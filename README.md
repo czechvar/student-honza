@@ -126,3 +126,4 @@ npx firebase-tools deploy --only hosting --project honza-study-space
 # Full deploy (Hosting + Firestore Security Rules & Indexes)
 npm run deploy
 ```
+
