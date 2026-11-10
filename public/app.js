@@ -161,7 +161,8 @@ const I18N = {
     passwordLengthError: 'Please enter a valid password (at least 6 characters).',
     signOutBtn: 'Sign Out',
     signInSubmitBtn: 'Sign In',
-    invalidPasswordError: 'Incorrect password. Please try again.'
+    invalidPasswordError: 'Incorrect password. Please try again.',
+    footerText: "Honza's Study Space • Web, Android & iPhone"
   },
   cs: {
     skipToMain: 'Přeskočit na hlavní obsah',
@@ -299,7 +300,8 @@ const I18N = {
     passwordLengthError: 'Zadejte prosím platné heslo (alespoň 6 znaků).',
     signOutBtn: 'Odhlásit se',
     signInSubmitBtn: 'Přihlásit se',
-    invalidPasswordError: 'Nesprávné heslo. Zkuste to prosím znovu.'
+    invalidPasswordError: 'Nesprávné heslo. Zkuste to prosím znovu.',
+    footerText: 'Honzův studijní prostor • Web, Android a iPhone'
   }
 };
 
@@ -704,6 +706,7 @@ function applyRolePermissions() {
   const avatarEl = document.getElementById('current-user-avatar');
   const labelEl = document.getElementById('current-user-label');
   const switchTag = document.getElementById('switch-account-tag');
+  const headerLogoutBtn = document.getElementById('header-logout-btn');
   const signOutBtn = document.getElementById('auth-signout-btn');
   const authCloseForm = document.getElementById('auth-close-form');
   const authDialog = document.getElementById('auth-login-dialog');
@@ -712,6 +715,7 @@ function applyRolePermissions() {
   if (heroBanner) heroBanner.hidden = !isAuthenticated;
   if (studioNavLi) studioNavLi.hidden = !isAdmin;
   if (firebaseBtn) firebaseBtn.hidden = !isAdmin;
+  if (headerLogoutBtn) headerLogoutBtn.hidden = !isAuthenticated;
   if (signOutBtn) signOutBtn.hidden = !isAuthenticated;
   if (authCloseForm) authCloseForm.hidden = !isAuthenticated;
   if (switchTag) switchTag.hidden = !isAuthenticated;
@@ -750,9 +754,14 @@ function applyRolePermissions() {
 }
 
 function openLoginDialog() {
+  const isAuthenticated = Boolean(state.userRole);
   const dialog = document.getElementById('auth-login-dialog');
   const feedback = document.getElementById('auth-login-feedback');
   const pwdInput = document.getElementById('login-password');
+  const signOutBtn = document.getElementById('auth-signout-btn');
+  const authCloseForm = document.getElementById('auth-close-form');
+  if (signOutBtn) signOutBtn.hidden = !isAuthenticated;
+  if (authCloseForm) authCloseForm.hidden = !isAuthenticated;
   if (feedback) feedback.hidden = true;
   if (pwdInput) {
     pwdInput.value = '';
@@ -2376,7 +2385,7 @@ function initEvents() {
     }
   });
 
-  document.getElementById('auth-signout-btn')?.addEventListener('click', async () => {
+  const handleSignOut = async () => {
     if (state.auth) {
       const { signOut } = await import('firebase/auth');
       await signOut(state.auth).catch(() => {});
@@ -2385,7 +2394,10 @@ function initEvents() {
     localStorage.removeItem(STORAGE_KEYS.AUTH_ROLE);
     applyRolePermissions();
     openLoginDialog();
-  });
+  };
+
+  document.getElementById('auth-signout-btn')?.addEventListener('click', handleSignOut);
+  document.getElementById('header-logout-btn')?.addEventListener('click', handleSignOut);
 }
 
 // Register Service Worker for Android / iOS PWA

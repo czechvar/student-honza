@@ -76,6 +76,9 @@
           <span id="current-user-label">Přihlásit</span>
           <span class="switch-account-tag" id="switch-account-tag" hidden data-i18n="switchAccountShort">Přepnout</span>
         </button>
+        <button type="button" class="secondary-btn sm-btn" id="header-logout-btn" hidden data-i18n="signOutBtn">
+          Odhlásit se
+        </button>
         <div class="lang-switch" role="group" aria-label="Jazyk rozhraní / Interface Language">
           <button type="button" class="lang-btn" data-lang-switch="cs" aria-pressed="true">CZ</button>
           <button type="button" class="lang-btn" data-lang-switch="en" aria-pressed="false">EN</button>
@@ -339,8 +342,8 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <p data-i18n="footerText">Honza's Study Space • Works on Web, Android &amp; iPhone • Powered by Firebase Firestore</p>
+  <footer class="site-footer" id="site-footer">
+    <p data-i18n="footerText">Honzův studijní prostor • Web, Android a iPhone</p>
   </footer>
 
   <!-- MODAL 1: ATTEMPT DETAILED REVIEW DIALOG -->
