@@ -195,48 +195,72 @@
   }
 
   .brand-group {
-    position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    cursor: default;
-  }
-
-  .brand-group[data-tooltip]::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    inset-block-start: calc(100% + 0.45rem);
-    inset-inline-start: 0;
-    padding: 0.4rem 0.7rem;
-    border-radius: 8px;
-    background-color: var(--text-main);
-    color: var(--bg-surface);
-    font-size: 0.8rem;
-    font-weight: 700;
-    white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-4px);
-    transition: opacity 0.15s ease, transform 0.15s ease;
-    z-index: 30;
-  }
-
-  .brand-group[data-tooltip]:is(:hover, :focus-visible)::after {
-    opacity: 1;
-    transform: translateY(0);
+    gap: 0.65rem;
+    cursor: pointer;
+    user-select: none;
   }
 
   .brand-logo {
     color: var(--color-brand);
     flex-shrink: 0;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .brand-group:is(:hover, :focus-visible) .brand-logo {
+    transform: scale(1.08) rotate(-4deg);
   }
 
   .brand-title {
-    display: block;
+    display: inline-flex;
+    align-items: baseline;
     font-weight: 800;
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     letter-spacing: -0.02em;
+    background-image: linear-gradient(120deg, var(--text-main) 0%, var(--color-brand) 55%, #f59e0b 100%);
+    background-size: 200% auto;
+    background-position: 0% center;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: var(--text-main);
+    transition:
+      background-position 0.45s ease,
+      color 0.3s ease;
+  }
+
+  .brand-group:is(:hover, :focus-visible) .brand-title {
+    color: transparent;
+    background-position: 100% center;
+  }
+
+  .brand-word {
+    display: inline-flex;
+    align-items: baseline;
+  }
+
+  .brand-initial {
+    font-weight: 900;
+  }
+
+  .brand-expand {
+    display: inline-block;
+    max-inline-size: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: pre;
+    font-weight: 700;
+    transform: translateX(-6px);
+    transition:
+      max-inline-size 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.3s ease,
+      transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .brand-group:is(:hover, :focus-visible) .brand-expand {
+    max-inline-size: 9ch;
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .brand-subtitle {

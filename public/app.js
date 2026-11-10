@@ -957,10 +957,21 @@ function applyTranslations() {
 
   const brandGroup = document.getElementById('brand-group');
   if (brandGroup) {
-    const fullTitle = t('appTitle');
-    brandGroup.setAttribute('title', fullTitle);
-    brandGroup.setAttribute('data-tooltip', fullTitle);
-    brandGroup.setAttribute('aria-label', `HSP — ${fullTitle}`);
+    brandGroup.setAttribute('aria-label', t('appTitle'));
+  }
+  const exp1 = document.getElementById('brand-exp-1');
+  const exp2 = document.getElementById('brand-exp-2');
+  const exp3 = document.getElementById('brand-exp-3');
+  if (exp1 && exp2 && exp3) {
+    if (state.lang === 'cs') {
+      exp1.textContent = 'onzův\u00A0';
+      exp2.textContent = 'tudijní\u00A0';
+      exp3.textContent = 'rostor';
+    } else {
+      exp1.textContent = "onza's\u00A0";
+      exp2.textContent = 'tudy\u00A0';
+      exp3.textContent = 'lace';
+    }
   }
 
   updateSyncBadge();
