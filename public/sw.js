@@ -1,4 +1,4 @@
-const CACHE_NAME = 'honza-study-v6';
+const CACHE_NAME = 'honza-study-v7';
 const ASSETS = [
   '/',
   '/index.html',

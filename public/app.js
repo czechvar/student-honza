@@ -1224,13 +1224,111 @@ function renderActiveFlashcard() {
 // ============================================================================
 // Interactive Quiz Engine
 // ============================================================================
+function shuffleArray(items) {
+  const arr = [...items];
+  for (let i = arr.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function randomizeQuestionOptions(questions) {
+  let prevCorrectIdx = -1;
+  return questions.map((q) => {
+    const copy = { ...q };
+    if (copy.type === 'multiple-choice' && Array.isArray(copy.options) && copy.options.length > 1) {
+      let opts = shuffleArray(copy.options);
+      const normCorrect = normalizeAnswer(copy.correctAnswer);
+      let correctIdx = opts.findIndex((o) => normalizeAnswer(o) === normCorrect);
+      // Avoid placing the correct answer in the exact same position (e.g. 'A') twice in a row
+      if (opts.length > 2 && correctIdx !== -1 && correctIdx === prevCorrectIdx) {
+        const swapIdx = (correctIdx + 1 + Math.floor(Math.random() * (opts.length - 1))) % opts.length;
+        [opts[correctIdx], opts[swapIdx]] = [opts[swapIdx], opts[correctIdx]];
+        correctIdx = swapIdx;
+      }
+      prevCorrectIdx = correctIdx;
+      copy.options = opts;
+    }
+    return copy;
+  });
+}
+
+function selectQuizQuestionsForAttempt(topic) {
+  const pool = Array.isArray(topic.questions) ? topic.questions : [];
+  if (pool.length <= 1) return randomizeQuestionOptions(pool);
+
+  // Target quiz size (~55–60% of the topic question bank, e.g. 12–15 questions out of 22–25)
+  const quizSize =
+    pool.length >= 16
+      ? Math.max(10, Math.min(15, Math.round(pool.length * 0.6)))
+      : pool.length >= 8
+      ? Math.max(6, Math.round(pool.length * 0.7))
+      : pool.length;
+
+  // Gather prompts from the previous quiz on this topic (either in-memory or last saved attempt)
+  if (!state.lastQuizPromptsByTopic) state.lastQuizPromptsByTopic = {};
+  const lastAttempt = state.attempts.find(
+    (a) => a.topicId === topic.id && a.mode !== 'mistakes' && Array.isArray(a.answers) && a.answers.length > 0
+  );
+  const prevPromptsList =
+    state.lastQuizPromptsByTopic[topic.id] ||
+    (lastAttempt ? lastAttempt.answers.map((a) => a.prompt) : []);
+  const prevPromptsSet = new Set(prevPromptsList);
+  const missedPromptsSet = new Set(
+    (lastAttempt?.answers || []).filter((a) => !a.isCorrect).map((a) => a.prompt)
+  );
+
+  let selected;
+  if (prevPromptsSet.size === 0 || quizSize >= pool.length) {
+    selected = shuffleArray(pool).slice(0, quizSize);
+  } else {
+    const freshPool = shuffleArray(pool.filter((q) => !prevPromptsSet.has(q.prompt)));
+    const repeatMissed = shuffleArray(
+      pool.filter((q) => prevPromptsSet.has(q.prompt) && missedPromptsSet.has(q.prompt))
+    );
+    const repeatOther = shuffleArray(
+      pool.filter((q) => prevPromptsSet.has(q.prompt) && !missedPromptsSet.has(q.prompt))
+    );
+    const repeatPool = [...repeatMissed, ...repeatOther];
+
+    // Enforce at most 60% overlap with the previous quiz, and at least 40% fresh questions
+    const maxSame = Math.floor(quizSize * 0.6);
+    const minFresh = quizSize - maxSame;
+
+    const chosenFresh = freshPool.slice(0, Math.max(minFresh, quizSize - repeatPool.length));
+    const remainingNeeded = quizSize - chosenFresh.length;
+    const chosenRepeat = repeatPool.slice(0, Math.min(maxSame, remainingNeeded));
+
+    selected = [...chosenFresh, ...chosenRepeat];
+
+    // If still short (e.g. small pool), top up from remaining fresh or repeat questions
+    if (selected.length < quizSize) {
+      const usedPrompts = new Set(selected.map((q) => q.prompt));
+      for (const candidate of [...freshPool, ...repeatPool]) {
+        if (selected.length >= quizSize) break;
+        if (!usedPrompts.has(candidate.prompt)) {
+          selected.push(candidate);
+          usedPrompts.add(candidate.prompt);
+        }
+      }
+    }
+
+    selected = shuffleArray(selected);
+  }
+
+  state.lastQuizPromptsByTopic[topic.id] = selected.map((q) => q.prompt);
+  return randomizeQuestionOptions(selected);
+}
+
 function startQuiz(topicId, mode = 'full', customQuestions = null) {
   const topic = state.topics.find((tp) => tp.id === topicId);
   if (!topic) return;
 
-  const questionsPool = Array.isArray(customQuestions) && customQuestions.length
-    ? customQuestions
-    : topic.questions;
+  const questionsPool =
+    Array.isArray(customQuestions) && customQuestions.length
+      ? randomizeQuestionOptions(shuffleArray(customQuestions))
+      : selectQuizQuestionsForAttempt(topic);
 
   if (!questionsPool || !questionsPool.length) return;
 
