@@ -6,15 +6,371 @@ export const DEPRECATED_DEMO_TOPIC_IDS = [
 
 export const STARTER_TOPICS = [
   {
-    id: "fyzika-teleso-latka-skupenstvi-atomy",
-    title: "Těleso a látka, skupenství látek, atomy a molekuly",
-    subject: "Fyzika",
-    lang: "cs",
-    description: "Příprava na písemku (11. 11., 6.C): Fyzikální těleso vs. látka, vlastnosti pevných, kapalných a plynných látek, změny skupenství, stavba atomu, prvky, sloučeniny, molekuly, Brownův pohyb a difuze.",
-    authorName: "Táta & Gemini",
-    createdAt: 1794307600000,
-    updatedAt: 1794343600000,
-    studyNotes: [
+    "lang": "cs",
+    "title": "Těleso a látka, skupenství látek, atomy a molekuly - 11. 11., od 10:55 do 11:40",
+    "subject": "Fyzika",
+    "description": "Příprava na písemku (11. 11., od 10:55 do 11:40, 6.C): Fyzikální těleso vs. látka, vlastnosti pevných, kapalných a plynných látek, změny skupenství, stavba atomu, prvky, sloučeniny, molekuly, Brownův pohyb a difuze.",
+    "id": "fyzika-teleso-latka-skupenstvi-atomy",
+    "questions": [
+      {
+        "id": "fy-q1",
+        "type": "multiple-choice",
+        "prompt": "Ve které z následujících možností jsou uvedena POUZE fyzikální tělesa?",
+        "options": [
+          "Dřevo, sklo, železo, voda",
+          "Dřevěný stůl, sklenička, železný hřebík, kapka vody",
+          "Sklenička, voda, vzduch, plast",
+          "Železný hřebík, měď, zlato, kyslík"
+        ],
+        "correctAnswer": "Dřevěný stůl, sklenička, železný hřebík, kapka vody",
+        "explanation": "Stůl, sklenička, hřebík a kapka vody jsou konkrétní předměty (tělesa). Dřevo, sklo, železo, voda, vzduch, plast, měď či zlato jsou látky."
+      },
+      {
+        "id": "fy-q2",
+        "type": "multiple-choice",
+        "prompt": "Ve které z možností jsou uvedeny POUZE látky?",
+        "options": [
+          "Kapka vody, sněhová vločka, ledová kra",
+          "Míč, vzduch, guma, stůl",
+          "Voda, železo, vzduch, sklo",
+          "Sklo, okno, zrcadlo, lupa"
+        ],
+        "correctAnswer": "Voda, železo, vzduch, sklo",
+        "explanation": "Voda, železo, vzduch a sklo jsou materiály (látky), ze kterých se skládají tělesa."
+      },
+      {
+        "id": "fy-q3",
+        "type": "multiple-choice",
+        "prompt": "Které skupenství látek má stálý objem, ale nemá stálý tvar (přizpůsobí se nádobě)?",
+        "options": [
+          "Pevné",
+          "Plynné",
+          "Krystalické",
+          "Kapalné"
+        ],
+        "correctAnswer": "Kapalné",
+        "explanation": "Kapaliny (např. voda, olej) mají stálý objem, jsou téměř nestlačitelné, ale tvar mění podle nádoby."
+      },
+      {
+        "id": "fy-q4",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Plyny jsou snadno stlačitelné a vždy vyplní celý objem uzavřené nádoby.",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Pravda",
+        "explanation": "Mezi částicemi plynu jsou velké vzdálenosti, proto lze plyny snadno stlačit a samovolně se rozpínají do celého prostoru nádoby."
+      },
+      {
+        "id": "fy-q5",
+        "type": "type-in",
+        "prompt": "Jakým společným jednoslovným názvem označujeme kapaliny a plyny (protože je lze přelévat a nemají stálý tvar)?",
+        "correctAnswer": "tekutiny",
+        "acceptedAnswers": [
+          "tekutiny",
+          "tekutina"
+        ],
+        "explanation": "Kapaliny a plyny jsou tekuté, a proto mají společný fyzikální název tekutiny."
+      },
+      {
+        "id": "fy-q6",
+        "type": "multiple-choice",
+        "prompt": "Mezi amorfní (beztvaré) pevné látky, v nichž částice NEJSOU pravidelně uspořádané, patří:",
+        "options": [
+          "Kuchyňská sůl, led, křemen, železo",
+          "Sklo, vosk, asfalt, pryskyřice",
+          "Voda, rtuť, olej, líh",
+          "Kyslík, vodík, dusík, helium"
+        ],
+        "correctAnswer": "Sklo, vosk, asfalt, pryskyřice",
+        "explanation": "Sklo, vosk, asfalt a pryskyřice jsou amorfní pevné látky (nemají krystalovou mřížku). Sůl, led, křemen a kovy jsou látky krystalické."
+      },
+      {
+        "id": "fy-q7",
+        "type": "multiple-choice",
+        "prompt": "Z jakých částic se skládá jádro atomu?",
+        "options": [
+          "Z kladných protonů a záporných elektronů",
+          "Pouze ze záporných elektronů",
+          "Z kladných protonů a neutrálních neutronů",
+          "Z molekul a elektronů"
+        ],
+        "correctAnswer": "Z kladných protonů a neutrálních neutronů",
+        "explanation": "Atomové jádro obsahuje protony (s kladným nábojem) a neutrony (bez elektrického náboje). Elektrony se pohybují v elektronovém obalu kolem jádra."
+      },
+      {
+        "id": "fy-q8",
+        "type": "type-in",
+        "prompt": "Které částice tvoří obal atomu a mají záporný elektrický náboj? (Napiš v množném čísle)",
+        "correctAnswer": "elektrony",
+        "acceptedAnswers": [
+          "elektrony",
+          "elektron"
+        ],
+        "explanation": "Elektronový obal atomu je tvořen elektrony (e⁻), které mají záporný elektrický náboj."
+      },
+      {
+        "id": "fy-q9",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Elektrony mají kladný elektrický náboj a nacházejí se uprostřed atomového jádra.",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Lež",
+        "explanation": "Lež! Elektrony mají ZÁPORNÝ elektrický náboj a pohybují se v elektronovém obalu. Kladný náboj mají protony v jádře."
+      },
+      {
+        "id": "fy-q10",
+        "type": "multiple-choice",
+        "prompt": "Když smícháme 50 ml vody a 50 ml lihu, výsledný objem směsi není 100 ml, ale jen asi 96 ml. Co tento pokus dokazuje?",
+        "options": [
+          "Že se částice vody okamžitě přeměnily na plyn",
+          "Že kapaliny nemají hmotnost",
+          "Že v kapalinách neplatí gravitace",
+          "Že mezi částicemi látek (molekulami) jsou volné mezery"
+        ],
+        "correctAnswer": "Že mezi částicemi látek (molekulami) jsou volné mezery",
+        "explanation": "Menší molekuly vody zapadnou do mezer mezi většími molekulami lihu (podobně jako když smícháme hrách a mák)."
+      },
+      {
+        "id": "fy-q11",
+        "type": "multiple-choice",
+        "prompt": "Co je to chemická sloučenina? Vyber správné tvrzení a příklad:",
+        "options": [
+          "Látka složená pouze z jednoho druhu atomů (např. železo Fe nebo zlato Au)",
+          "Látka složená z molekul tvořených atomy RŮZNÝCH prvků (např. voda H₂O nebo oxid uhličitý CO₂)",
+          "Každá směs písku a kamínků",
+          "Částice uvnitř atomového jádra"
+        ],
+        "correctAnswer": "Látka složená z molekul tvořených atomy RŮZNÝCH prvků (např. voda H₂O nebo oxid uhličitý CO₂)",
+        "explanation": "Sloučenina vzniká chemickým sloučením atomů dvou nebo více různých prvků (např. H₂O se skládá z vodíku a kyslíku)."
+      },
+      {
+        "id": "fy-q12",
+        "type": "type-in",
+        "prompt": "Jak se nazývá samovolné pronikání částic jedné látky mezi částice druhé látky (např. šíření vůně parfému po místnosti)?",
+        "correctAnswer": "difuze",
+        "acceptedAnswers": [
+          "difuze",
+          "difúze"
+        ],
+        "explanation": "Difuze je samovolné promíchávání částic dvou látek způsobené jejich neustálým neuspořádaným pohybem."
+      },
+      {
+        "id": "fy-q13",
+        "type": "multiple-choice",
+        "prompt": "Jak ovlivňuje teplota rychlost neuspořádaného (Brownova) pohybu částic?",
+        "options": [
+          "Čím je teplota látky vyšší, tím pomaleji se její částice pohybují",
+          "Teplota nemá na rychlost pohybu částic žádný vliv",
+          "Čím je teplota látky vyšší, tím rychleji se její částice pohybují",
+          "Při zahřátí se částice úplně zastaví"
+        ],
+        "correctAnswer": "Čím je teplota látky vyšší, tím rychleji se její částice pohybují",
+        "explanation": "Rychlost neuspořádaného pohybu částic přímo souvisí s teplotou: v horké vodě se proto čaj nebo cukr rozpustí (difunduje) mnohem rychleji než ve studené."
+      },
+      {
+        "id": "fy-q14",
+        "type": "multiple-choice",
+        "prompt": "Jak se nazývá přeměna skupenství z plynného na kapalné (např. když se v koupelně orosí studené zrcadlo)?",
+        "options": [
+          "Vypařování",
+          "Sublimace",
+          "Kapalnění (kondenzace)",
+          "Tání"
+        ],
+        "correctAnswer": "Kapalnění (kondenzace)",
+        "explanation": "Přeměna plynu (vodní páry) na kapalinu (kapičky vody) se nazývá kapalnění neboli kondenzace."
+      },
+      {
+        "id": "fy-q15",
+        "type": "type-in",
+        "prompt": "Který jediný kov je při běžné pokojové teplotě (20 °C) kapalný?",
+        "correctAnswer": "rtuť",
+        "acceptedAnswers": [
+          "rtuť",
+          "rtut",
+          "hg"
+        ],
+        "explanation": "Rtuť (chemická značka Hg) je za běžné pokojové teploty stříbrná těžká kapalina (tuhne až při −39 °C)."
+      },
+      {
+        "id": "fy-q16",
+        "type": "multiple-choice",
+        "prompt": "Kolik atomů celkem tvoří jednu molekulu vody se značkou H₂O?",
+        "options": [
+          "2 atomy (1 atom vodíku a 1 atom kyslíku)",
+          "4 atomy (2 atomy vodíku a 2 atomy kyslíku)",
+          "1 atom vody",
+          "3 atomy (2 atomy vodíku a 1 atom kyslíku)"
+        ],
+        "correctAnswer": "3 atomy (2 atomy vodíku a 1 atom kyslíku)",
+        "explanation": "Ve vzorci H₂O dolní index 2 u vodíku (H) znamená 2 atomy vodíku a u kyslíku (O) je 1 atom → celkem 3 atomy v jedné molekule."
+      },
+      {
+        "id": "fy-q17",
+        "type": "multiple-choice",
+        "prompt": "Jak se nazývá přímá přeměna pevné látky na plyn bez kapalného mezistupně (např. vypařování suchého ledu nebo jódu)?",
+        "options": [
+          "Tání",
+          "Sublimace",
+          "Kondenzace",
+          "Tuhnutí"
+        ],
+        "correctAnswer": "Sublimace",
+        "explanation": "Přeměna pevné látky přímo v plyn se nazývá sublimace (opačný děj, např. vznik jinovatky z vodní páry, je desublimace)."
+      },
+      {
+        "id": "fy-q18",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Kapaliny mají stálý tvar a jsou velmi snadno stlačitelné.",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Lež",
+        "explanation": "Lež! Kapaliny NEMAJÍ stálý tvar (přizpůsobí se nádobě), mají pouze stálý objem a jsou téměř nestlačitelné."
+      },
+      {
+        "id": "fy-q19",
+        "type": "type-in",
+        "prompt": "Jak se nazývají částice v jádře atomu, které NEMAJÍ žádný elektrický náboj? (Napiš v množném čísle)",
+        "correctAnswer": "neutrony",
+        "acceptedAnswers": [
+          "neutrony",
+          "neutron"
+        ],
+        "explanation": "Neutrony (n⁰) se nacházejí v jádře atomu společně s protony a jsou elektricky neutrální (bez náboje)."
+      },
+      {
+        "id": "fy-q20",
+        "type": "multiple-choice",
+        "prompt": "Která z následujících látek je CHEMICKÝ PRVEK (nikoli sloučenina ani směs)?",
+        "options": [
+          "Voda (H₂O)",
+          "Vzduch",
+          "Oxid uhličitý (CO₂)",
+          "Železo (Fe)"
+        ],
+        "correctAnswer": "Železo (Fe)",
+        "explanation": "Železo (Fe) je chemický prvek složený pouze z atomů železa. Voda a oxid uhličitý jsou sloučeniny, vzduch je směs plynů."
+      },
+      {
+        "id": "fy-q21",
+        "type": "multiple-choice",
+        "prompt": "Co platí o pohybu částic v pevných krystalických látkách (např. v kusu železa nebo ledu)?",
+        "options": [
+          "Částice jsou úplně nehybné a vůbec se nepohybují",
+          "Částice kmitají kolem svých stálých rovnovážných poloh",
+          "Částice volně létají po celé místnosti vysokou rychlostí",
+          "Částice se mohou volně přelévat jako v kapalině"
+        ],
+        "correctAnswer": "Částice kmitají kolem svých stálých rovnovážných poloh",
+        "explanation": "V pevných látkách na sebe částice působí velkými přitažlivými silami, takže nemohou opustit svá místa a pouze kmitají kolem rovnovážných poloh."
+      },
+      {
+        "id": "fy-q22",
+        "type": "type-in",
+        "prompt": "Jak se nazývá neustálý neuspořádaný pohyb částic v kapalinách a plynech, pojmenovaný po skotském botanikovi? (Napiš: _____ pohyb)",
+        "correctAnswer": "Brownův",
+        "acceptedAnswers": [
+          "brownův",
+          "brownuv",
+          "brownův pohyb",
+          "brownuv pohyb"
+        ],
+        "explanation": "Neustálý chaotický pohyb částic v tekutinách se nazývá Brownův pohyb (podle Roberta Browna, který jej pozoroval u pylových zrnek ve vodě)."
+      },
+      {
+        "id": "fy-q23",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Jedno fyzikální těleso může být složeno i z několika různých látek najednou (např. školní tužka nebo jízdní kolo).",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Pravda",
+        "explanation": "Ano! Například tužka je jedno těleso, ale skládá se ze dřeva, tuhy (grafitu), kovu a gumy."
+      },
+      {
+        "id": "fy-q24",
+        "type": "multiple-choice",
+        "prompt": "Z jakých atomů se skládá jedna molekula oxidu uhličitého (CO₂)?",
+        "options": [
+          "Z 2 atomů uhlíku a 1 atomu kyslíku",
+          "Z 1 atomu uhlíku a 2 atomů kyslíku",
+          "Z 1 atomu vodíku a 2 atomů uhlíku",
+          "Pouze ze 3 atomů kyslíku"
+        ],
+        "correctAnswer": "Z 1 atomu uhlíku a 2 atomů kyslíku",
+        "explanation": "Značka C označuje 1 atom uhlíku a O₂ označuje 2 atomy kyslíku → dohromady molekula oxidu uhličitého CO₂."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "Jaký je rozdíl mezi fyzikálním tělesem a látkou?",
+        "back": "Těleso je konkrétní předmět (např. sklenice, hřebík), látka je materiál, ze kterého je těleso vytvořeno (např. sklo, železo)."
+      },
+      {
+        "front": "Jaké vlastnosti mají pevné látky (tvar, objem, stlačitelnost)?",
+        "back": "Mají stálý tvar, stálý objem, jsou nestlačitelné a nejsou tekuté."
+      },
+      {
+        "front": "Jaké vlastnosti mají kapaliny?",
+        "back": "Mají stálý objem, mění tvar podle nádoby, tvoří vodorovnou hladinu, jsou tekuté a téměř nestlačitelné."
+      },
+      {
+        "front": "Jaké vlastnosti mají plyny?",
+        "back": "Nemají stálý tvar ani stálý objem, vyplní celý prostor nádoby, jsou tekuté a snadno stlačitelné i rozpínavé."
+      },
+      {
+        "front": "Které látky označujeme společným názvem TEKUTINY?",
+        "back": "Kapaliny a plyny (protože jsou tekuté a nemají stálý tvar)."
+      },
+      {
+        "front": "Který kov je při běžné pokojové teplotě kapalný?",
+        "back": "Rtuť (Hg)."
+      },
+      {
+        "front": "Jaký je rozdíl mezi krystalickou a amorfní (beztvarou) pevnou látkou?",
+        "back": "Krystalická má částice pravidelně uspořádané (sůl, led, kovy); amorfní nepravidelně (sklo, vosk, asfalt)."
+      },
+      {
+        "front": "Jak se nazývá přeměna pevné látky přímo na plyn (a naopak)?",
+        "back": "Pevná → plyn = sublimace (např. jód, suchý led). Plyn → pevná = desublimace (např. jinovatka)."
+      },
+      {
+        "front": "Z jakých částic se skládá atom a kde jsou umístěny?",
+        "back": "Jádro uprostřed: protony (kladné p⁺) a neutrony (bez náboje n⁰). Elektronový obal okolo: elektrony (záporné e⁻)."
+      },
+      {
+        "front": "Proč je běžný atom elektricky neutrální?",
+        "back": "Protože má v jádře stejný počet kladných protonů jako záporných elektronů v obalu."
+      },
+      {
+        "front": "Co je to molekula?",
+        "back": "Částice složená ze dvou nebo více pevně spojených atomů (např. molekula kyslíku O₂ nebo vody H₂O)."
+      },
+      {
+        "front": "Jaký je rozdíl mezi chemickým prvkem a sloučeninou?",
+        "back": "Prvek je látka ze stejných atomů (např. kyslík O, železo Fe). Sloučenina je látka z atomů různých prvků (např. voda H₂O, oxid uhličitý CO₂)."
+      },
+      {
+        "front": "Z jakých atomů se skládá jedna molekula vody (H₂O)?",
+        "back": "Ze 2 atomů vodíku (H) a 1 atomu kyslíku (O)."
+      },
+      {
+        "front": "Co je to Brownův pohyb a na čem závisí jeho rychlost?",
+        "back": "Neustálý neuspořádaný (chaotický) pohyb částic v tekutinách. Čím je vyšší teplota, tím rychleji se částice pohybují."
+      },
+      {
+        "front": "Co je to difuze?",
+        "back": "Samovolné pronikání částic jedné látky mezi částice druhé látky (např. šíření vůně ve vzduchu nebo rozpuštění kapky inkoustu ve vodě)."
+      }
+    ],
+    "studyNotes": [
       "Fyzikální těleso vs. látka: TĚLESO je každý konkrétní předmět, který má určitý tvar a objem (např. sklenice, hřebík, stůl, kapka vody, míč, Měsíc). LÁTKA je materiál, ze kterého je těleso složeno (např. sklo, železo, dřevo, voda, vzduch, plast).",
       "Jedno těleso může být složeno z více látek (např. obyčejná tužka = dřevo + grafitová tuha + kovový plíšek + guma) a ze stejné látky můžeme vyrobit různá tělesa (ze skla: sklenici, okenní tabuli, kuličku).",
       "Tři skupenství látek: Látky kolem nás se vyskytují jako PEVNÉ (led, železo, sůl), KAPALNÉ (voda, olej, benzín, rtuť – jediný kov kapalný při pokojové teplotě) a PLYNNÉ (vzduch, vodní pára, kyslík, oxid uhličitý, zemní plyn).",
@@ -26,298 +382,389 @@ export const STARTER_TOPICS = [
       "Stavba atomu: Uprostřed atomu je kladně nabité JÁDRO, které obsahuje PROTONY (kladný náboj p⁺) a NEUTRONY (bez náboje n⁰, elektricky neutrální). Kolem jádra je ELEKTRONOVÝ OBAL tvořený ELEKTRONY (záporný náboj e⁻). Elektricky neutrální atom má STEJNÝ počet protonů a elektronů.",
       "Prvky, molekuly, sloučeniny, Brownův pohyb a difuze: PRVEK je látka z atomů se stejným počtem protonů (např. vodík H, kyslík O, uhlík C, železo Fe). MOLEKULA vzniká sloučením dvou nebo více atomů (např. O₂, H₂O). SLOUČENINA se skládá z atomů různých prvků (voda H₂O, oxid uhličitý CO₂). BROWNŮV POHYB je neustálý neuspořádaný pohyb částic (rychlejší při vyšší teplotě) a DIFUZE je samovolné pronikání částic jedné látky mezi částice druhé látky."
     ],
-    flashcards: [
-      { front: "Jaký je rozdíl mezi fyzikálním tělesem a látkou?", back: "Těleso je konkrétní předmět (např. sklenice, hřebík), látka je materiál, ze kterého je těleso vytvořeno (např. sklo, železo)." },
-      { front: "Jaké vlastnosti mají pevné látky (tvar, objem, stlačitelnost)?", back: "Mají stálý tvar, stálý objem, jsou nestlačitelné a nejsou tekuté." },
-      { front: "Jaké vlastnosti mají kapaliny?", back: "Mají stálý objem, mění tvar podle nádoby, tvoří vodorovnou hladinu, jsou tekuté a téměř nestlačitelné." },
-      { front: "Jaké vlastnosti mají plyny?", back: "Nemají stálý tvar ani stálý objem, vyplní celý prostor nádoby, jsou tekuté a snadno stlačitelné i rozpínavé." },
-      { front: "Které látky označujeme společným názvem TEKUTINY?", back: "Kapaliny a plyny (protože jsou tekuté a nemají stálý tvar)." },
-      { front: "Který kov je při běžné pokojové teplotě kapalný?", back: "Rtuť (Hg)." },
-      { front: "Jaký je rozdíl mezi krystalickou a amorfní (beztvarou) pevnou látkou?", back: "Krystalická má částice pravidelně uspořádané (sůl, led, kovy); amorfní nepravidelně (sklo, vosk, asfalt)." },
-      { front: "Jak se nazývá přeměna pevné látky přímo na plyn (a naopak)?", back: "Pevná → plyn = sublimace (např. jód, suchý led). Plyn → pevná = desublimace (např. jinovatka)." },
-      { front: "Z jakých částic se skládá atom a kde jsou umístěny?", back: "Jádro uprostřed: protony (kladné p⁺) a neutrony (bez náboje n⁰). Elektronový obal okolo: elektrony (záporné e⁻)." },
-      { front: "Proč je běžný atom elektricky neutrální?", back: "Protože má v jádře stejný počet kladných protonů jako záporných elektronů v obalu." },
-      { front: "Co je to molekula?", back: "Částice složená ze dvou nebo více pevně spojených atomů (např. molekula kyslíku O₂ nebo vody H₂O)." },
-      { front: "Jaký je rozdíl mezi chemickým prvkem a sloučeninou?", back: "Prvek je látka ze stejných atomů (např. kyslík O, železo Fe). Sloučenina je látka z atomů různých prvků (např. voda H₂O, oxid uhličitý CO₂)." },
-      { front: "Z jakých atomů se skládá jedna molekula vody (H₂O)?", back: "Ze 2 atomů vodíku (H) a 1 atomu kyslíku (O)." },
-      { front: "Co je to Brownův pohyb a na čem závisí jeho rychlost?", back: "Neustálý neuspořádaný (chaotický) pohyb částic v tekutinách. Čím je vyšší teplota, tím rychleji se částice pohybují." },
-      { front: "Co je to difuze?", back: "Samovolné pronikání částic jedné látky mezi částice druhé látky (např. šíření vůně ve vzduchu nebo rozpuštění kapky inkoustu ve vodě)." }
-    ],
-    questions: [
-      {
-        id: "fy-q1",
-        type: "multiple-choice",
-        prompt: "Ve které z následujících možností jsou uvedena POUZE fyzikální tělesa?",
-        options: [
-          "Dřevo, sklo, železo, voda",
-          "Dřevěný stůl, sklenička, železný hřebík, kapka vody",
-          "Sklenička, voda, vzduch, plast",
-          "Železný hřebík, měď, zlato, kyslík"
-        ],
-        correctAnswer: "Dřevěný stůl, sklenička, železný hřebík, kapka vody",
-        explanation: "Stůl, sklenička, hřebík a kapka vody jsou konkrétní předměty (tělesa). Dřevo, sklo, železo, voda, vzduch, plast, měď či zlato jsou látky."
-      },
-      {
-        id: "fy-q2",
-        type: "multiple-choice",
-        prompt: "Ve které z možností jsou uvedeny POUZE látky?",
-        options: [
-          "Kapka vody, sněhová vločka, ledová kra",
-          "Míč, vzduch, guma, stůl",
-          "Voda, železo, vzduch, sklo",
-          "Sklo, okno, zrcadlo, lupa"
-        ],
-        correctAnswer: "Voda, železo, vzduch, sklo",
-        explanation: "Voda, železo, vzduch a sklo jsou materiály (látky), ze kterých se skládají tělesa."
-      },
-      {
-        id: "fy-q3",
-        type: "multiple-choice",
-        prompt: "Které skupenství látek má stálý objem, ale nemá stálý tvar (přizpůsobí se nádobě)?",
-        options: [
-          "Pevné",
-          "Plynné",
-          "Krystalické",
-          "Kapalné"
-        ],
-        correctAnswer: "Kapalné",
-        explanation: "Kapaliny (např. voda, olej) mají stálý objem, jsou téměř nestlačitelné, ale tvar mění podle nádoby."
-      },
-      {
-        id: "fy-q4",
-        type: "true-false",
-        prompt: "Pravda nebo lež: Plyny jsou snadno stlačitelné a vždy vyplní celý objem uzavřené nádoby.",
-        options: ["Pravda", "Lež"],
-        correctAnswer: "Pravda",
-        explanation: "Mezi částicemi plynu jsou velké vzdálenosti, proto lze plyny snadno stlačit a samovolně se rozpínají do celého prostoru nádoby."
-      },
-      {
-        id: "fy-q5",
-        type: "type-in",
-        prompt: "Jakým společným jednoslovným názvem označujeme kapaliny a plyny (protože je lze přelévat a nemají stálý tvar)?",
-        correctAnswer: "tekutiny",
-        acceptedAnswers: ["tekutiny", "tekutina"],
-        explanation: "Kapaliny a plyny jsou tekuté, a proto mají společný fyzikální název tekutiny."
-      },
-      {
-        id: "fy-q6",
-        type: "multiple-choice",
-        prompt: "Mezi amorfní (beztvaré) pevné látky, v nichž částice NEJSOU pravidelně uspořádané, patří:",
-        options: [
-          "Kuchyňská sůl, led, křemen, železo",
-          "Sklo, vosk, asfalt, pryskyřice",
-          "Voda, rtuť, olej, líh",
-          "Kyslík, vodík, dusík, helium"
-        ],
-        correctAnswer: "Sklo, vosk, asfalt, pryskyřice",
-        explanation: "Sklo, vosk, asfalt a pryskyřice jsou amorfní pevné látky (nemají krystalovou mřížku). Sůl, led, křemen a kovy jsou látky krystalické."
-      },
-      {
-        id: "fy-q7",
-        type: "multiple-choice",
-        prompt: "Z jakých částic se skládá jádro atomu?",
-        options: [
-          "Z kladných protonů a záporných elektronů",
-          "Pouze ze záporných elektronů",
-          "Z kladných protonů a neutrálních neutronů",
-          "Z molekul a elektronů"
-        ],
-        correctAnswer: "Z kladných protonů a neutrálních neutronů",
-        explanation: "Atomové jádro obsahuje protony (s kladným nábojem) a neutrony (bez elektrického náboje). Elektrony se pohybují v elektronovém obalu kolem jádra."
-      },
-      {
-        id: "fy-q8",
-        type: "type-in",
-        prompt: "Které částice tvoří obal atomu a mají záporný elektrický náboj? (Napiš v množném čísle)",
-        correctAnswer: "elektrony",
-        acceptedAnswers: ["elektrony", "elektron"],
-        explanation: "Elektronový obal atomu je tvořen elektrony (e⁻), které mají záporný elektrický náboj."
-      },
-      {
-        id: "fy-q9",
-        type: "true-false",
-        prompt: "Pravda nebo lež: Elektrony mají kladný elektrický náboj a nacházejí se uprostřed atomového jádra.",
-        options: ["Pravda", "Lež"],
-        correctAnswer: "Lež",
-        explanation: "Lež! Elektrony mají ZÁPORNÝ elektrický náboj a pohybují se v elektronovém obalu. Kladný náboj mají protony v jádře."
-      },
-      {
-        id: "fy-q10",
-        type: "multiple-choice",
-        prompt: "Když smícháme 50 ml vody a 50 ml lihu, výsledný objem směsi není 100 ml, ale jen asi 96 ml. Co tento pokus dokazuje?",
-        options: [
-          "Že se částice vody okamžitě přeměnily na plyn",
-          "Že kapaliny nemají hmotnost",
-          "Že v kapalinách neplatí gravitace",
-          "Že mezi částicemi látek (molekulami) jsou volné mezery"
-        ],
-        correctAnswer: "Že mezi částicemi látek (molekulami) jsou volné mezery",
-        explanation: "Menší molekuly vody zapadnou do mezer mezi většími molekulami lihu (podobně jako když smícháme hrách a mák)."
-      },
-      {
-        id: "fy-q11",
-        type: "multiple-choice",
-        prompt: "Co je to chemická sloučenina? Vyber správné tvrzení a příklad:",
-        options: [
-          "Látka složená pouze z jednoho druhu atomů (např. železo Fe nebo zlato Au)",
-          "Látka složená z molekul tvořených atomy RŮZNÝCH prvků (např. voda H₂O nebo oxid uhličitý CO₂)",
-          "Každá směs písku a kamínků",
-          "Částice uvnitř atomového jádra"
-        ],
-        correctAnswer: "Látka složená z molekul tvořených atomy RŮZNÝCH prvků (např. voda H₂O nebo oxid uhličitý CO₂)",
-        explanation: "Sloučenina vzniká chemickým sloučením atomů dvou nebo více různých prvků (např. H₂O se skládá z vodíku a kyslíku)."
-      },
-      {
-        id: "fy-q12",
-        type: "type-in",
-        prompt: "Jak se nazývá samovolné pronikání částic jedné látky mezi částice druhé látky (např. šíření vůně parfému po místnosti)?",
-        correctAnswer: "difuze",
-        acceptedAnswers: ["difuze", "difúze"],
-        explanation: "Difuze je samovolné promíchávání částic dvou látek způsobené jejich neustálým neuspořádaným pohybem."
-      },
-      {
-        id: "fy-q13",
-        type: "multiple-choice",
-        prompt: "Jak ovlivňuje teplota rychlost neuspořádaného (Brownova) pohybu částic?",
-        options: [
-          "Čím je teplota látky vyšší, tím pomaleji se její částice pohybují",
-          "Teplota nemá na rychlost pohybu částic žádný vliv",
-          "Čím je teplota látky vyšší, tím rychleji se její částice pohybují",
-          "Při zahřátí se částice úplně zastaví"
-        ],
-        correctAnswer: "Čím je teplota látky vyšší, tím rychleji se její částice pohybují",
-        explanation: "Rychlost neuspořádaného pohybu částic přímo souvisí s teplotou: v horké vodě se proto čaj nebo cukr rozpustí (difunduje) mnohem rychleji než ve studené."
-      },
-      {
-        id: "fy-q14",
-        type: "multiple-choice",
-        prompt: "Jak se nazývá přeměna skupenství z plynného na kapalné (např. když se v koupelně orosí studené zrcadlo)?",
-        options: [
-          "Vypařování",
-          "Sublimace",
-          "Kapalnění (kondenzace)",
-          "Tání"
-        ],
-        correctAnswer: "Kapalnění (kondenzace)",
-        explanation: "Přeměna plynu (vodní páry) na kapalinu (kapičky vody) se nazývá kapalnění neboli kondenzace."
-      },
-      {
-        id: "fy-q15",
-        type: "type-in",
-        prompt: "Který jediný kov je při běžné pokojové teplotě (20 °C) kapalný?",
-        correctAnswer: "rtuť",
-        acceptedAnswers: ["rtuť", "rtut", "hg"],
-        explanation: "Rtuť (chemická značka Hg) je za běžné pokojové teploty stříbrná těžká kapalina (tuhne až při −39 °C)."
-      },
-      {
-        id: "fy-q16",
-        type: "multiple-choice",
-        prompt: "Kolik atomů celkem tvoří jednu molekulu vody se značkou H₂O?",
-        options: [
-          "2 atomy (1 atom vodíku a 1 atom kyslíku)",
-          "4 atomy (2 atomy vodíku a 2 atomy kyslíku)",
-          "1 atom vody",
-          "3 atomy (2 atomy vodíku a 1 atom kyslíku)"
-        ],
-        correctAnswer: "3 atomy (2 atomy vodíku a 1 atom kyslíku)",
-        explanation: "Ve vzorci H₂O dolní index 2 u vodíku (H) znamená 2 atomy vodíku a u kyslíku (O) je 1 atom → celkem 3 atomy v jedné molekule."
-      },
-      {
-        id: "fy-q17",
-        type: "multiple-choice",
-        prompt: "Jak se nazývá přímá přeměna pevné látky na plyn bez kapalného mezistupně (např. vypařování suchého ledu nebo jódu)?",
-        options: [
-          "Tání",
-          "Sublimace",
-          "Kondenzace",
-          "Tuhnutí"
-        ],
-        correctAnswer: "Sublimace",
-        explanation: "Přeměna pevné látky přímo v plyn se nazývá sublimace (opačný děj, např. vznik jinovatky z vodní páry, je desublimace)."
-      },
-      {
-        id: "fy-q18",
-        type: "true-false",
-        prompt: "Pravda nebo lež: Kapaliny mají stálý tvar a jsou velmi snadno stlačitelné.",
-        options: ["Pravda", "Lež"],
-        correctAnswer: "Lež",
-        explanation: "Lež! Kapaliny NEMAJÍ stálý tvar (přizpůsobí se nádobě), mají pouze stálý objem a jsou téměř nestlačitelné."
-      },
-      {
-        id: "fy-q19",
-        type: "type-in",
-        prompt: "Jak se nazývají částice v jádře atomu, které NEMAJÍ žádný elektrický náboj? (Napiš v množném čísle)",
-        correctAnswer: "neutrony",
-        acceptedAnswers: ["neutrony", "neutron"],
-        explanation: "Neutrony (n⁰) se nacházejí v jádře atomu společně s protony a jsou elektricky neutrální (bez náboje)."
-      },
-      {
-        id: "fy-q20",
-        type: "multiple-choice",
-        prompt: "Která z následujících látek je CHEMICKÝ PRVEK (nikoli sloučenina ani směs)?",
-        options: [
-          "Voda (H₂O)",
-          "Vzduch",
-          "Oxid uhličitý (CO₂)",
-          "Železo (Fe)"
-        ],
-        correctAnswer: "Železo (Fe)",
-        explanation: "Železo (Fe) je chemický prvek složený pouze z atomů železa. Voda a oxid uhličitý jsou sloučeniny, vzduch je směs plynů."
-      },
-      {
-        id: "fy-q21",
-        type: "multiple-choice",
-        prompt: "Co platí o pohybu částic v pevných krystalických látkách (např. v kusu železa nebo ledu)?",
-        options: [
-          "Částice jsou úplně nehybné a vůbec se nepohybují",
-          "Částice kmitají kolem svých stálých rovnovážných poloh",
-          "Částice volně létají po celé místnosti vysokou rychlostí",
-          "Částice se mohou volně přelévat jako v kapalině"
-        ],
-        correctAnswer: "Částice kmitají kolem svých stálých rovnovážných poloh",
-        explanation: "V pevných látkách na sebe částice působí velkými přitažlivými silami, takže nemohou opustit svá místa a pouze kmitají kolem rovnovážných poloh."
-      },
-      {
-        id: "fy-q22",
-        type: "type-in",
-        prompt: "Jak se nazývá neustálý neuspořádaný pohyb částic v kapalinách a plynech, pojmenovaný po skotském botanikovi? (Napiš: _____ pohyb)",
-        correctAnswer: "Brownův",
-        acceptedAnswers: ["brownův", "brownuv", "brownův pohyb", "brownuv pohyb"],
-        explanation: "Neustálý chaotický pohyb částic v tekutinách se nazývá Brownův pohyb (podle Roberta Browna, který jej pozoroval u pylových zrnek ve vodě)."
-      },
-      {
-        id: "fy-q23",
-        type: "true-false",
-        prompt: "Pravda nebo lež: Jedno fyzikální těleso může být složeno i z několika různých látek najednou (např. školní tužka nebo jízdní kolo).",
-        options: ["Pravda", "Lež"],
-        correctAnswer: "Pravda",
-        explanation: "Ano! Například tužka je jedno těleso, ale skládá se ze dřeva, tuhy (grafitu), kovu a gumy."
-      },
-      {
-        id: "fy-q24",
-        type: "multiple-choice",
-        prompt: "Z jakých atomů se skládá jedna molekula oxidu uhličitého (CO₂)?",
-        options: [
-          "Z 2 atomů uhlíku a 1 atomu kyslíku",
-          "Z 1 atomu uhlíku a 2 atomů kyslíku",
-          "Z 1 atomu vodíku a 2 atomů uhlíku",
-          "Pouze ze 3 atomů kyslíku"
-        ],
-        correctAnswer: "Z 1 atomu uhlíku a 2 atomů kyslíku",
-        explanation: "Značka C označuje 1 atom uhlíku a O₂ označuje 2 atomy kyslíku → dohromady molekula oxidu uhličitého CO₂."
-      }
-    ]
+    "updatedAt": 1794349000000,
+    "createdAt": 1794307600000,
+    "authorName": "Táta & Gemini"
   },
   {
-    id: "cjl-ctvrtletni-prace-utvary-slovane-tvorba-slov",
-    title: "Čtvrtletní písemná práce: Útvary jazyka, slovanské jazyky a tvorba slov",
-    subject: "Český jazyk a literatura",
-    lang: "cs",
-    description: "Příprava na čtvrtletní práci (11. 11., 6.C): Spisovná a nespisovná čeština (nářečí, obecná čeština, profesní mluva, slang, argot), slovanské jazyky a tvorba slov (slovo základové, příbuzné, změny hlásek při odvozování).",
-    authorName: "Táta & Gemini",
-    createdAt: 1794307610000,
-    updatedAt: 1794343600000,
-    studyNotes: [
+    "createdAt": 1794307610000,
+    "updatedAt": 1794349000000,
+    "id": "cjl-ctvrtletni-prace-utvary-slovane-tvorba-slov",
+    "description": "Příprava na čtvrtletní práci (11. 11., od 11:50 do 12:35, 1. hodina v OSV, 6.C): Spisovná a nespisovná čeština (nářečí, obecná čeština, profesní mluva, slang, argot), slovanské jazyky a tvorba slov (slovo základové, příbuzné, změny hlásek při odvozování).",
+    "questions": [
+      {
+        "id": "cjl-q1",
+        "type": "multiple-choice",
+        "prompt": "Jak se nazývá nespisovný útvar jazyka, jehož hlavním cílem je UTAJIT obsah sdělení před ostatními (např. mluva zlodějů a vězňů)?",
+        "options": [
+          "Slang",
+          "Profesní mluva",
+          "Argot",
+          "Nářečí"
+        ],
+        "correctAnswer": "Argot",
+        "explanation": "Argot je tajná mluva společenské spodiny, zlodějů nebo vězňů, která má utajit smysl výpovědi před nezasvěcenými."
+      },
+      {
+        "id": "cjl-q2",
+        "type": "multiple-choice",
+        "prompt": "Když žáci ve škole řeknou: „První hodinu v OSV píšeme čtvrtletku z češtiny a pak máme matiku a zemák,“ o jaký útvar jazyka jde?",
+        "options": [
+          "Argot",
+          "Slang (studentský slang)",
+          "Nářečí (dialekt)",
+          "Spisovná čeština"
+        ],
+        "correctAnswer": "Slang (studentský slang)",
+        "explanation": "Slova jako čtvrtletka, matika, zemák nebo tělák patří do mluvy zájmové skupiny (žáků a studentů), tedy do slangu."
+      },
+      {
+        "id": "cjl-q3",
+        "type": "multiple-choice",
+        "prompt": "Lékaři a zdravotní sestry v nemocnici používají výrazy jako „slepák, kapačka, pacoš, jipka“. O jaký útvar národního jazyka se jedná?",
+        "options": [
+          "Argot",
+          "Nářečí",
+          "Spisovná čeština",
+          "Profesní mluva"
+        ],
+        "correctAnswer": "Profesní mluva",
+        "explanation": "Profesní mluva vzniká v určitém povolání (zde u zdravotníků) pro rychlé a úsporné dorozumění při práci."
+      },
+      {
+        "id": "cjl-q4",
+        "type": "multiple-choice",
+        "prompt": "Věta „Ten mladej kluk votevřel vokno a vypil dobrý mlíko“ je typickým příkladem:",
+        "options": [
+          "Hovorové češtiny",
+          "Spisovné češtiny",
+          "Obecné češtiny",
+          "Argotu"
+        ],
+        "correctAnswer": "Obecné češtiny",
+        "explanation": "Koncovky -ej (mladej), -ý místo -é (dobrý mlíko) a protetické v- na začátku slova (votevřel, vokno) jsou typické znaky obecné češtiny."
+      },
+      {
+        "id": "cjl-q5",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Hovorová čeština je mluvenou podobou SPISOVNÉ češtiny.",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Pravda",
+        "explanation": "Ano! Hovorová čeština je uvolněnější mluvená podoba spisovné češtiny (na rozdíl od obecné češtiny, která je nespisovná)."
+      },
+      {
+        "id": "cjl-q6",
+        "type": "multiple-choice",
+        "prompt": "Ve které možnosti jsou uvedeny POUZE západoslovanské jazyky?",
+        "options": [
+          "Čeština, slovenština, slovinština, chorvatština",
+          "Ruština, ukrajinština, běloruština",
+          "Čeština, slovenština, polština, lužická srbština",
+          "Polština, ruština, bulharština, srbština"
+        ],
+        "correctAnswer": "Čeština, slovenština, polština, lužická srbština",
+        "explanation": "Západoslovanské jazyky jsou čeština, slovenština, polština a horní a dolní lužická srbština. Pozor: slovinština a srbština jsou jihoslovanské!"
+      },
+      {
+        "id": "cjl-q7",
+        "type": "multiple-choice",
+        "prompt": "Do které skupiny slovanských jazyků patří ukrajinština, ruština a běloruština?",
+        "options": [
+          "Západoslovanské jazyky",
+          "Východoslovanské jazyky",
+          "Jihoslovanské jazyky",
+          "Germánské jazyky"
+        ],
+        "correctAnswer": "Východoslovanské jazyky",
+        "explanation": "Ruština, ukrajinština a běloruština tvoří východoslovanskou skupinu a zapisují se cyrilicí (azbukou)."
+      },
+      {
+        "id": "cjl-q8",
+        "type": "multiple-choice",
+        "prompt": "Pozor na chyták! Do které skupiny slovanských jazyků patří SLOVINŠTINA a CHORVATŠTINA?",
+        "options": [
+          "Západoslovanské jazyky",
+          "Východoslovanské jazyky",
+          "Románské jazyky",
+          "Jihoslovanské jazyky"
+        ],
+        "correctAnswer": "Jihoslovanské jazyky",
+        "explanation": "Slovinština (jazyk ve Slovinsku u Jaderského moře), chorvatština, srbština, bulharština a makedonština jsou jihoslovanské jazyky."
+      },
+      {
+        "id": "cjl-q9",
+        "type": "type-in",
+        "prompt": "Jak se nazývalo úplně první slovanské písmo, které sestavil Konstantin (Cyril) pro staroslověnštinu?",
+        "correctAnswer": "hlaholice",
+        "acceptedAnswers": [
+          "hlaholice"
+        ],
+        "explanation": "Konstantin před příchodem na Velkou Moravu (863) sestavil první slovanské písmo zvané hlaholice (až později vznikla cyrilice)."
+      },
+      {
+        "id": "cjl-q10",
+        "type": "type-in",
+        "prompt": "Napiš SLOVO ZÁKLADOVÉ, od kterého bylo bezprostředně utvořeno přídavné jméno „LESNICKÝ“:",
+        "correctAnswer": "lesník",
+        "acceptedAnswers": [
+          "lesník",
+          "lesnik"
+        ],
+        "explanation": "Slovotvorná řada postupuje po jednotlivých krocích: les → lesník → lesnický. Bezprostředním základovým slovem pro 'lesnický' je tedy 'lesník'."
+      },
+      {
+        "id": "cjl-q11",
+        "type": "type-in",
+        "prompt": "Napiš SLOVO ZÁKLADOVÉ, od kterého bylo utvořeno podstatné jméno „RYBÁŘ“:",
+        "correctAnswer": "ryba",
+        "acceptedAnswers": [
+          "ryba"
+        ],
+        "explanation": "Slovo 'rybář' (ten, kdo loví ryby) je odvozeno příponou -ář přímo od základového slova 'ryba'."
+      },
+      {
+        "id": "cjl-q12",
+        "type": "multiple-choice",
+        "prompt": "Které slovo NEPATŘÍ do řady slov příbuzných: vodní, vodník, vodovod, vodit, povodeň?",
+        "options": [
+          "vodník",
+          "vodit",
+          "vodovod",
+          "povodeň"
+        ],
+        "correctAnswer": "vodit",
+        "explanation": "Slovo 'vodit' souvisí se slovem 'vést' (vůdce, průvodce), nikoli s 'vodou'. Ostatní slova mají společný kořen -vod- s významem tekutiny (vody)."
+      },
+      {
+        "id": "cjl-q13",
+        "type": "multiple-choice",
+        "prompt": "Která čtveřice slov obsahuje POUZE slova příbuzná se slovem KNIHA?",
+        "options": [
+          "knihovna, kníže, knížectví, knižní",
+          "knihař, kňourat, knížka, knihovník",
+          "knihovna, knižní, knihkupec, knížka",
+          "knížka, křížovka, knihovna, knižní"
+        ],
+        "correctAnswer": "knihovna, knižní, knihkupec, knížka",
+        "explanation": "Všechna tato slova mají kořen -knih-/-kniž- (střídání souhlásek h → ž) a společný význam související s knihou. Slovo 'kníže' má jiný původ i význam."
+      },
+      {
+        "id": "cjl-q14",
+        "type": "multiple-choice",
+        "prompt": "Jaká změna hlásek v kořeni proběhla při odvozování dvojic: ruka → ruční, kniha → knižní, střecha → střešní?",
+        "options": [
+          "Krácení samohlásek v kořeni",
+          "Dloužení samohlásek v kořeni",
+          "Střídání (měkčení) souhlásek: k → č, h → ž, ch → š",
+          "Žádná změna hlásek v kořeni neproběhla"
+        ],
+        "correctAnswer": "Střídání (měkčení) souhlásek: k → č, h → ž, ch → š",
+        "explanation": "Při odvozování příponou -ní se koncová souhláska kořene měkčí: ruk-a → ruč-ní (k → č), knih-a → kniž-ní (h → ž), střech-a → střeš-ní (ch → š)."
+      },
+      {
+        "id": "cjl-q15",
+        "type": "multiple-choice",
+        "prompt": "Jaká hlásková změna v kořeni nastala při odvozování slov: dům → domovní, kůň → koník, práce → pracovat?",
+        "options": [
+          "Dloužení samohlásek (o → ů, a → á)",
+          "Krácení samohlásek (ů → o, á → a)",
+          "Střídání souhlásek (m → n, c → č)",
+          "Přidání předpony"
+        ],
+        "correctAnswer": "Krácení samohlásek (ů → o, á → a)",
+        "explanation": "Dlouhá samohláska v kořeni základového slova se při odvozování zkrátila: dům → domovní (ů → o), kůň → koník (ů → o), práce → pracovat (á → a)."
+      },
+      {
+        "id": "cjl-q16",
+        "type": "type-in",
+        "prompt": "Odvoď přídavné jméno od slova „MLÉKO“ pomocí přípony -ný (pozor na změnu souhlásek k → č):",
+        "correctAnswer": "mléčný",
+        "acceptedAnswers": [
+          "mléčný",
+          "mlecny"
+        ],
+        "explanation": "Od základového slova 'mléko' vzniká přídavné jméno 'mléčný' – v kořeni dochází ke střídání souhlásek k → č."
+      },
+      {
+        "id": "cjl-q17",
+        "type": "multiple-choice",
+        "prompt": "Jak byl utvořen výraz „PRALES“ od základového slova „les“?",
+        "options": [
+          "Odvozením pomocí přípony -les",
+          "Skládáním dvou kořenů",
+          "Zkracováním",
+          "Odvozením pomocí předpony pra-"
+        ],
+        "correctAnswer": "Odvozením pomocí předpony pra-",
+        "explanation": "Ke slovu základovému 'les' byla připojena předpona pra- (pra-les)."
+      },
+      {
+        "id": "cjl-q18",
+        "type": "type-in",
+        "prompt": "Napiš KOŘEN slova „ZAHRADNÍK“ (bez spojovníků):",
+        "correctAnswer": "hrad",
+        "acceptedAnswers": [
+          "hrad",
+          "-hrad-"
+        ],
+        "explanation": "Rozbor slova za-hrad-ník: předpona za-, kořen -hrad- (příbuzná slova: hradba, ohradit, zahrada, zahradní), přípona -ník."
+      },
+      {
+        "id": "cjl-q19",
+        "type": "multiple-choice",
+        "prompt": "Když člověk na Hané řekne „Tož to bél pěkné deň“ nebo na Chodsku „Von tam bul“, o jaký útvar národního jazyka jde?",
+        "options": [
+          "Profesní mluva",
+          "Argot",
+          "Nářečí (dialekt)",
+          "Spisovná čeština"
+        ],
+        "correctAnswer": "Nářečí (dialekt)",
+        "explanation": "Nářečí (dialekt) je nespisovný útvar národního jazyka vázaný na určité zeměpisné území (např. hanácké nebo chodské nářečí)."
+      },
+      {
+        "id": "cjl-q20",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Maďarština a němčina patří mezi slovanské jazyky.",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Lež",
+        "explanation": "Lež! Němčina je germánský jazyk a maďarština je ugrofinský jazyk. Ani jeden z nich není slovanský."
+      },
+      {
+        "id": "cjl-q21",
+        "type": "type-in",
+        "prompt": "Napiš SLOVO ZÁKLADOVÉ, od kterého bylo bezprostředně utvořeno podstatné jméno „KAPESNÍK“:",
+        "correctAnswer": "kapesní",
+        "acceptedAnswers": [
+          "kapesní",
+          "kapesni"
+        ],
+        "explanation": "Pozor na slovotvornou řadu: kapsa → kapesní → kapesník (šátek do kapsy, tedy kapesní šátek → kapesník). Bezprostředním základovým slovem je 'kapesní'."
+      },
+      {
+        "id": "cjl-q22",
+        "type": "multiple-choice",
+        "prompt": "Které slovo vzniklo SKLÁDÁNÍM dvou kořenů (nikoli prostým odvozením)?",
+        "options": [
+          "učitelka",
+          "dějepis",
+          "prales",
+          "mrazík"
+        ],
+        "correctAnswer": "dějepis",
+        "explanation": "Slovo 'dějepis' vzniklo složením dvou základů: děj-e-pis (podobně jako zeměpis, vodovod, přírodopis)."
+      },
+      {
+        "id": "cjl-q23",
+        "type": "multiple-choice",
+        "prompt": "K jaké hláskové změně došlo v kořeni při odvozování slova: HRAD → HRÁDEK, LIST → LÍSTEK?",
+        "options": [
+          "Krácení samohlásky",
+          "Dloužení samohlásky (a → á, i → í)",
+          "Měkčení souhlásky",
+          "Zánik samohlásky"
+        ],
+        "correctAnswer": "Dloužení samohlásky (a → á, i → í)",
+        "explanation": "Krátká samohláska v kořeni základového slova se při odvozování zdrobněliny prodloužila: hrad → hrádek (a → á), list → lístek (i → í)."
+      },
+      {
+        "id": "cjl-q24",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Slova „RYS“ (lesní šelma) a „RÝSOVAT“ (kreslit podle pravítka) jsou slova příbuzná.",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Lež",
+        "explanation": "Lež! Tato slova spolu významově vůbec nesouvisejí, jde pouze o náhodnou zvukovou podobnost."
+      },
+      {
+        "id": "cjl-q25",
+        "type": "type-in",
+        "prompt": "Odvoď přídavné jméno od slova „PRAHA“ pomocí přípony -ský (pozor na změnu hlásky h → ž a malé písmeno):",
+        "correctAnswer": "pražský",
+        "acceptedAnswers": [
+          "pražský",
+          "prazsky"
+        ],
+        "explanation": "Při odvozování Praha → pražský se měkčí souhláska h → ž a přídavné jméno odvozené příponou -ský píšeme s malým počátečním písmenem."
+      }
+    ],
+    "lang": "cs",
+    "flashcards": [
+      {
+        "front": "Jaký je rozdíl mezi slangem, profesní mluvou a argotem?",
+        "back": "Slang = zájmové skupiny (studenti, sportovci). Profesní mluva = lidé stejného povolání v práci (lékaři, ajťáci). Argot = tajná mluva zlodějů/vězňů s cílem utajit sdělení."
+      },
+      {
+        "front": "Co je to hovorová čeština a patří ke spisovné češtině?",
+        "back": "Ano! Hovorová čeština je mluvená, mírně uvolněná podoba spisovné češtiny v běžném hovoru (např. děkuju, můžu, panelák)."
+      },
+      {
+        "front": "Jaké jsou typické znaky obecné češtiny?",
+        "back": "Koncovky -ej místo -ý (hezkej), -ý místo -é (dobrý mlíko), v- na začátku slov (vokno) a -ma v 7. pádě mn. č. (s klukama)."
+      },
+      {
+        "front": "Co je to nářečí (dialekt)? Uveď příklady v ČR.",
+        "back": "Nespisovný útvar vázaný na určité území/region (např. chodské v Čechách, hanácké, slovácké a valašské na Moravě, lašské ve Slezsku)."
+      },
+      {
+        "front": "Vyjmenuj západoslovanské jazyky.",
+        "back": "Čeština, slovenština, polština, horní a dolní lužická srbština."
+      },
+      {
+        "front": "Vyjmenuj východoslovanské jazyky a jakým písmem se píší.",
+        "back": "Ruština, ukrajinština, běloruština. Píší se azbukou (cyrilicí)."
+      },
+      {
+        "front": "Vyjmenuj alespoň 4 jihoslovanské jazyky.",
+        "back": "Slovinština, chorvatština, srbština, bulharština, makedonština (a historická staroslověnština)."
+      },
+      {
+        "front": "Chyták: Patří SLOVENŠTINA a SLOVINŠTINA do stejné skupiny slovanských jazyků?",
+        "back": "NE! Slovenština je západoslovanský jazyk, zatímco slovinština (Slovinsko) je jihoslovanský jazyk."
+      },
+      {
+        "front": "Co je staroslověnština a které písmo pro ni sestavil Konstantin?",
+        "back": "Nejstarší spisovný slovanský jazyk (863, Velká Morava). První slovanské písmo byla hlaholice."
+      },
+      {
+        "front": "Co je to slovo základové?",
+        "back": "Slovo, od kterého bylo nové (odvozené) slovo bezprostředně utvořeno (např. pro slovo 'rybářský' je slovem základovým 'rybář')."
+      },
+      {
+        "front": "Jaké je slovo základové pro slovo 'kapesní' a pro slovo 'kapesník'?",
+        "back": "Pro 'kapesní' je základové slovo 'kapsa'. Pro 'kapesník' je základové slovo 'kapesní' (kapsa → kapesní → kapesník)."
+      },
+      {
+        "front": "Co jsou to slova příbuzná?",
+        "back": "Slova, která mají společný kořen a zároveň podobný (související) věcný význam (např. les, lesník, prales, zalesnit)."
+      },
+      {
+        "front": "Jsou slova 'hora' a 'hořet' příbuzná? Proč?",
+        "back": "Nejsou! Sice podobně znějí, ale nemají žádnou významovou souvislost (jde o náhodnou shodu kořenů)."
+      },
+      {
+        "front": "K jaké hláskové změně došlo při odvozování: ruka → ruční, kniha → knižní, střecha → střešní?",
+        "back": "Ke střídání (měkčení) souhlásek v kořeni slova: k → č (ruka/ruční), h → ž (kniha/knižní), ch → š (střecha/střešní)."
+      },
+      {
+        "front": "K jaké hláskové změně došlo při odvozování: dům → domovní, kůň → koník, práce → pracovat?",
+        "back": "Ke střídání (krácení) samohlásek v kořeni slova: ů → o (dům/domovní, kůň/koník) a á → a (práce/pracovat)."
+      },
+      {
+        "front": "Urči stavbu slova 'PŘEDŠKOLNÍ' (předpona, kořen, přípona, koncovka).",
+        "back": "před- (předpona) + -škol- (kořen) + -n- (přípona) + -í (koncovka)."
+      }
+    ],
+    "subject": "Český jazyk a literatura",
+    "studyNotes": [
       "Spisovná čeština: Celonárodní reprezentativní útvar českého jazyka. Používá se ve škole, na úřadech, v médiích a literatuře. Její mluvenou, mírně uvolněnou podobou pro běžnou komunikaci je HOVOROVÁ ČEŠTINA (stále patří ke spisovné češtině, např. děkuju, můžu, spacák, panelák).",
       "Nespisovné územní útvary: 1) NÁŘEČÍ (dialekt) – vázané na určitý region (např. chodské 'bul', hanácké 'bél', slovácké, valašské, lašské/ostravské). 2) OBECNÁ ČEŠTINA – běžná nespisovná mluva především v Čechách (koncovky -ej místo -ý: mladej kluk; -ý místo -é: dobrý mlíko; v- na začátku slov: vokno, votevřít).",
       "Nespisovné sociální a zájmové útvary (POZOR na rozdíly!): 1) PROFESNÍ MLUVA – mluva lidí určitého povolání pro rychlé dorozumění v práci (lékaři: slepák, kapačka; stavbaři: šalování). 2) SLANG – mluva zájmových skupin, např. studentů, sportovců, myslivců (matika, čtvrtletka, zemák, koule). 3) ARGOT – tajná mluva společenské spodiny, zlodějů a vězňů, jejímž cílem je UTAJIT sdělení před ostatními (káča = kasa, chlupatej = policista, basa = vězení).",
@@ -329,307 +776,279 @@ export const STARTER_TOPICS = [
       "Slova příbuzná: Mají SPOLEČNÝ KOŘEN a zároveň spolu VÝZNAMOVĚ SOUVISEJÍ (např. kořen -knih-/-kniž-: kniha, knihovna, knižní, knihkupec). Pozor na slova nepříbuzná, která jen podobně znějí: např. voda × vodit, rys (šelma) × rýsovat, kolej × koleno.",
       "Změny hlásek při odvozování slov: 1) STŘÍDÁNÍ SAMOHLÁSEK – krácení (práce → pracovat, mráz → mrazík, dům → domovní [ů → o], kůň → koník [ů → o]) nebo dloužení (hrad → hrádek, list → lístek). 2) STŘÍDÁNÍ SOUHLÁSEK (měkčení): k → č (ruka → ruční), h → ž (kniha → knižní, Bůh → boží), ch → š (střecha → střešní, prach → prašný), r → ř (moře → námořník, dvůr → dvořan)."
     ],
-    flashcards: [
-      { front: "Jaký je rozdíl mezi slangem, profesní mluvou a argotem?", back: "Slang = zájmové skupiny (studenti, sportovci). Profesní mluva = lidé stejného povolání v práci (lékaři, ajťáci). Argot = tajná mluva zlodějů/vězňů s cílem utajit sdělení." },
-      { front: "Co je to hovorová čeština a patří ke spisovné češtině?", back: "Ano! Hovorová čeština je mluvená, mírně uvolněná podoba spisovné češtiny v běžném hovoru (např. děkuju, můžu, panelák)." },
-      { front: "Jaké jsou typické znaky obecné češtiny?", back: "Koncovky -ej místo -ý (hezkej), -ý místo -é (dobrý mlíko), v- na začátku slov (vokno) a -ma v 7. pádě mn. č. (s klukama)." },
-      { front: "Co je to nářečí (dialekt)? Uveď příklady v ČR.", back: "Nespisovný útvar vázaný na určité území/region (např. chodské v Čechách, hanácké, slovácké a valašské na Moravě, lašské ve Slezsku)." },
-      { front: "Vyjmenuj západoslovanské jazyky.", back: "Čeština, slovenština, polština, horní a dolní lužická srbština." },
-      { front: "Vyjmenuj východoslovanské jazyky a jakým písmem se píší.", back: "Ruština, ukrajinština, běloruština. Píší se azbukou (cyrilicí)." },
-      { front: "Vyjmenuj alespoň 4 jihoslovanské jazyky.", back: "Slovinština, chorvatština, srbština, bulharština, makedonština (a historická staroslověnština)." },
-      { front: "Chyták: Patří SLOVENŠTINA a SLOVINŠTINA do stejné skupiny slovanských jazyků?", back: "NE! Slovenština je západoslovanský jazyk, zatímco slovinština (Slovinsko) je jihoslovanský jazyk." },
-      { front: "Co je staroslověnština a které písmo pro ni sestavil Konstantin?", back: "Nejstarší spisovný slovanský jazyk (863, Velká Morava). První slovanské písmo byla hlaholice." },
-      { front: "Co je to slovo základové?", back: "Slovo, od kterého bylo nové (odvozené) slovo bezprostředně utvořeno (např. pro slovo 'rybářský' je slovem základovým 'rybář')." },
-      { front: "Jaké je slovo základové pro slovo 'kapesní' a pro slovo 'kapesník'?", back: "Pro 'kapesní' je základové slovo 'kapsa'. Pro 'kapesník' je základové slovo 'kapesní' (kapsa → kapesní → kapesník)." },
-      { front: "Co jsou to slova příbuzná?", back: "Slova, která mají společný kořen a zároveň podobný (související) věcný význam (např. les, lesník, prales, zalesnit)." },
-      { front: "Jsou slova 'hora' a 'hořet' příbuzná? Proč?", back: "Nejsou! Sice podobně znějí, ale nemají žádnou významovou souvislost (jde o náhodnou shodu kořenů)." },
-      { front: "K jaké hláskové změně došlo při odvozování: ruka → ruční, kniha → knižní, střecha → střešní?", back: "Ke střídání (měkčení) souhlásek v kořeni slova: k → č (ruka/ruční), h → ž (kniha/knižní), ch → š (střecha/střešní)." },
-      { front: "K jaké hláskové změně došlo při odvozování: dům → domovní, kůň → koník, práce → pracovat?", back: "Ke střídání (krácení) samohlásek v kořeni slova: ů → o (dům/domovní, kůň/koník) a á → a (práce/pracovat)." },
-      { front: "Urči stavbu slova 'PŘEDŠKOLNÍ' (předpona, kořen, přípona, koncovka).", back: "před- (předpona) + -škol- (kořen) + -n- (přípona) + -í (koncovka)." }
-    ],
-    questions: [
-      {
-        id: "cjl-q1",
-        type: "multiple-choice",
-        prompt: "Jak se nazývá nespisovný útvar jazyka, jehož hlavním cílem je UTAJIT obsah sdělení před ostatními (např. mluva zlodějů a vězňů)?",
-        options: ["Slang", "Profesní mluva", "Argot", "Nářečí"],
-        correctAnswer: "Argot",
-        explanation: "Argot je tajná mluva společenské spodiny, zlodějů nebo vězňů, která má utajit smysl výpovědi před nezasvěcenými."
-      },
-      {
-        id: "cjl-q2",
-        type: "multiple-choice",
-        prompt: "Když žáci ve škole řeknou: „První hodinu v OSV píšeme čtvrtletku z češtiny a pak máme matiku a zemák,“ o jaký útvar jazyka jde?",
-        options: [
-          "Argot",
-          "Slang (studentský slang)",
-          "Nářečí (dialekt)",
-          "Spisovná čeština"
-        ],
-        correctAnswer: "Slang (studentský slang)",
-        explanation: "Slova jako čtvrtletka, matika, zemák nebo tělák patří do mluvy zájmové skupiny (žáků a studentů), tedy do slangu."
-      },
-      {
-        id: "cjl-q3",
-        type: "multiple-choice",
-        prompt: "Lékaři a zdravotní sestry v nemocnici používají výrazy jako „slepák, kapačka, pacoš, jipka“. O jaký útvar národního jazyka se jedná?",
-        options: [
-          "Argot",
-          "Nářečí",
-          "Spisovná čeština",
-          "Profesní mluva"
-        ],
-        correctAnswer: "Profesní mluva",
-        explanation: "Profesní mluva vzniká v určitém povolání (zde u zdravotníků) pro rychlé a úsporné dorozumění při práci."
-      },
-      {
-        id: "cjl-q4",
-        type: "multiple-choice",
-        prompt: "Věta „Ten mladej kluk votevřel vokno a vypil dobrý mlíko“ je typickým příkladem:",
-        options: [
-          "Hovorové češtiny",
-          "Spisovné češtiny",
-          "Obecné češtiny",
-          "Argotu"
-        ],
-        correctAnswer: "Obecné češtiny",
-        explanation: "Koncovky -ej (mladej), -ý místo -é (dobrý mlíko) a protetické v- na začátku slova (votevřel, vokno) jsou typické znaky obecné češtiny."
-      },
-      {
-        id: "cjl-q5",
-        type: "true-false",
-        prompt: "Pravda nebo lež: Hovorová čeština je mluvenou podobou SPISOVNÉ češtiny.",
-        options: ["Pravda", "Lež"],
-        correctAnswer: "Pravda",
-        explanation: "Ano! Hovorová čeština je uvolněnější mluvená podoba spisovné češtiny (na rozdíl od obecné češtiny, která je nespisovná)."
-      },
-      {
-        id: "cjl-q6",
-        type: "multiple-choice",
-        prompt: "Ve které možnosti jsou uvedeny POUZE západoslovanské jazyky?",
-        options: [
-          "Čeština, slovenština, slovinština, chorvatština",
-          "Ruština, ukrajinština, běloruština",
-          "Čeština, slovenština, polština, lužická srbština",
-          "Polština, ruština, bulharština, srbština"
-        ],
-        correctAnswer: "Čeština, slovenština, polština, lužická srbština",
-        explanation: "Západoslovanské jazyky jsou čeština, slovenština, polština a horní a dolní lužická srbština. Pozor: slovinština a srbština jsou jihoslovanské!"
-      },
-      {
-        id: "cjl-q7",
-        type: "multiple-choice",
-        prompt: "Do které skupiny slovanských jazyků patří ukrajinština, ruština a běloruština?",
-        options: [
-          "Západoslovanské jazyky",
-          "Východoslovanské jazyky",
-          "Jihoslovanské jazyky",
-          "Germánské jazyky"
-        ],
-        correctAnswer: "Východoslovanské jazyky",
-        explanation: "Ruština, ukrajinština a běloruština tvoří východoslovanskou skupinu a zapisují se cyrilicí (azbukou)."
-      },
-      {
-        id: "cjl-q8",
-        type: "multiple-choice",
-        prompt: "Pozor na chyták! Do které skupiny slovanských jazyků patří SLOVINŠTINA a CHORVATŠTINA?",
-        options: [
-          "Západoslovanské jazyky",
-          "Východoslovanské jazyky",
-          "Románské jazyky",
-          "Jihoslovanské jazyky"
-        ],
-        correctAnswer: "Jihoslovanské jazyky",
-        explanation: "Slovinština (jazyk ve Slovinsku u Jaderského moře), chorvatština, srbština, bulharština a makedonština jsou jihoslovanské jazyky."
-      },
-      {
-        id: "cjl-q9",
-        type: "type-in",
-        prompt: "Jak se nazývalo úplně první slovanské písmo, které sestavil Konstantin (Cyril) pro staroslověnštinu?",
-        correctAnswer: "hlaholice",
-        acceptedAnswers: ["hlaholice"],
-        explanation: "Konstantin před příchodem na Velkou Moravu (863) sestavil první slovanské písmo zvané hlaholice (až později vznikla cyrilice)."
-      },
-      {
-        id: "cjl-q10",
-        type: "type-in",
-        prompt: "Napiš SLOVO ZÁKLADOVÉ, od kterého bylo bezprostředně utvořeno přídavné jméno „LESNICKÝ“:",
-        correctAnswer: "lesník",
-        acceptedAnswers: ["lesník", "lesnik"],
-        explanation: "Slovotvorná řada postupuje po jednotlivých krocích: les → lesník → lesnický. Bezprostředním základovým slovem pro 'lesnický' je tedy 'lesník'."
-      },
-      {
-        id: "cjl-q11",
-        type: "type-in",
-        prompt: "Napiš SLOVO ZÁKLADOVÉ, od kterého bylo utvořeno podstatné jméno „RYBÁŘ“:",
-        correctAnswer: "ryba",
-        acceptedAnswers: ["ryba"],
-        explanation: "Slovo 'rybář' (ten, kdo loví ryby) je odvozeno příponou -ář přímo od základového slova 'ryba'."
-      },
-      {
-        id: "cjl-q12",
-        type: "multiple-choice",
-        prompt: "Které slovo NEPATŘÍ do řady slov příbuzných: vodní, vodník, vodovod, vodit, povodeň?",
-        options: [
-          "vodník",
-          "vodit",
-          "vodovod",
-          "povodeň"
-        ],
-        correctAnswer: "vodit",
-        explanation: "Slovo 'vodit' souvisí se slovem 'vést' (vůdce, průvodce), nikoli s 'vodou'. Ostatní slova mají společný kořen -vod- s významem tekutiny (vody)."
-      },
-      {
-        id: "cjl-q13",
-        type: "multiple-choice",
-        prompt: "Která čtveřice slov obsahuje POUZE slova příbuzná se slovem KNIHA?",
-        options: [
-          "knihovna, kníže, knížectví, knižní",
-          "knihař, kňourat, knížka, knihovník",
-          "knihovna, knižní, knihkupec, knížka",
-          "knížka, křížovka, knihovna, knižní"
-        ],
-        correctAnswer: "knihovna, knižní, knihkupec, knížka",
-        explanation: "Všechna tato slova mají kořen -knih-/-kniž- (střídání souhlásek h → ž) a společný význam související s knihou. Slovo 'kníže' má jiný původ i význam."
-      },
-      {
-        id: "cjl-q14",
-        type: "multiple-choice",
-        prompt: "Jaká změna hlásek v kořeni proběhla při odvozování dvojic: ruka → ruční, kniha → knižní, střecha → střešní?",
-        options: [
-          "Krácení samohlásek v kořeni",
-          "Dloužení samohlásek v kořeni",
-          "Střídání (měkčení) souhlásek: k → č, h → ž, ch → š",
-          "Žádná změna hlásek v kořeni neproběhla"
-        ],
-        correctAnswer: "Střídání (měkčení) souhlásek: k → č, h → ž, ch → š",
-        explanation: "Při odvozování příponou -ní se koncová souhláska kořene měkčí: ruk-a → ruč-ní (k → č), knih-a → kniž-ní (h → ž), střech-a → střeš-ní (ch → š)."
-      },
-      {
-        id: "cjl-q15",
-        type: "multiple-choice",
-        prompt: "Jaká hlásková změna v kořeni nastala při odvozování slov: dům → domovní, kůň → koník, práce → pracovat?",
-        options: [
-          "Dloužení samohlásek (o → ů, a → á)",
-          "Krácení samohlásek (ů → o, á → a)",
-          "Střídání souhlásek (m → n, c → č)",
-          "Přidání předpony"
-        ],
-        correctAnswer: "Krácení samohlásek (ů → o, á → a)",
-        explanation: "Dlouhá samohláska v kořeni základového slova se při odvozování zkrátila: dům → domovní (ů → o), kůň → koník (ů → o), práce → pracovat (á → a)."
-      },
-      {
-        id: "cjl-q16",
-        type: "type-in",
-        prompt: "Odvoď přídavné jméno od slova „MLÉKO“ pomocí přípony -ný (pozor na změnu souhlásek k → č):",
-        correctAnswer: "mléčný",
-        acceptedAnswers: ["mléčný", "mlecny"],
-        explanation: "Od základového slova 'mléko' vzniká přídavné jméno 'mléčný' – v kořeni dochází ke střídání souhlásek k → č."
-      },
-      {
-        id: "cjl-q17",
-        type: "multiple-choice",
-        prompt: "Jak byl utvořen výraz „PRALES“ od základového slova „les“?",
-        options: [
-          "Odvozením pomocí přípony -les",
-          "Skládáním dvou kořenů",
-          "Zkracováním",
-          "Odvozením pomocí předpony pra-"
-        ],
-        correctAnswer: "Odvozením pomocí předpony pra-",
-        explanation: "Ke slovu základovému 'les' byla připojena předpona pra- (pra-les)."
-      },
-      {
-        id: "cjl-q18",
-        type: "type-in",
-        prompt: "Napiš KOŘEN slova „ZAHRADNÍK“ (bez spojovníků):",
-        correctAnswer: "hrad",
-        acceptedAnswers: ["hrad", "-hrad-"],
-        explanation: "Rozbor slova za-hrad-ník: předpona za-, kořen -hrad- (příbuzná slova: hradba, ohradit, zahrada, zahradní), přípona -ník."
-      },
-      {
-        id: "cjl-q19",
-        type: "multiple-choice",
-        prompt: "Když člověk na Hané řekne „Tož to bél pěkné deň“ nebo na Chodsku „Von tam bul“, o jaký útvar národního jazyka jde?",
-        options: [
-          "Profesní mluva",
-          "Argot",
-          "Nářečí (dialekt)",
-          "Spisovná čeština"
-        ],
-        correctAnswer: "Nářečí (dialekt)",
-        explanation: "Nářečí (dialekt) je nespisovný útvar národního jazyka vázaný na určité zeměpisné území (např. hanácké nebo chodské nářečí)."
-      },
-      {
-        id: "cjl-q20",
-        type: "true-false",
-        prompt: "Pravda nebo lež: Maďarština a němčina patří mezi slovanské jazyky.",
-        options: ["Pravda", "Lež"],
-        correctAnswer: "Lež",
-        explanation: "Lež! Němčina je germánský jazyk a maďarština je ugrofinský jazyk. Ani jeden z nich není slovanský."
-      },
-      {
-        id: "cjl-q21",
-        type: "type-in",
-        prompt: "Napiš SLOVO ZÁKLADOVÉ, od kterého bylo bezprostředně utvořeno podstatné jméno „KAPESNÍK“:",
-        correctAnswer: "kapesní",
-        acceptedAnswers: ["kapesní", "kapesni"],
-        explanation: "Pozor na slovotvornou řadu: kapsa → kapesní → kapesník (šátek do kapsy, tedy kapesní šátek → kapesník). Bezprostředním základovým slovem je 'kapesní'."
-      },
-      {
-        id: "cjl-q22",
-        type: "multiple-choice",
-        prompt: "Které slovo vzniklo SKLÁDÁNÍM dvou kořenů (nikoli prostým odvozením)?",
-        options: [
-          "učitelka",
-          "dějepis",
-          "prales",
-          "mrazík"
-        ],
-        correctAnswer: "dějepis",
-        explanation: "Slovo 'dějepis' vzniklo složením dvou základů: děj-e-pis (podobně jako zeměpis, vodovod, přírodopis)."
-      },
-      {
-        id: "cjl-q23",
-        type: "multiple-choice",
-        prompt: "K jaké hláskové změně došlo v kořeni při odvozování slova: HRAD → HRÁDEK, LIST → LÍSTEK?",
-        options: [
-          "Krácení samohlásky",
-          "Dloužení samohlásky (a → á, i → í)",
-          "Měkčení souhlásky",
-          "Zánik samohlásky"
-        ],
-        correctAnswer: "Dloužení samohlásky (a → á, i → í)",
-        explanation: "Krátká samohláska v kořeni základového slova se při odvozování zdrobněliny prodloužila: hrad → hrádek (a → á), list → lístek (i → í)."
-      },
-      {
-        id: "cjl-q24",
-        type: "true-false",
-        prompt: "Pravda nebo lež: Slova „RYS“ (lesní šelma) a „RÝSOVAT“ (kreslit podle pravítka) jsou slova příbuzná.",
-        options: ["Pravda", "Lež"],
-        correctAnswer: "Lež",
-        explanation: "Lež! Tato slova spolu významově vůbec nesouvisejí, jde pouze o náhodnou zvukovou podobnost."
-      },
-      {
-        id: "cjl-q25",
-        type: "type-in",
-        prompt: "Odvoď přídavné jméno od slova „PRAHA“ pomocí přípony -ský (pozor na změnu hlásky h → ž a malé písmeno):",
-        correctAnswer: "pražský",
-        acceptedAnswers: ["pražský", "prazsky"],
-        explanation: "Při odvozování Praha → pražský se měkčí souhláska h → ž a přídavné jméno odvozené příponou -ský píšeme s malým počátečním písmenem."
-      }
-    ]
+    "title": "Čtvrtletní písemná práce - 11. 11., od 11:50 do 12:35",
+    "authorName": "Táta & Gemini"
   },
   {
-    id: "cjl-ctvrtletni-diktat-pravopis",
-    title: "Čtvrtletní diktát: Trénink pravopisu (i/y, mě/mně, s/z, shoda)",
-    subject: "Český jazyk a literatura",
-    lang: "cs",
-    description: "Příprava na čtvrtletní diktát (11. 11., 6.C): Vyjmenovaná slova a pravopisné chytáky (být/bít, mít/mýt, slepýš/slepíš, výr/vír, pýcha/píchá), shoda přísudku s podmětem, mě/mně, předpony s-/z- a koncovky.",
-    authorName: "Táta & Gemini",
-    createdAt: 1794307620000,
-    updatedAt: 1794343600000,
-    studyNotes: [
+    "createdAt": 1794307620000,
+    "title": "Čtvrtletní diktát - 11. 11., od 11:50 do 12:35",
+    "questions": [
+      {
+        "id": "dik-q1",
+        "type": "multiple-choice",
+        "prompt": "Ve které větě je správně napsané i/y u slov VÝR / VÍR a SLEPÝŠ / SLEPÍŠ?",
+        "options": [
+          "Na větvi seděl vír velký, v potoce se točil vodní výr a v trávě se plazil slepíš.",
+          "Na větvi seděl výr velký, v potoce se točil vodní vír a v trávě se plazil slepýš.",
+          "Na větvi seděl výr velký, v potoce se točil vodní výr a v trávě se plazil slepýš.",
+          "Na větvi seděl vír velký, v potoce se točil vodní vír a v trávě se plazil slepýš."
+        ],
+        "correctAnswer": "Na větvi seděl výr velký, v potoce se točil vodní vír a v trávě se plazil slepýš.",
+        "explanation": "Výr (sova) a slepýš (plaz, od slepý) mají tvrdé Y. Vodní nebo větrný vír má měkké I."
+      },
+      {
+        "id": "dik-q2",
+        "type": "type-in",
+        "prompt": "Napiš správně celé slovo s doplněným mě/mně: „Honza na zítřejší písemku nezapo___l.“",
+        "correctAnswer": "nezapomněl",
+        "acceptedAnswers": [
+          "nezapomněl",
+          "nezapomnel"
+        ],
+        "explanation": "Píšeme nezapomněl (se skupinou mně), protože v příbuzném slově zapomenout slyšíme hlásku N."
+      },
+      {
+        "id": "dik-q3",
+        "type": "type-in",
+        "prompt": "Napiš správně celé slovo s doplněným mě/mně: „Všem příkladům z fyziky dobře rozu___l.“",
+        "correctAnswer": "rozuměl",
+        "acceptedAnswers": [
+          "rozuměl",
+          "rozumel"
+        ],
+        "explanation": "Píšeme rozuměl (s mě), protože kořen slova je rozum- (končí na m, v žádném příbuzném slově není n)."
+      },
+      {
+        "id": "dik-q4",
+        "type": "multiple-choice",
+        "prompt": "Která věta má zcela správně napsané předpony s- a z-?",
+        "options": [
+          "V kině jsme shlédli napínavý film a poté jsme zhlédli z rozhledny do údolí.",
+          "V kině jsme zhlédli napínavý film a poté jsme zhlédli z rozhledny do údolí.",
+          "V kině jsme zhlédli napínavý film a poté jsme shlédli z rozhledny do údolí.",
+          "V kině jsme shlédli napínavý film a poté jsme shlédli z rozhledny do údolí."
+        ],
+        "correctAnswer": "V kině jsme zhlédli napínavý film a poté jsme shlédli z rozhledny do údolí.",
+        "explanation": "Zhlédnout (se Z) znamená vidět film, divadlo nebo výstavu. Shlédnout (se S) znamená dívat se shora dolů."
+      },
+      {
+        "id": "dik-q5",
+        "type": "multiple-choice",
+        "prompt": "Vyber správně napsané spojení v 7. pádě množného čísla:",
+        "options": [
+          "s našimi nejlepšími přátely",
+          "s našimy nejlepšímy přáteli",
+          "s našimy nejlepšími přátely",
+          "s našimi nejlepšími přáteli"
+        ],
+        "correctAnswer": "s našimi nejlepšími přáteli",
+        "explanation": "Zájmeno 'našimi' a přídavné jméno 'nejlepšími' (vzor jarní) mají měkké -i, podstatné jméno 's přáteli' má v 7. p. mn. č. rovněž měkké -i."
+      },
+      {
+        "id": "dik-q6",
+        "type": "multiple-choice",
+        "prompt": "Ve které větě je správně zapsána shoda přísudku s podmětem?",
+        "options": [
+          "Sněhuláci na slunci roztály, zatímco dny rychle ubíhali.",
+          "Sněhuláci na slunci roztáli, zatímco dny rychle ubíhaly.",
+          "Sněhuláci na slunci roztály, zatímco dny rychle ubíhaly.",
+          "Sněhuláci na slunci roztáli, zatímco dny rychle ubíhali."
+        ],
+        "correctAnswer": "Sněhuláci na slunci roztáli, zatímco dny rychle ubíhaly.",
+        "explanation": "Podmět 'sněhuláci' má koncovku životného rodu (-i → roztáli). Podmět 'dny' je rodu mužského neživotného (-y → ubíhaly)."
+      },
+      {
+        "id": "dik-q7",
+        "type": "type-in",
+        "prompt": "Doplň správně celé slovo (byli / bili / bily): „Kostelní hodiny právě ___ dvanáct hodin.“",
+        "correctAnswer": "bily",
+        "acceptedAnswers": [
+          "bily"
+        ],
+        "explanation": "Dvojitý chyták! Od slovesa 'bít' (tlouci) píšeme v kořeni měkké i (bi-), a protože podmět 'hodiny' je rodu ženského (pomnožné podstatné jméno), v koncovce příčestí je tvrdé -y → bily!"
+      },
+      {
+        "id": "dik-q8",
+        "type": "multiple-choice",
+        "prompt": "Která z následujících možností obsahuje pravopisnou CHYBU v psaní jednoho nebo dvou N?",
+        "options": [
+          "kamenný most",
+          "okenní parapet",
+          "dřevěnný stůl",
+          "rané brambory"
+        ],
+        "correctAnswer": "dřevěnný stůl",
+        "explanation": "Přídavná jména utvořená příponou -ěný (dřevěný, hliněný, plátěný, skleněný) se píší vždy s JEDNÍM n!"
+      },
+      {
+        "id": "dik-q9",
+        "type": "multiple-choice",
+        "prompt": "Doplň správně i/y: „Tatínek musí ___ auto v myčce, aby ___ čistá okna.“",
+        "options": [
+          "umít ... měl",
+          "umýt ... mněl",
+          "umít ... mněl",
+          "umýt ... měl"
+        ],
+        "correctAnswer": "umýt ... měl",
+        "explanation": "Umýt (vodou) je vyjmenované slovo po M (mýt, myčka, mýdlo). Sloveso měl (od mít) se píše s mě."
+      },
+      {
+        "id": "dik-q10",
+        "type": "type-in",
+        "prompt": "Napiš správně tvar slova v závorce (spravit / zpravit): „Mechanik dokázal rychle ___ porouchané kolo.“",
+        "correctAnswer": "spravit",
+        "acceptedAnswers": [
+          "spravit"
+        ],
+        "explanation": "Spravit (s předponou s-) znamená opravit. Zpravit (se z-) znamená informovat někoho (podat zprávu)."
+      },
+      {
+        "id": "dik-q11",
+        "type": "multiple-choice",
+        "prompt": "Doplň správně zájmeno mě / mně: „Půjdeš tam beze ___ , nebo to řekneš ___ ?“",
+        "options": [
+          "beze mně ... mě",
+          "beze mě ... mně",
+          "beze mě ... mě",
+          "beze mně ... mně"
+        ],
+        "correctAnswer": "beze mě ... mně",
+        "explanation": "Po předložce 'bez' je 2. pád (koho/čeho → beze mě). Ve druhé části se ptáme 3. pádem (komu/čemu → řekneš mně / mi)."
+      },
+      {
+        "id": "dik-q12",
+        "type": "multiple-choice",
+        "prompt": "Ve které větě je správně napsaná koncovka přísudku?",
+        "options": [
+          "Malá štěňata vesele pobíhaly po zahradě a děti si s nimi hráli.",
+          "Malá štěňata vesele pobíhala po zahradě a děti si s nimi hráli.",
+          "Malá štěňata vesele pobíhala po zahradě a děti si s nimi hrály.",
+          "Malá štěňata vesele pobíhaly po zahradě a děti si s nimi hrály."
+        ],
+        "correctAnswer": "Malá štěňata vesele pobíhala po zahradě a děti si s nimi hrály.",
+        "explanation": "Podmět 'štěňata' je v mn. č. rodu středního (koncovka -a → pobíhala). Podmět 'děti' je v mn. č. rodu ženského (koncovka -y → hrály)."
+      },
+      {
+        "id": "dik-q13",
+        "type": "type-in",
+        "prompt": "Doplň správně celé slovo (pýcha / píchá): „Pozor na trn růže, velmi ostře ___ !“",
+        "correctAnswer": "píchá",
+        "acceptedAnswers": [
+          "píchá",
+          "picha"
+        ],
+        "explanation": "Sloveso píchat (trn píchá, žihadlo píchne) se píše s měkkým í. Tvrdé ý se píše v podstatném jméně pýcha (pyšný)."
+      },
+      {
+        "id": "dik-q14",
+        "type": "multiple-choice",
+        "prompt": "Které ze slov má na začátku předponu VZ-?",
+        "options": [
+          "zklamat",
+          "shromáždit",
+          "vzkvétat (a vzpomínat)",
+          "zpívat"
+        ],
+        "correctAnswer": "vzkvétat (a vzpomínat)",
+        "explanation": "Předpona vz- označuje směr vzhůru nebo počátek děje (vzkvétat, vzlétnout, vzhlížet, vzpomínka)."
+      },
+      {
+        "id": "dik-q15",
+        "type": "type-in",
+        "prompt": "Doplň správně celé slovo (zpravit / spravit): „Musíme ___ rodiče o výsledku čtvrtletní písemky.“",
+        "correctAnswer": "zpravit",
+        "acceptedAnswers": [
+          "zpravit"
+        ],
+        "explanation": "Zpravit (s předponou z-) znamená podat někomu zprávu / informovat ho."
+      },
+      {
+        "id": "dik-q16",
+        "type": "multiple-choice",
+        "prompt": "Doplň správně i/y: „Starý vodní ml_n klapal a mlynář v něm mlel obil_ na mouku.“",
+        "options": [
+          "mlín ... obylí",
+          "mlýn ... obilí",
+          "mlín ... obilí",
+          "mlýn ... obylí"
+        ],
+        "correctAnswer": "mlýn ... obilí",
+        "explanation": "Mlýn (a mlynář) patří mezi vyjmenovaná slova po L. Slovo obilí se píše s měkkým i."
+      },
+      {
+        "id": "dik-q17",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Ve větě „Rodiče nám připomněli zítřejší test“ se slovo připomněli píše se skupinou MNĚ.",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Pravda",
+        "explanation": "Ano! V příbuzných slovech připomenout a vzpomínka jasně slyšíme hlásku N, proto píšeme připomněli."
+      },
+      {
+        "id": "dik-q18",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Ve spojení „hliněnná váza“ se píší dvě N (nn).",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Lež",
+        "explanation": "Lež! Přídavná jména odvozená příponou -ěný (hliněný, dřevěný, skleněný, olověný) se píší vždy jen s JEDNÍM n (hliněná váza)."
+      },
+      {
+        "id": "dik-q19",
+        "type": "type-in",
+        "prompt": "Napiš správně celé slovo s doplněným i/y: „Z lýka stromů se dříve pletly l_čené střevíce.“",
+        "correctAnswer": "lýčené",
+        "acceptedAnswers": [
+          "lýčené",
+          "lycene"
+        ],
+        "explanation": "Slovo lýčené je odvozeno od vyjmenovaného slova lýko, proto píšeme tvrdé ý."
+      },
+      {
+        "id": "dik-q20",
+        "type": "multiple-choice",
+        "prompt": "Ve které větě je správně zapsána shoda přísudku s podmětem?",
+        "options": [
+          "Děvčata vesele zpívaly a chlapci hrály fotbal.",
+          "Děvčata vesele zpívala a chlapci hráli fotbal.",
+          "Děvčata vesele zpívali a chlapci hráli fotbal.",
+          "Děvčata vesele zpívala a chlapci hrály fotbal."
+        ],
+        "correctAnswer": "Děvčata vesele zpívala a chlapci hráli fotbal.",
+        "explanation": "Podmět 'děvčata' je v množném čísle rodu středního (koncovka -a → zpívala). Podmět 'chlapci' je rodu mužského životného (koncovka -i → hráli)."
+      },
+      {
+        "id": "dik-q21",
+        "type": "type-in",
+        "prompt": "Napiš správně celé slovo s doplněným mě/mně: „Byla to jen nepodložená do___nka.“",
+        "correctAnswer": "domněnka",
+        "acceptedAnswers": [
+          "domněnka",
+          "domnenka"
+        ],
+        "explanation": "Píšeme domněnka (s mně), protože v příbuzném slově domnívat se je hláska N."
+      },
+      {
+        "id": "dik-q22",
+        "type": "multiple-choice",
+        "prompt": "Vyber větu, která je napsána ZCELA BEZ PRAVOPISNÉ CHYBY:",
+        "options": [
+          "Brzy zrána jsme vyrazili s mladými přáteli na výlet do zasněžených hor.",
+          "Brzi zrána jsme vyrazily s mladými přáteli na výlet do zasněžených hor.",
+          "Brzy srána jsme vyrazili s mladými přátely na výlet do zasněžených hor.",
+          "Brzy zrána jsme vyrazili s mladými přáteli na vílet do zasněžených hor."
+        ],
+        "correctAnswer": "Brzy zrána jsme vyrazili s mladými přáteli na výlet do zasněžených hor.",
+        "explanation": "Brzy (vyjmenované slovo), zrána (z rána → předpona z-), vyrazili (my všichni → -i), s mladými přáteli (7. p. mn. č. → -i), výlet (předpona vý-)."
+      }
+    ],
+    "updatedAt": 1794349000000,
+    "studyNotes": [
       "Vyjmenovaná slova – záludné dvojice (homonyma): • BÝT (existovat, obyčej, obydlí, dobytek) × BÍT (tlouci, hodiny bijí, bitva, zabít). • MÍT (vlastnit) × MÝT (umývat vodou, myčka, mýdlo, umyvadlo). • SLEPÝŠ (beznohý plaz, příbuzné se slepý) × SLEPÍŠ (lepidlem). • VÝR (velká sova) × VÍR (vodní nebo větrný, vířit). • PÝCHA (pyšný, zpytovat) × PÍCHÁ (trn, včela). • LÝKO (pod kůrou stromu, lýčené střevíce) × LÍTO (lítost).",
       "Shoda přísudku s podmětem v minulém čase: • Podmět rodu mužského ŽIVOTNÉHO → koncovka -i (Chlapci běželi. Psi štěkali. Sněhuláci roztáli. Rodiče přišli.). • Podmět rodu mužského NEŽIVOTNÉHO a rodu ŽENSKÉHO → koncovka -y (Stromy šuměly. Dny ubíhaly. Ženy zpívaly. Děti si hrály.). • Podmět rodu STŘEDNÍHO v mn. č. → koncovka -a (Děvčata tancovala. Kuřata pípala. Auta houkala.).",
       "Psaní MĚ a MNĚ: • MNĚ píšeme tam, kde je v příbuzném slově slyšet N nebo Ň: zapomněl (zapomenout), připomněl (vzpomínka), domněnka (domnívat se), uzemnění (zemní). • MĚ píšeme, když v příbuzném slově N není: rozuměl (rozum), uměl (umí), tamější (tam), soukromě (soukromý), vědomě (vědomí), zatmění (tma).",
@@ -638,257 +1057,618 @@ export const STARTER_TOPICS = [
       "Koncovky podstatných a přídavných jmen v 7. pádě mn. č.: • S mladými přáteli (vzor mladý → s mladými, ale přítel v 7. p. mn. č. má koncovku -i: s přáteli, s učiteli, s obyvateli!). • V 1. pádě mn. č. životného rodu se k/h/ch/r měkčí a píše se měkké -i: mladí chlapci, čeští spisovatelé, drazí přátelé.",
       "Zdvojené souhlásky: Píšeme tam, kde se setkává předpona s kořenem (oddechnout si = od + dechnout, bezzubý = bez + zubý, nejjasnější = nej + jasnější) nebo kořen končící na -n s příponou -ní/-ný (okenní = okn-o + -ní, denní, kamenný, vinný, cenný × ale: raný brambor, dřevěný, hliněný, olověný – přípona -ěný má jen jedno n!)."
     ],
-    flashcards: [
-      { front: "Jaký je rozdíl mezi: SLEPÝŠ a SLEPÍŠ?", back: "Slepýš s Y je beznohý plaz (příbuzné se slovem slepý). Slepíš s I je tvar slovesa slepit (lepidlem)." },
-      { front: "Jaký je rozdíl mezi: VÝR a VÍR?", back: "Výr s Y je velká noční sova (vyjmenované slovo). Vír s I je krouživý pohyb vody nebo vzduchu." },
-      { front: "Doplň i/y: Hodiny právě odb_ly poledne a my jsme b_li doma.", back: "odbily (od bít = tlouci) × byli (od být = existovat)." },
-      { front: "Doplň mě/mně: Honza na úkol nezapo___l a rozu___l látce.", back: "nezapomněl (zapomenout – slyšíme N) × rozuměl (rozum – žádné N)." },
-      { front: "Jaký je rozdíl: ZHLÉDNOUT a SHLÉDNOUT?", back: "Zhlédnout (se Z) = vidět představení, film, výstavu. Shlédnout (se S) = podívat se shora dolů (např. z rozhledny)." },
-      { front: "Jaký je rozdíl: SPRAVIT a ZPRAVIT?", back: "Spravit (se S) = opravit rozbitou věc. Zpravit (se Z) = podat někomu zprávu (informovat)." },
-      { front: "Doplň koncovku: Sněhuláci na jaře roztál_.", back: "roztáli (s měkkým i – podměty sněhuláci, strašáci, maňásci mají v přísudku koncovku životného rodu -i)." },
-      { front: "Doplň koncovky: S mil_m_ přátel_.", back: "S milými přáteli (milými = vzor mladý, přáteli = 7. pád mn. č. s koncovkou -i)." },
-      { front: "Jedno n, nebo dvě nn: dřevě_ý stůl vs. kame_ý most?", back: "dřevěný (přípona -ěný má vždy jen jedno N) × kamenný (kořen kamen- + přípona -ný = nn)." },
-      { front: "Doplň i/y: Děti si hrály × Děvčata zpíval_.", back: "Děti si hrály (slovo děti je v mn. č. rodu ženského → -y) × Děvčata zpívala (rod střední mn. č. → -a)." },
-      { front: "Doplň mě/mně: Mluvil o ___ × Viděl ___ na hřišti.", back: "Mluvil o mně (6. pád) × Viděl mě na hřišti (4. pád)." },
-      { front: "Doplň i/y: Lýčené střevíce z l_ka × Bylo mu to moc l_to.", back: "z lýka (vyjmenované slovo lýko) × líto (lítost, měkké i)." }
-    ],
-    questions: [
+    "flashcards": [
       {
-        id: "dik-q1",
-        type: "multiple-choice",
-        prompt: "Ve které větě je správně napsané i/y u slov VÝR / VÍR a SLEPÝŠ / SLEPÍŠ?",
-        options: [
-          "Na větvi seděl vír velký, v potoce se točil vodní výr a v trávě se plazil slepíš.",
-          "Na větvi seděl výr velký, v potoce se točil vodní vír a v trávě se plazil slepýš.",
-          "Na větvi seděl výr velký, v potoce se točil vodní výr a v trávě se plazil slepýš.",
-          "Na větvi seděl vír velký, v potoce se točil vodní vír a v trávě se plazil slepýš."
-        ],
-        correctAnswer: "Na větvi seděl výr velký, v potoce se točil vodní vír a v trávě se plazil slepýš.",
-        explanation: "Výr (sova) a slepýš (plaz, od slepý) mají tvrdé Y. Vodní nebo větrný vír má měkké I."
+        "front": "Jaký je rozdíl mezi: SLEPÝŠ a SLEPÍŠ?",
+        "back": "Slepýš s Y je beznohý plaz (příbuzné se slovem slepý). Slepíš s I je tvar slovesa slepit (lepidlem)."
       },
       {
-        id: "dik-q2",
-        type: "type-in",
-        prompt: "Napiš správně celé slovo s doplněným mě/mně: „Honza na zítřejší písemku nezapo___l.“",
-        correctAnswer: "nezapomněl",
-        acceptedAnswers: ["nezapomněl", "nezapomnel"],
-        explanation: "Píšeme nezapomněl (se skupinou mně), protože v příbuzném slově zapomenout slyšíme hlásku N."
+        "front": "Jaký je rozdíl mezi: VÝR a VÍR?",
+        "back": "Výr s Y je velká noční sova (vyjmenované slovo). Vír s I je krouživý pohyb vody nebo vzduchu."
       },
       {
-        id: "dik-q3",
-        type: "type-in",
-        prompt: "Napiš správně celé slovo s doplněným mě/mně: „Všem příkladům z fyziky dobře rozu___l.“",
-        correctAnswer: "rozuměl",
-        acceptedAnswers: ["rozuměl", "rozumel"],
-        explanation: "Píšeme rozuměl (s mě), protože kořen slova je rozum- (končí na m, v žádném příbuzném slově není n)."
+        "front": "Doplň i/y: Hodiny právě odb_ly poledne a my jsme b_li doma.",
+        "back": "odbily (od bít = tlouci) × byli (od být = existovat)."
       },
       {
-        id: "dik-q4",
-        type: "multiple-choice",
-        prompt: "Která věta má zcela správně napsané předpony s- a z-?",
-        options: [
-          "V kině jsme shlédli napínavý film a poté jsme zhlédli z rozhledny do údolí.",
-          "V kině jsme zhlédli napínavý film a poté jsme zhlédli z rozhledny do údolí.",
-          "V kině jsme zhlédli napínavý film a poté jsme shlédli z rozhledny do údolí.",
-          "V kině jsme shlédli napínavý film a poté jsme shlédli z rozhledny do údolí."
-        ],
-        correctAnswer: "V kině jsme zhlédli napínavý film a poté jsme shlédli z rozhledny do údolí.",
-        explanation: "Zhlédnout (se Z) znamená vidět film, divadlo nebo výstavu. Shlédnout (se S) znamená dívat se shora dolů."
+        "front": "Doplň mě/mně: Honza na úkol nezapo___l a rozu___l látce.",
+        "back": "nezapomněl (zapomenout – slyšíme N) × rozuměl (rozum – žádné N)."
       },
       {
-        id: "dik-q5",
-        type: "multiple-choice",
-        prompt: "Vyber správně napsané spojení v 7. pádě množného čísla:",
-        options: [
-          "s našimi nejlepšími přátely",
-          "s našimy nejlepšímy přáteli",
-          "s našimy nejlepšími přátely",
-          "s našimi nejlepšími přáteli"
-        ],
-        correctAnswer: "s našimi nejlepšími přáteli",
-        explanation: "Zájmeno 'našimi' a přídavné jméno 'nejlepšími' (vzor jarní) mají měkké -i, podstatné jméno 's přáteli' má v 7. p. mn. č. rovněž měkké -i."
+        "front": "Jaký je rozdíl: ZHLÉDNOUT a SHLÉDNOUT?",
+        "back": "Zhlédnout (se Z) = vidět představení, film, výstavu. Shlédnout (se S) = podívat se shora dolů (např. z rozhledny)."
       },
       {
-        id: "dik-q6",
-        type: "multiple-choice",
-        prompt: "Ve které větě je správně zapsána shoda přísudku s podmětem?",
-        options: [
-          "Sněhuláci na slunci roztály, zatímco dny rychle ubíhali.",
-          "Sněhuláci na slunci roztáli, zatímco dny rychle ubíhaly.",
-          "Sněhuláci na slunci roztály, zatímco dny rychle ubíhaly.",
-          "Sněhuláci na slunci roztáli, zatímco dny rychle ubíhali."
-        ],
-        correctAnswer: "Sněhuláci na slunci roztáli, zatímco dny rychle ubíhaly.",
-        explanation: "Podmět 'sněhuláci' má koncovku životného rodu (-i → roztáli). Podmět 'dny' je rodu mužského neživotného (-y → ubíhaly)."
+        "front": "Jaký je rozdíl: SPRAVIT a ZPRAVIT?",
+        "back": "Spravit (se S) = opravit rozbitou věc. Zpravit (se Z) = podat někomu zprávu (informovat)."
       },
       {
-        id: "dik-q7",
-        type: "type-in",
-        prompt: "Doplň správně celé slovo (byli / bili / bily): „Kostelní hodiny právě ___ dvanáct hodin.“",
-        correctAnswer: "bily",
-        acceptedAnswers: ["bily"],
-        explanation: "Dvojitý chyták! Od slovesa 'bít' (tlouci) píšeme v kořeni měkké i (bi-), a protože podmět 'hodiny' je rodu ženského (pomnožné podstatné jméno), v koncovce příčestí je tvrdé -y → bily!"
+        "front": "Doplň koncovku: Sněhuláci na jaře roztál_.",
+        "back": "roztáli (s měkkým i – podměty sněhuláci, strašáci, maňásci mají v přísudku koncovku životného rodu -i)."
       },
       {
-        id: "dik-q8",
-        type: "multiple-choice",
-        prompt: "Která z následujících možností obsahuje pravopisnou CHYBU v psaní jednoho nebo dvou N?",
-        options: [
-          "kamenný most",
-          "okenní parapet",
-          "dřevěnný stůl",
-          "rané brambory"
-        ],
-        correctAnswer: "dřevěnný stůl",
-        explanation: "Přídavná jména utvořená příponou -ěný (dřevěný, hliněný, plátěný, skleněný) se píší vždy s JEDNÍM n!"
+        "front": "Doplň koncovky: S mil_m_ přátel_.",
+        "back": "S milými přáteli (milými = vzor mladý, přáteli = 7. pád mn. č. s koncovkou -i)."
       },
       {
-        id: "dik-q9",
-        type: "multiple-choice",
-        prompt: "Doplň správně i/y: „Tatínek musí ___ auto v myčce, aby ___ čistá okna.“",
-        options: [
-          "umít ... měl",
-          "umýt ... mněl",
-          "umít ... mněl",
-          "umýt ... měl"
-        ],
-        correctAnswer: "umýt ... měl",
-        explanation: "Umýt (vodou) je vyjmenované slovo po M (mýt, myčka, mýdlo). Sloveso měl (od mít) se píše s mě."
+        "front": "Jedno n, nebo dvě nn: dřevě_ý stůl vs. kame_ý most?",
+        "back": "dřevěný (přípona -ěný má vždy jen jedno N) × kamenný (kořen kamen- + přípona -ný = nn)."
       },
       {
-        id: "dik-q10",
-        type: "type-in",
-        prompt: "Napiš správně tvar slova v závorce (spravit / zpravit): „Mechanik dokázal rychle ___ porouchané kolo.“",
-        correctAnswer: "spravit",
-        acceptedAnswers: ["spravit"],
-        explanation: "Spravit (s předponou s-) znamená opravit. Zpravit (se z-) znamená informovat někoho (podat zprávu)."
+        "front": "Doplň i/y: Děti si hrály × Děvčata zpíval_.",
+        "back": "Děti si hrály (slovo děti je v mn. č. rodu ženského → -y) × Děvčata zpívala (rod střední mn. č. → -a)."
       },
       {
-        id: "dik-q11",
-        type: "multiple-choice",
-        prompt: "Doplň správně zájmeno mě / mně: „Půjdeš tam beze ___ , nebo to řekneš ___ ?“",
-        options: [
-          "beze mně ... mě",
-          "beze mě ... mně",
-          "beze mě ... mě",
-          "beze mně ... mně"
-        ],
-        correctAnswer: "beze mě ... mně",
-        explanation: "Po předložce 'bez' je 2. pád (koho/čeho → beze mě). Ve druhé části se ptáme 3. pádem (komu/čemu → řekneš mně / mi)."
+        "front": "Doplň mě/mně: Mluvil o ___ × Viděl ___ na hřišti.",
+        "back": "Mluvil o mně (6. pád) × Viděl mě na hřišti (4. pád)."
       },
       {
-        id: "dik-q12",
-        type: "multiple-choice",
-        prompt: "Ve které větě je správně napsaná koncovka přísudku?",
-        options: [
-          "Malá štěňata vesele pobíhaly po zahradě a děti si s nimi hráli.",
-          "Malá štěňata vesele pobíhala po zahradě a děti si s nimi hráli.",
-          "Malá štěňata vesele pobíhala po zahradě a děti si s nimi hrály.",
-          "Malá štěňata vesele pobíhaly po zahradě a děti si s nimi hrály."
-        ],
-        correctAnswer: "Malá štěňata vesele pobíhala po zahradě a děti si s nimi hrály.",
-        explanation: "Podmět 'štěňata' je v mn. č. rodu středního (koncovka -a → pobíhala). Podmět 'děti' je v mn. č. rodu ženského (koncovka -y → hrály)."
-      },
-      {
-        id: "dik-q13",
-        type: "type-in",
-        prompt: "Doplň správně celé slovo (pýcha / píchá): „Pozor na trn růže, velmi ostře ___ !“",
-        correctAnswer: "píchá",
-        acceptedAnswers: ["píchá", "picha"],
-        explanation: "Sloveso píchat (trn píchá, žihadlo píchne) se píše s měkkým í. Tvrdé ý se píše v podstatném jméně pýcha (pyšný)."
-      },
-      {
-        id: "dik-q14",
-        type: "multiple-choice",
-        prompt: "Které ze slov má na začátku předponu VZ-?",
-        options: [
-          "zklamat",
-          "shromáždit",
-          "vzkvétat (a vzpomínat)",
-          "zpívat"
-        ],
-        correctAnswer: "vzkvétat (a vzpomínat)",
-        explanation: "Předpona vz- označuje směr vzhůru nebo počátek děje (vzkvétat, vzlétnout, vzhlížet, vzpomínka)."
-      },
-      {
-        id: "dik-q15",
-        type: "type-in",
-        prompt: "Doplň správně celé slovo (zpravit / spravit): „Musíme ___ rodiče o výsledku čtvrtletní písemky.“",
-        correctAnswer: "zpravit",
-        acceptedAnswers: ["zpravit"],
-        explanation: "Zpravit (s předponou z-) znamená podat někomu zprávu / informovat ho."
-      },
-      {
-        id: "dik-q16",
-        type: "multiple-choice",
-        prompt: "Doplň správně i/y: „Starý vodní ml_n klapal a mlynář v něm mlel obil_ na mouku.“",
-        options: [
-          "mlín ... obylí",
-          "mlýn ... obilí",
-          "mlín ... obilí",
-          "mlýn ... obylí"
-        ],
-        correctAnswer: "mlýn ... obilí",
-        explanation: "Mlýn (a mlynář) patří mezi vyjmenovaná slova po L. Slovo obilí se píše s měkkým i."
-      },
-      {
-        id: "dik-q17",
-        type: "true-false",
-        prompt: "Pravda nebo lež: Ve větě „Rodiče nám připomněli zítřejší test“ se slovo připomněli píše se skupinou MNĚ.",
-        options: ["Pravda", "Lež"],
-        correctAnswer: "Pravda",
-        explanation: "Ano! V příbuzných slovech připomenout a vzpomínka jasně slyšíme hlásku N, proto píšeme připomněli."
-      },
-      {
-        id: "dik-q18",
-        type: "true-false",
-        prompt: "Pravda nebo lež: Ve spojení „hliněnná váza“ se píší dvě N (nn).",
-        options: ["Pravda", "Lež"],
-        correctAnswer: "Lež",
-        explanation: "Lež! Přídavná jména odvozená příponou -ěný (hliněný, dřevěný, skleněný, olověný) se píší vždy jen s JEDNÍM n (hliněná váza)."
-      },
-      {
-        id: "dik-q19",
-        type: "type-in",
-        prompt: "Napiš správně celé slovo s doplněným i/y: „Z lýka stromů se dříve pletly l_čené střevíce.“",
-        correctAnswer: "lýčené",
-        acceptedAnswers: ["lýčené", "lycene"],
-        explanation: "Slovo lýčené je odvozeno od vyjmenovaného slova lýko, proto píšeme tvrdé ý."
-      },
-      {
-        id: "dik-q20",
-        type: "multiple-choice",
-        prompt: "Ve které větě je správně zapsána shoda přísudku s podmětem?",
-        options: [
-          "Děvčata vesele zpívaly a chlapci hrály fotbal.",
-          "Děvčata vesele zpívala a chlapci hráli fotbal.",
-          "Děvčata vesele zpívali a chlapci hráli fotbal.",
-          "Děvčata vesele zpívala a chlapci hrály fotbal."
-        ],
-        correctAnswer: "Děvčata vesele zpívala a chlapci hráli fotbal.",
-        explanation: "Podmět 'děvčata' je v množném čísle rodu středního (koncovka -a → zpívala). Podmět 'chlapci' je rodu mužského životného (koncovka -i → hráli)."
-      },
-      {
-        id: "dik-q21",
-        type: "type-in",
-        prompt: "Napiš správně celé slovo s doplněným mě/mně: „Byla to jen nepodložená do___nka.“",
-        correctAnswer: "domněnka",
-        acceptedAnswers: ["domněnka", "domnenka"],
-        explanation: "Píšeme domněnka (s mně), protože v příbuzném slově domnívat se je hláska N."
-      },
-      {
-        id: "dik-q22",
-        type: "multiple-choice",
-        prompt: "Vyber větu, která je napsána ZCELA BEZ PRAVOPISNÉ CHYBY:",
-        options: [
-          "Brzy zrána jsme vyrazili s mladými přáteli na výlet do zasněžených hor.",
-          "Brzi zrána jsme vyrazily s mladými přáteli na výlet do zasněžených hor.",
-          "Brzy srána jsme vyrazili s mladými přátely na výlet do zasněžených hor.",
-          "Brzy zrána jsme vyrazili s mladými přáteli na vílet do zasněžených hor."
-        ],
-        correctAnswer: "Brzy zrána jsme vyrazili s mladými přáteli na výlet do zasněžených hor.",
-        explanation: "Brzy (vyjmenované slovo), zrána (z rána → předpona z-), vyrazili (my všichni → -i), s mladými přáteli (7. p. mn. č. → -i), výlet (předpona vý-)."
+        "front": "Doplň i/y: Lýčené střevíce z l_ka × Bylo mu to moc l_to.",
+        "back": "z lýka (vyjmenované slovo lýko) × líto (lítost, měkké i)."
       }
-    ]
+    ],
+    "description": "Příprava na čtvrtletní diktát (11. 11., od 11:50 do 12:35, 1. hodina v OSV, 6.C): Vyjmenovaná slova a pravopisné chytáky (být/bít, mít/mýt, slepýš/slepíš, výr/vír, pýcha/píchá), shoda přísudku s podmětem, mě/mně, předpony s-/z- a koncovky.",
+    "id": "cjl-ctvrtletni-diktat-pravopis",
+    "lang": "cs",
+    "authorName": "Táta & Gemini",
+    "subject": "Český jazyk a literatura"
+  },
+  {
+    "authorName": "Táta & Gemini",
+    "subject": "Zeměpis",
+    "title": "Země ve vesmíru - 12. 11., od 8:55 do 9:40",
+    "description": "Příprava na písemku (12. 11., od 8:55 do 9:40, 6.C): Vesmír, sluneční soustava, Měsíc, Působení Měsíce na Zemi, Dálkový průzkum Země (DPZ).",
+    "id": "zemepis-zeme-ve-vesmiru",
+    "flashcards": [
+      {
+        "front": "Jak vznikl vesmír, před jakou dobou a jak se vyvíjí?",
+        "back": "Vznikl Velkým třeskem (Big Bang) přibližně před 13,7 až 13,8 miliardy let. Neustále se vyvíjí a rozpíná."
+      },
+      {
+        "front": "Jak se jmenuje věda zkoumající vesmír a jaká síla řídí pohyb všech kosmických těles?",
+        "back": "Věda je astronomie. Pohyb všech těles ve vesmíru řídí gravitační síla."
+      },
+      {
+        "front": "Co jsou to hvězdy a jak se jmenuje naše nejbližší hvězda?",
+        "back": "Hvězdy jsou velké, horké plynné koule, které září vlastním světlem. Naší nejbližší hvězdou je Slunce."
+      },
+      {
+        "front": "Jaká je střední vzdálenost Země od Slunce a kolikrát má Slunce větší poloměr a hmotnost než Země?",
+        "back": "Vzdálenost je asi 150 milionů km. Slunce má 100× větší poloměr a 330 000× větší hmotnost než Země."
+      },
+      {
+        "front": "Která hvězda je nejjasnější na naší noční obloze a která cizí hvězda je nejblíže Slunci?",
+        "back": "Nejjasnější na noční obloze je Sirius (v souhvězdí Velkého psa). Nejbližší hvězdou od Slunce je Proxima Centauri."
+      },
+      {
+        "front": "Jak se jmenuje naše galaxie, jaký má tvar a co je to světelný rok?",
+        "back": "Naše Galaxie se nazývá Mléčná dráha a má tvar disku. Světelný rok je vzdálenost, kterou urazí světlo za jeden rok."
+      },
+      {
+        "front": "Kolik souhvězdí celkem rozlišujeme na obloze a co jsou to obtočnová souhvězdí?",
+        "back": "Celkem je 88 souhvězdí. Obtočnová souhvězdí jsou u nás viditelná po celý rok (leží blízko Polárky: Malý medvěd, Velká medvědice, Kasiopeja, Cefeus, Drak)."
+      },
+      {
+        "front": "Ve kterém souhvězdí leží hvězda Polárka a jaký má význam?",
+        "back": "Leží v souhvězdí Malého medvěda (součást Malého vozu) a ukazuje vždy směr na sever."
+      },
+      {
+        "front": "Kolik je znamení zvěrokruhu a které 13. souhvězdí patří mezi astronomická zvířetníková souhvězdí?",
+        "back": "Znamení zvěrokruhu je 12, ale Slunce prochází 13 zvířetníkovými souhvězdími – třináctým je Hadonoš."
+      },
+      {
+        "front": "Přiřaď milníky kosmonautiky: 4. 10. 1957, 12. 4. 1961, 20. 7. 1969, 2. 3. 1978.",
+        "back": "4. 10. 1957 = Sputnik 1 (1. družice); 12. 4. 1961 = Jurij Gagarin / Vostok; 20. 7. 1969 = Apollo 11 (přistání na Měsíci); 2. 3. 1978 = Vladimír Remek."
+      },
+      {
+        "front": "Kdy a z čeho vznikla sluneční soustava a co je praslunce?",
+        "back": "Asi před 4,8 miliardy let z rotujícího mračna chladného prachu a plynu. Praslunce byla první vznikající podoba Slunce."
+      },
+      {
+        "front": "Vyjmenuj všech 8 planet sluneční soustavy v pořadí od Slunce.",
+        "back": "Merkur, Venuše, Země, Mars (vnitřní) a Jupiter, Saturn, Uran, Neptun (vnější)."
+      },
+      {
+        "front": "Které planety jsou vnitřní (terestrické) a které vnější (plynné)?",
+        "back": "Vnitřní terestrické (kamenné): Merkur, Venuše, Země, Mars. Vnější plynné: Jupiter, Saturn, Uran, Neptun."
+      },
+      {
+        "front": "Co jsou to měsíce, planetky a komety (ze sešitu)?",
+        "back": "Měsíce = přirozené družice planet. Planetky = malé a nepravidelné objekty. Komety = tělesa z prachu a ledu letící vesmírem."
+      },
+      {
+        "front": "Jaký je skutečný tvar Země a co je to glóbus?",
+        "back": "Země není dokonale kulatá (je zploštělá jako mandarinka), její tvar se nazývá GEOID. Glóbus je zmenšený model (zdrobnělina) Země."
+      },
+      {
+        "front": "Jaký je obvod Země, poloměr Země od rovníku do středu a plocha povrchu Země?",
+        "back": "Obvod Země = 40 075 km (40 075,004 km). Poloměr Země = 6 378 km. Plocha povrchu Země = 510 mil. km²."
+      },
+      {
+        "front": "Jak daleko je Měsíc od Země a za jak dlouho tuto vzdálenost urazí světlo?",
+        "back": "Střední vzdálenost Země–Měsíc je 384 000 km; světlo ji urazí přibližně za 1 sekundu."
+      },
+      {
+        "front": "Proč ze Země vidíme stále stejnou (přivrácenou) stranu Měsíce?",
+        "back": "Protože doba otočení Měsíce kolem vlastní osy je stejně dlouhá jako doba jeho oběhu kolem Země (asi 28 dní / 27,3 dne)."
+      },
+      {
+        "front": "Vyjmenuj 4 hlavní fáze Měsíce.",
+        "back": "Nov (není vidět), první čtvrť (dorůstá – tvar D), úplněk (celý kotouč), poslední čtvrť (couvá – tvar C)."
+      },
+      {
+        "front": "Jak působí Měsíc na Zemi (slapové jevy) a jak vzniká zatmění Slunce a Měsíce?",
+        "back": "Gravitace Měsíce způsobuje příliv a odliv (dmutí moří, střídá se po cca 6 h). Zatmění Slunce = Měsíc v novu zastíní Slunce; zatmění Měsíce = Země vrhne stín na Měsíc v úplňku."
+      },
+      {
+        "front": "Co je to Dálkový průzkum Země (DPZ)?",
+        "back": "Získávání, analýza a interpretace leteckých a družicových snímků pro geografické účely."
+      },
+      {
+        "front": "Jak dělíme snímky DPZ podle velikosti území a podle barev?",
+        "back": "Podle území: a) globální (celá planeta), b) oblastní (velké části – celé státy), c) místní (malé části – města). Podle barev: 1. barevné (přirozené a nepřirozené barvy), 2. černobílé (vystínované)."
+      },
+      {
+        "front": "K čemu se využívá Dálkový průzkum Země (5 oblastí)?",
+        "back": "1) studium životního prostředí, 2) meteorologie – předpověď počasí, 3) kartografie – tvorba map, 4) mapování – land use (využití ploch Země), 5) průmysl, zemědělství, vodstvo, půdy."
+      },
+      {
+        "front": "Jak dělíme družice podle drah obletu Země a uveď příklady?",
+        "back": "a) geostacionární – nad rovníkem (METEOSAT / MSG); b) šikmá dráha – mezi rovníkem a pólem (GPS); c) subpolární – v blízkosti pólů (LANDSAT, NOAA – počasí)."
+      }
+    ],
+    "studyNotes": [
+      "Vznik a vývoj vesmíru: Vesmír (z řeckého kosmos) vznikl přibližně před 13,7 až 13,8 miliardy let obrovským výbuchem zvaným VELKÝ TŘESK (anglicky Big Bang). Vesmír není stále stejný – postupně se VYVÍJÍ a ROZPÍNÁ (zvětšuje se do všech směrů). Věda, která zkoumá vesmír, se nazývá ASTRONOMIE.",
+      "Co najdeme ve vesmíru a gravitační síla: Ve vesmíru se nacházejí planety, hvězdy, galaxie (a kupy galaxií), hvězdokupy, mlhoviny, komety, planetky, měsíce, černé díry, meziplanetární prach a plyny. Pohyby všech těles řídí GRAVITAČNÍ SÍLA (zákon přitažlivosti) – způsobuje např. oběh Země kolem Slunce i obíhání DVOJHVĚZD kolem sebe (např. dvojhvězda Albireo).",
+      "Hvězdy a Slunce: HVĚZDY jsou velké, horké plynné koule, které ZÁŘÍ VLASTNÍM SVĚTLEM (v nitru mají teplotu několik milionů °C). Naší nejbližší hvězdou je SLUNCE (vzdálené od Země asi 150 milionů km; má 100× větší poloměr a 330 000× větší hmotnost než Země – jako tenisový míček oproti zrnku máku). Nejjasnější hvězdou na naší noční obloze je SIRIUS v souhvězdí Velkého psa (starořecký astronom Hipparchos rozdělil hvězdy podle jasnosti do 6 skupin).",
+      "Hvězdokupy, Galaxie a světelný rok: Hvězdy se shlukují do HVĚZDOKUP a obrovských hvězdných soustav zvaných GALAXIE. Naše Slunce patří do GALAXIE (s velkým G), jejíž část vidíme na noční obloze jako světlý pás zvaný MLÉČNÁ DRÁHA. Naše Galaxie má TVAR DISKU. Vzdálenosti ve vesmíru měříme ve SVĚTELNÝCH ROCÍCH (= vzdálenost, kterou urazí světlo za 1 rok; ze Země na Měsíc urazí světlo 384 000 km přibližně za 1 sekundu). Nejbližší hvězdou od Slunce je PROXIMA CENTAURI.",
+      "Souhvězdí – obtočnová a zvířetníková: SOUHVĚZDÍ jsou skupiny hvězd připomínající na obloze různé obrazce; celkem rozlišujeme 88 souhvězdí. 1) OBTOČNOVÁ SOUHVĚZDÍ můžeme u nás pozorovat PO CELÝ ROK (ležící blízko hvězdy POLÁRKY v souhvězdí Malého medvěda / Malého vozu, která ukazuje sever): patří sem Velká medvědice (Velký vůz), Malý medvěd (Malý vůz), Kasiopeja, Cefeus a Drak. 2) ZVÍŘETNÍKOVÁ SOUHVĚZDÍ se střídají podle ročních období – znamení zvěrokruhu je 12, ale astronomických zvířetníkových souhvězdí je 13 (navíc HADONOŠ).",
+      "Významné události kosmonautiky (z učebnice str. 10): • 4. 10. 1957 – SPUTNIK 1 (první umělá družice Země). • 4. 10. 1959 – sonda LUNA 3 (první fotografie odvrácené strany Měsíce). • 12. 4. 1961 – JURIJ GAGARIN v kosmické lodi VOSTOK (první člověk ve vesmíru, první oblet Země). • 20. 7. 1969 – měsíční modul APOLLO 11, NEIL ARMSTRONG a EDWIN ALDRIN (první přistání lidí na Měsíci). • 2. 3. 1978 – VLADIMÍR REMEK (první československý kosmonaut a první občan naší republiky v kosmu).",
+      "Vznik a stavba sluneční soustavy: Sluneční soustava vznikla asi před 4,8 miliardy let z rotujícího mračna chladného prachu a plynu (mlhoviny). Gravitační silou se ve středu utvořilo PRASLUNCE (dnešní Slunce) a z prachových zrnek a krystalků zmrzlých plynů vznikly planety. Kolem Slunce obíhá 8 planet v pořadí od Slunce: MERKUR, VENUŠE, ZEMĚ, MARS, JUPITER, SATURN, URAN, NEPTUN.",
+      "Rozdělení planet a další tělesa sluneční soustavy: 1) VNITŘNÍ PLANETY – TERESTRICKÉ (kamenné, zemského typu): Merkur, Venuše, Země, Mars. 2) VNĚJŠÍ PLANETY – PLYNNÉ (plynní obři): Jupiter, Saturn, Uran, Neptun. • MĚSÍCE = přirozené družice planet. • PLANETKY = malé a nepravidelné kamenné objekty (hlavně mezi Marsem a Jupiterem). • KOMETY = tělesa složená z prachu a ledu, která letí vesmírem (u Slunce se led vypařuje a tvoří ohon). • METEOROIDY = drobná tělíska v meziplanetárním prostoru.",
+      "Planeta Země – tvar, rozměry a glóbus (ze sešitu): Země není dokonale kulatá, vlivem otáčení je na pólech mírně zploštělá (připomíná mandarinku) – skutečný tvar Země se nazývá GEOID. • Obvod Země (kolem rovníku): 40 075,004 km (cca 40 075 km). • Poloměr Země (od rovníku do středu): 6 378 km. • Plocha povrchu Země: 510 mil. km². • GLÓBUS = zmenšený kulový model (zdrobnělina) Země.",
+      "Měsíc – přirozená družice Země: Měsíc je jediná přirozená družice Země, vzdálená přibližně 384 000 km (má asi 4× menší poloměr než Země). Nesvítí vlastním světlem, pouze odráží sluneční záření. Nemá atmosféru ani vodu, jeho povrch pokrývají krátery a tmavé plochy ztuhlé lávy („moře“). Kolem Země oběhne zhruba za 28 dní (27,3 dne) a za úplně stejnou dobu se otočí kolem své osy – proto ze Země vidíme STÁLE STEJNOU (přivrácenou) stranu Měsíce.",
+      "Fáze Měsíce a zatmění: Při oběhu Měsíce kolem Země pozorujeme 4 hlavní fáze: 1) NOV (Měsíc je mezi Zemí a Sluncem, není vidět), 2) PRVNÍ ČTVRŤ (dorůstá do tvaru písmene D), 3) ÚPLNĚK (svítí celý kotouč Měsíce), 4) POSLEDNÍ ČTVRŤ (couvá/ubývá do tvaru písmene C). • ZATMĚNÍ SLUNCE nastane, když Měsíc ve fázi novu vstoupí přesně mezi Slunce a Zemi. • ZATMĚNÍ MĚSÍCE nastane, když Země vrhne stín na Měsíc ve fázi úplňku.",
+      "Působení Měsíce na Zemi – slapové jevy (příliv a odliv): Gravitační přitažlivost Měsíce (a menší měrou i Slunce) působí na světový oceán a způsobuje SLAPOVÉ JEVY – DMUTÍ MOŘÍ, tedy pravidelné střídání PŘÍLIVU (vzdutí hladiny) a ODLIVU (pokles hladiny). Během jednoho dne (24 hodin) se na jednom místě vystřídají 2 přílivy a 2 odlivy (příliv a odliv se mění přibližně každých 6 hodin).",
+      "Dálkový průzkum Země (DPZ) – definice, dělení a využití: DPZ je získávání, analýza a interpretace LETECKÝCH a DRUŽICOVÝCH snímků pro geografické účely. • Dělení snímků podle území: a) GLOBÁLNÍ (celá planeta), b) OBLASTNÍ (velké části – celé státy), c) MÍSTNÍ (malé části – města). • Dělení podle barev: 1. BAREVNÉ (přirozené a nepřirozené barvy), 2. ČERNOBÍLÉ (vystínované). • Využití DPZ: 1) studium životního prostředí, 2) meteorologie – předpověď počasí, 3) kartografie – tvorba map, 4) mapování – land use (využití ploch Země), 5) průmysl, zemědělství, vodstvo, půdy.",
+      "Družice podle drah obletu Země (DPZ): • a) GEOSTACIONÁRNÍ družice – obíhají nad rovníkem (stále nad stejným místem na Zemi), příklad: meteorologická družice METEOSAT (MSG). • b) Družice se ŠIKMOU DRÁHOU – obíhají mezi rovníkem a pólem, příklad: navigační družice GPS. • c) SUBPOLÁRNÍ družice – obíhají v blízkosti pólů, příklad: družice LANDSAT a NOAA (počasí)."
+    ],
+    "updatedAt": 1794349000000,
+    "lang": "cs",
+    "questions": [
+      {
+        "id": "zem-q1",
+        "type": "multiple-choice",
+        "prompt": "Jak se nazývá obecně uznávaná teorie vzniku vesmíru a před jakou dobou k němu přibližně došlo?",
+        "options": [
+          "Velký třesk (Big Bang) přibližně před 13,7 až 13,8 miliardy let",
+          "Velký třesk přibližně před 4,8 milionu let",
+          "Sluneční exploze přibližně před 100 tisíci lety",
+          "Srážka dvou planet před 1 miliardou let"
+        ],
+        "correctAnswer": "Velký třesk (Big Bang) přibližně před 13,7 až 13,8 miliardy let",
+        "explanation": "Vesmír vznikl velkým třeskem před 13,7 až 13,8 miliardy let a od té doby se neustále vyvíjí a rozpíná."
+      },
+      {
+        "id": "zem-q2",
+        "type": "type-in",
+        "prompt": "Jak se nazývá věda, která zkoumá vesmír a kosmické objekty?",
+        "correctAnswer": "astronomie",
+        "acceptedAnswers": [
+          "astronomie"
+        ],
+        "explanation": "Věda zkoumající vesmír a vesmírná tělesa se nazývá astronomie."
+      },
+      {
+        "id": "zem-q3",
+        "type": "multiple-choice",
+        "prompt": "Která síla řídí celý vesmír, pohyb kosmických těles a drží Zemi na oběžné dráze kolem Slunce?",
+        "options": [
+          "Magnetická síla Měsíce",
+          "Gravitační síla (přitažlivost)",
+          "Třecí síla vzduchu",
+          "Sluneční vítr"
+        ],
+        "correctAnswer": "Gravitační síla (přitažlivost)",
+        "explanation": "Podle gravitačního zákona se kosmické objekty vzájemně přitahují gravitační silou, která řídí pohyb všech těles ve vesmíru."
+      },
+      {
+        "id": "zem-q4",
+        "type": "multiple-choice",
+        "prompt": "Co jsou to HVĚZDY? Vyber přesnou definici ze sešitu a učebnice:",
+        "options": [
+          "Chladná kamenná tělesa, která pouze odrážejí cizí světlo",
+          "Tělesa složená z ledu a prachu s dlouhým ohonem",
+          "Velké, horké plynné koule, které září vlastním světlem",
+          "Malé a nepravidelné úlomky hornin obíhající kolem planet"
+        ],
+        "correctAnswer": "Velké, horké plynné koule, které září vlastním světlem",
+        "explanation": "Hvězdy (včetně našeho Slunce) jsou obrovské horké koule žhavých plynů s teplotou v nitru několik milionů °C, které svítí vlastním světlem."
+      },
+      {
+        "id": "zem-q5",
+        "type": "type-in",
+        "prompt": "Jak se jmenuje naše galaxie (a zároveň světlý pás hvězd pozorovatelný na noční obloze)?",
+        "correctAnswer": "Mléčná dráha",
+        "acceptedAnswers": [
+          "mléčná dráha",
+          "mlecna draha",
+          "galaxie"
+        ],
+        "explanation": "Naše galaxie se nazývá Galaxie neboli Mléčná dráha a má tvar plochého disku."
+      },
+      {
+        "id": "zem-q6",
+        "type": "multiple-choice",
+        "prompt": "Jaká je střední vzdálenost Země od Slunce a jak velký je poloměr Slunce oproti Zemi?",
+        "options": [
+          "Vzdálenost je asi 150 milionů km a Slunce má asi 100× větší poloměr než Země",
+          "Vzdálenost je 384 000 km a Slunce je stejně velké jako Země",
+          "Vzdálenost je 40 075 km a Slunce má 10× větší poloměr než Země",
+          "Vzdálenost je 15 milionů km a Slunce je menší než Země"
+        ],
+        "correctAnswer": "Vzdálenost je asi 150 milionů km a Slunce má asi 100× větší poloměr než Země",
+        "explanation": "Střední vzdálenost Slunce a Země je asi 150 mil. km. Slunce má 100× větší poloměr a 330 000× větší hmotnost než Země (jako tenisový míček a zrnko máku)."
+      },
+      {
+        "id": "zem-q7",
+        "type": "multiple-choice",
+        "prompt": "Která hvězda je vůbec NEJJASNĚJŠÍ na naší noční obloze?",
+        "options": [
+          "Polárka v souhvězdí Malého medvěda",
+          "Sirius v souhvězdí Velkého psa",
+          "Albireo v souhvězdí Labutě",
+          "Venuše"
+        ],
+        "correctAnswer": "Sirius v souhvězdí Velkého psa",
+        "explanation": "Nejjasnější hvězdou noční oblohy je Sirius v souhvězdí Velkého psa (Slunce pozorujeme ve dne a Venuše je planeta, nikoli hvězda)."
+      },
+      {
+        "id": "zem-q8",
+        "type": "multiple-choice",
+        "prompt": "Co jsou to OBTOČNOVÁ souhvězdí a která hvězda je v jejich blízkosti?",
+        "options": [
+          "Souhvězdí viditelná pouze v létě na jižní polokouli",
+          "Souhvězdí, která u nás můžeme pozorovat po celý rok; leží blízko Polárky (např. Malý medvěd, Velká medvědice, Kasiopeja, Cefeus, Drak)",
+          "Dvanáct znamení zvěrokruhu",
+          "Souhvězdí viditelná pouze dalekohledem ve dne"
+        ],
+        "correctAnswer": "Souhvězdí, která u nás můžeme pozorovat po celý rok; leží blízko Polárky (např. Malý medvěd, Velká medvědice, Kasiopeja, Cefeus, Drak)",
+        "explanation": "Obtočnová souhvězdí u nás nikdy nezapadají za obzor, vidíme je po celý rok a nacházejí se blízko hvězdy Polárky, která ukazuje sever."
+      },
+      {
+        "id": "zem-q9",
+        "type": "multiple-choice",
+        "prompt": "Kolik různých souhvězdí celkem astronomové rozlišují na celé hvězdné obloze a které 13. souhvězdí doplnili mezi zvířetníková souhvězdí?",
+        "options": [
+          "88 souhvězdí celkem; 13. zvířetníkovým souhvězdím je Hadonoš",
+          "12 souhvězdí celkem; 13. souhvězdím je Orion",
+          "50 souhvězdí celkem; 13. souhvězdím je Velký pes",
+          "365 souhvězdí celkem; 13. souhvězdím je Kasiopeja"
+        ],
+        "correctAnswer": "88 souhvězdí celkem; 13. zvířetníkovým souhvězdím je Hadonoš",
+        "explanation": "Hvězdná obloha je rozdělena na 88 souhvězdí. Znamení zvěrokruhu je sice 12, ale Slunce na obloze prochází i 13. zvířetníkovým souhvězdím – Hadonošem."
+      },
+      {
+        "id": "zem-q10",
+        "type": "multiple-choice",
+        "prompt": "Co vyjadřuje jednotka SVĚTELNÝ ROK?",
+        "options": [
+          "Čas, za který se Země otočí kolem Slunce (365 dní)",
+          "Vzdálenost, kterou urazí světlo za jeden rok",
+          "Stáří nejbližší hvězdy",
+          "Dobu, po kterou svítí Slunce"
+        ],
+        "correctAnswer": "Vzdálenost, kterou urazí světlo za jeden rok",
+        "explanation": "Světelný rok je jednotka VZDÁLENOSTI (nikoli času!) používaná pro obrovské vzdálenosti ve vesmíru."
+      },
+      {
+        "id": "zem-q11",
+        "type": "multiple-choice",
+        "prompt": "Kdo byl prvním člověkem ve vesmíru (12. 4. 1961 v lodi Vostok) a kdo prvním československým kosmonautem (2. 3. 1978)?",
+        "options": [
+          "Neil Armstrong (1961) a Jurij Gagarin (1978)",
+          "Jurij Gagarin (12. 4. 1961) a Vladimír Remek (2. 3. 1978)",
+          "Vladimír Remek (1961) a Edwin Aldrin (1978)",
+          "Hipparchos (1961) a Sputnik (1978)"
+        ],
+        "correctAnswer": "Jurij Gagarin (12. 4. 1961) a Vladimír Remek (2. 3. 1978)",
+        "explanation": "12. 4. 1961 obletěl Zemi v lodi Vostok první kosmonaut Jurij Gagarin. 2. 3. 1978 vyletěl do vesmíru první občan naší republiky Vladimír Remek."
+      },
+      {
+        "id": "zem-q12",
+        "type": "multiple-choice",
+        "prompt": "Která historická událost kosmonautiky se odehrála 4. 10. 1957 a která 20. 7. 1969?",
+        "options": [
+          "4. 10. 1957 – první umělá družice Sputnik 1; 20. 7. 1969 – přistání lidí na Měsíci (Apollo 11: N. Armstrong a E. Aldrin)",
+          "4. 10. 1957 – přistání na Měsíci; 20. 7. 1969 – první družice Sputnik 1",
+          "4. 10. 1957 – let Vladimíra Remka; 20. 7. 1969 – sonda Luna 3",
+          "4. 10. 1957 – přistání na Marsu; 20. 7. 1969 – let Jurije Gagarina"
+        ],
+        "correctAnswer": "4. 10. 1957 – první umělá družice Sputnik 1; 20. 7. 1969 – přistání lidí na Měsíci (Apollo 11: N. Armstrong a E. Aldrin)",
+        "explanation": "4. 10. 1957 odstartovala první umělá družice Země Sputnik 1 (a 4. 10. 1959 vyfotila Luna 3 odvrácenou stranu Měsíce). 20. 7. 1969 přistál modul Apollo 11 na Měsíci."
+      },
+      {
+        "id": "zem-q13",
+        "type": "multiple-choice",
+        "prompt": "Kdy a jak vznikla naše sluneční soustava?",
+        "options": [
+          "Asi před 4,8 miliardy let z rotujícího mračna chladného prachu a plynu, v jehož středu vzniklo praslunce",
+          "Před 10 000 lety rozpadem Měsíce",
+          "Před 100 miliardami let z čistého ledu",
+          "Před 1 milionem let výbuchem komety"
+        ],
+        "correctAnswer": "Asi před 4,8 miliardy let z rotujícího mračna chladného prachu a plynu, v jehož středu vzniklo praslunce",
+        "explanation": "Sluneční soustava se začala vytvářet společně se Sluncem (prasluncem) asi před 4,8 miliardy let z rotujícího mračna prachu a plynu."
+      },
+      {
+        "id": "zem-q14",
+        "type": "multiple-choice",
+        "prompt": "Ve které možnosti jsou vyjmenovány POUZE vnitřní – terestrické (kamenné) planety ve správném pořadí od Slunce?",
+        "options": [
+          "Merkur, Venuše, Země, Mars",
+          "Země, Venuše, Mars, Jupiter",
+          "Jupiter, Saturn, Uran, Neptun",
+          "Merkur, Mars, Země, Saturn"
+        ],
+        "correctAnswer": "Merkur, Venuše, Země, Mars",
+        "explanation": "Čtyři vnitřní planety zemského typu (terestrické) v pořadí od Slunce jsou: 1. Merkur, 2. Venuše, 3. Země, 4. Mars."
+      },
+      {
+        "id": "zem-q15",
+        "type": "multiple-choice",
+        "prompt": "Ve které možnosti jsou uvedeny vnější – PLYNNÉ planety ve správném pořadí od Slunce?",
+        "options": [
+          "Jupiter, Saturn, Uran, Neptun",
+          "Saturn, Jupiter, Neptun, Uran",
+          "Mars, Jupiter, Saturn, Uran",
+          "Uran, Neptun, Pluto, Merkur"
+        ],
+        "correctAnswer": "Jupiter, Saturn, Uran, Neptun",
+        "explanation": "Čtyři vnější plynné planety (plynní obři) v pořadí od Slunce jsou: 5. Jupiter, 6. Saturn, 7. Uran, 8. Neptun."
+      },
+      {
+        "id": "zem-q16",
+        "type": "multiple-choice",
+        "prompt": "Jaký je rozdíl mezi PLANETKAMI a KOMETAMI (podle zápisu v sešitě)?",
+        "options": [
+          "Planetky jsou malé a nepravidelné kamenné objekty; komety jsou tělesa z prachu a ledu, která letí vesmírem",
+          "Planetky jsou obrovské žhavé hvězdy; komety jsou přirozené družice planet",
+          "Planetky jsou z plynu; komety jsou umělé družice",
+          "Mezi planetkami a kometami není žádný rozdíl"
+        ],
+        "correctAnswer": "Planetky jsou malé a nepravidelné kamenné objekty; komety jsou tělesa z prachu a ledu, která letí vesmírem",
+        "explanation": "Planetky jsou malá nepravidelná pevná tělesa, zatímco komety se skládají z prachu a ledu (při přiblížení ke Slunci vytvářejí zářící ohon)."
+      },
+      {
+        "id": "zem-q17",
+        "type": "type-in",
+        "prompt": "Jakým jednoslovným odborným názvem označujeme skutečný tvar Země (která není dokonale kulatá, ale mírně zploštělá na pólech jako mandarinka)?",
+        "correctAnswer": "geoid",
+        "acceptedAnswers": [
+          "geoid"
+        ],
+        "explanation": "Skutečnému, na pólech mírně zploštělému kulovitému tvaru Země říkáme geoid."
+      },
+      {
+        "id": "zem-q18",
+        "type": "multiple-choice",
+        "prompt": "Vyber správné rozměry planety Země (podle zápisu v sešitě):",
+        "options": [
+          "Obvod Země ≈ 40 075 km (40 075,004 km), poloměr od rovníku do středu = 6 378 km, plocha povrchu = 510 mil. km²",
+          "Obvod Země = 6 378 km, poloměr = 40 075 km, plocha povrchu = 150 mil. km²",
+          "Obvod Země = 384 000 km, poloměr = 10 000 km, plocha povrchu = 100 mil. km²",
+          "Obvod Země = 510 km, poloměr = 638 km, plocha povrchu = 40 mil. km²"
+        ],
+        "correctAnswer": "Obvod Země ≈ 40 075 km (40 075,004 km), poloměr od rovníku do středu = 6 378 km, plocha povrchu = 510 mil. km²",
+        "explanation": "Země měří po svém obvodu 40 075,004 km, od rovníku do středu (poloměr) 6 378 km a plocha povrchu Země je 510 mil. km²."
+      },
+      {
+        "id": "zem-q19",
+        "type": "type-in",
+        "prompt": "Kolik kilometrů měří poloměr Země od rovníku do středu? (Napiš číslo v km, např. 6378)",
+        "correctAnswer": "6378",
+        "acceptedAnswers": [
+          "6378",
+          "6 378",
+          "6378 km",
+          "6 378 km"
+        ],
+        "explanation": "Rovníkový poloměr Země (vzdálenost od rovníku do středu Země) měří 6 378 km."
+      },
+      {
+        "id": "zem-q20",
+        "type": "type-in",
+        "prompt": "Kolik milionů km² je celková plocha povrchu Země? (Napiš číslo v milionech, např. 510)",
+        "correctAnswer": "510",
+        "acceptedAnswers": [
+          "510",
+          "510 mil",
+          "510 mil.",
+          "510 mil. km2",
+          "510 mil. km²",
+          "510 milionů"
+        ],
+        "explanation": "Celková plocha povrchu Země činí 510 mil. km²."
+      },
+      {
+        "id": "zem-q21",
+        "type": "type-in",
+        "prompt": "Jak nazýváme zmenšený kulový model (zdrobnělinu) Země?",
+        "correctAnswer": "glóbus",
+        "acceptedAnswers": [
+          "glóbus",
+          "globus"
+        ],
+        "explanation": "Zmenšený trojrozměrný model planety Země se nazývá glóbus."
+      },
+      {
+        "id": "zem-q22",
+        "type": "multiple-choice",
+        "prompt": "Jaká je přibližná vzdálenost Měsíce od Země a za jak dlouho ji urazí světlo?",
+        "options": [
+          "384 000 km – světlo tuto vzdálenost urazí přibližně za 1 sekundu",
+          "150 milionů km – světlo ji urazí za 1 rok",
+          "40 075 km – světlo ji urazí za 1 hodinu",
+          "6 378 km – světlo ji urazí za 10 minut"
+        ],
+        "correctAnswer": "384 000 km – světlo tuto vzdálenost urazí přibližně za 1 sekundu",
+        "explanation": "Měsíc je od Země vzdálen přibližně 384 000 km a světlo tuto dráhu uletí přibližně za 1 sekundu."
+      },
+      {
+        "id": "zem-q23",
+        "type": "multiple-choice",
+        "prompt": "Proč ze Země vidíme vždy jen jednu (přivrácenou) stranu Měsíce?",
+        "options": [
+          "Protože Měsíc se kolem své osy vůbec neotáčí",
+          "Protože doba otočení Měsíce kolem vlastní osy je stejně dlouhá jako doba jeho oběhu kolem Země (asi 28 dní)",
+          "Protože odvrácená strana Měsíce je vždy ve stínu Země",
+          "Protože Měsíc obíhá pouze nad severním pólem"
+        ],
+        "correctAnswer": "Protože doba otočení Měsíce kolem vlastní osy je stejně dlouhá jako doba jeho oběhu kolem Země (asi 28 dní)",
+        "explanation": "Měsíc má vázanou rotaci: kolem své osy se otočí za stejnou dobu (cca 27,3–28 dní), za jakou oběhne kolem Země."
+      },
+      {
+        "id": "zem-q24",
+        "type": "multiple-choice",
+        "prompt": "Jak po sobě následují 4 hlavní fáze Měsíce?",
+        "options": [
+          "Nov → první čtvrť (dorůstá, tvar D) → úplněk → poslední čtvrť (couvá, tvar C)",
+          "Úplněk → nov → první čtvrť → zatmění",
+          "První čtvrť → úplněk → poslední čtvrť → příliv",
+          "Nov → úplněk → první čtvrť → poslední čtvrť"
+        ],
+        "correctAnswer": "Nov → první čtvrť (dorůstá, tvar D) → úplněk → poslední čtvrť (couvá, tvar C)",
+        "explanation": "V novu je Měsíc neosvětlený, v první čtvrti dorůstá (D), v úplňku září celý kotouč a v poslední čtvrti couvá (C)."
+      },
+      {
+        "id": "zem-q25",
+        "type": "multiple-choice",
+        "prompt": "Jak působí Měsíc svou gravitační silou na vodní obal Země?",
+        "options": [
+          "Způsobuje slapové jevy – dmutí moří, tedy pravidelné střídání přílivu a odlivu",
+          "Způsobuje střídání čtyř ročních období",
+          "Ohřívá vodu v oceánech svým vlastním tepelným zářením",
+          "Způsobuje vznik polární záře"
+        ],
+        "correctAnswer": "Způsobuje slapové jevy – dmutí moří, tedy pravidelné střídání přílivu a odlivu",
+        "explanation": "Gravitační přitažlivost Měsíce (spolu se Sluncem) vyvolává slapové jevy – příliv a odliv, které se na pobřeží střídají přibližně každých 6 hodin (2× příliv a 2× odliv za den)."
+      },
+      {
+        "id": "zem-q26",
+        "type": "multiple-choice",
+        "prompt": "Kdy nastává ZATMĚNÍ SLUNCE a kdy ZATMĚNÍ MĚSÍCE?",
+        "options": [
+          "Zatmění Slunce: Měsíc (v novu) vstoupí mezi Slunce a Zemi; Zatmění Měsíce: Země je mezi Sluncem a Měsícem (v úplňku)",
+          "Zatmění Slunce: Země vstoupí mezi Slunce a Měsíc; Zatmění Měsíce: Slunce vstoupí mezi Zemi a Měsíc",
+          "Zatmění Slunce nastává každou noc o půlnoci",
+          "Zatmění Měsíce nastává pouze ve fázi novu"
+        ],
+        "correctAnswer": "Zatmění Slunce: Měsíc (v novu) vstoupí mezi Slunce a Zemi; Zatmění Měsíce: Země je mezi Sluncem a Měsícem (v úplňku)",
+        "explanation": "Při zatmění Slunce vrhá Měsíc v novu stín na Zemi. Při zatmění Měsíce vrhá Země svůj stín na Měsíc v úplňku."
+      },
+      {
+        "id": "zem-q27",
+        "type": "multiple-choice",
+        "prompt": "Co je to DÁLKOVÝ PRŮZKUM ZEMĚ (DPZ)?",
+        "options": [
+          "Získávání, analýza a interpretace leteckých a družicových snímků pro geografické účely",
+          "Hlubinné vrtání do zemské kůry na kontinentech",
+          "Pozorování cizích galaxií ze dna oceánu",
+          "Měření teploty vzduchu pomocí pokojového teploměru"
+        ],
+        "correctAnswer": "Získávání, analýza a interpretace leteckých a družicových snímků pro geografické účely",
+        "explanation": "Podle definice z pracovního listu je DPZ získávání, analýza a interpretace leteckých a družicových snímků pro geografické účely."
+      },
+      {
+        "id": "zem-q28",
+        "type": "multiple-choice",
+        "prompt": "Jak dělíme snímky Dálkového průzkumu Země (DPZ) podle velikosti zachyceného území?",
+        "options": [
+          "a) globální (celá planeta), b) oblastní (velké části – celé státy), c) místní (malé části – města)",
+          "a) vesmírné, b) podzemní, c) podmořské",
+          "a) vnitřní, b) vnější, c) okrajové",
+          "a) rovníkové, b) polární, c) šikmé"
+        ],
+        "correctAnswer": "a) globální (celá planeta), b) oblastní (velké části – celé státy), c) místní (malé části – města)",
+        "explanation": "Podle rozsahu území dělíme snímky DPZ na globální (celá planeta), oblastní (velké části – celé státy) a místní (malé části – města)."
+      },
+      {
+        "id": "zem-q29",
+        "type": "multiple-choice",
+        "prompt": "Jak dělíme snímky DPZ podle barevnosti (z pracovního listu)?",
+        "options": [
+          "1. barevné (přirozené a nepřirozené barvy) a 2. černobílé (vystínované)",
+          "1. olejomalby a 2. kresby tužkou",
+          "1. průhledné a 2. neprůhledné",
+          "1. denní a 2. zimní"
+        ],
+        "correctAnswer": "1. barevné (přirozené a nepřirozené barvy) a 2. černobílé (vystínované)",
+        "explanation": "Snímky DPZ dělíme na barevné (v přirozených i nepřirozených barvách) a černobílé (vystínované)."
+      },
+      {
+        "id": "zem-q30",
+        "type": "multiple-choice",
+        "prompt": "Co znamená v Dálkovém průzkumu Země pojem „mapování – land use“ a k čemu dalšímu se DPZ využívá?",
+        "options": [
+          "Mapování využití ploch Země (dále studium životního prostředí, meteorologie – předpověď počasí, kartografie – tvorba map, průmysl, zemědělství, vodstvo, půdy)",
+          "Hledání pokladů na Měsíci",
+          "Stavba kosmických raket a družic",
+          "Určování znamení zvěrokruhu"
+        ],
+        "correctAnswer": "Mapování využití ploch Země (dále studium životního prostředí, meteorologie – předpověď počasí, kartografie – tvorba map, průmysl, zemědělství, vodstvo, půdy)",
+        "explanation": "Land use znamená využití ploch Země. Spolu se studiem životního prostředí, meteorologií, kartografií a sledováním průmyslu, zemědělství, vodstva a půd patří mezi 5 hlavních využití DPZ."
+      },
+      {
+        "id": "zem-q31",
+        "type": "multiple-choice",
+        "prompt": "Kde obíhají GEOSTACIONÁRNÍ družice a která známá meteorologická družice mezi ně patří?",
+        "options": [
+          "Nad rovníkem – např. družice METEOSAT (MSG)",
+          "V blízkosti pólů – např. družice LANDSAT",
+          "Mezi rovníkem a pólem – např. GPS",
+          "Kolem Měsíce – např. Luna 3"
+        ],
+        "correctAnswer": "Nad rovníkem – např. družice METEOSAT (MSG)",
+        "explanation": "Geostacionární družice obíhají nad rovníkem stejnou úhlovou rychlostí, jakou se otáčí Země, a patří k nim meteorologická družice METEOSAT (MSG)."
+      },
+      {
+        "id": "zem-q32",
+        "type": "multiple-choice",
+        "prompt": "Po jaké dráze obíhají navigační družice GPS a po jaké dráze družice LANDSAT a NOAA?",
+        "options": [
+          "GPS obíhají po šikmé dráze (mezi rovníkem a pólem); LANDSAT a NOAA obíhají po subpolární dráze (v blízkosti pólů)",
+          "GPS jsou geostacionární nad rovníkem; LANDSAT obíhá kolem Slunce",
+          "GPS obíhají kolem pólů; LANDSAT obíhá po šikmé dráze",
+          "Všechny družice obíhají výhradně nad rovníkem"
+        ],
+        "correctAnswer": "GPS obíhají po šikmé dráze (mezi rovníkem a pólem); LANDSAT a NOAA obíhají po subpolární dráze (v blízkosti pólů)",
+        "explanation": "Družice GPS využívají šikmou dráhu (mezi rovníkem a pólem), zatímco družice LANDSAT a NOAA létají po subpolární dráze v blízkosti pólů."
+      },
+      {
+        "id": "zem-q33",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Měsíc je hvězda, která září svým vlastním světlem.",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Lež",
+        "explanation": "Lež! Měsíc je přirozená družice Země. Vlastním světlem nezáří – vidíme ho jen proto, že odráží světlo ze Slunce."
+      },
+      {
+        "id": "zem-q34",
+        "type": "type-in",
+        "prompt": "Jak se jmenuje družice nad rovníkem (geostacionární), která se používá pro sledování počasí v Evropě (zkratka MSG)?",
+        "correctAnswer": "METEOSAT",
+        "acceptedAnswers": [
+          "meteosat",
+          "meteosat (msg)",
+          "msg"
+        ],
+        "explanation": "METEOSAT (MSG) je geostacionární družice obíhající nad rovníkem."
+      }
+    ],
+    "createdAt": 1794343650000
   }
 ];

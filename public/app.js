@@ -553,12 +553,23 @@ function saveLocalAttempts() {
   localStorage.setItem(STORAGE_KEYS.ATTEMPTS, JSON.stringify(state.attempts));
 }
 
+function stripSubjectPrefixFromTitle(title = '', subject = '') {
+  const cleanTitle = String(title || '').trim();
+  const cleanSubject = String(subject || '').trim();
+  if (!cleanSubject) return cleanTitle;
+  const escaped = cleanSubject.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const prefixRegex = new RegExp(`^${escaped}\\s*[-–—:]\\s*`, 'i');
+  return cleanTitle.replace(prefixRegex, '').trim();
+}
+
 function sanitizeTopicForFirestore(topic) {
   const now = Date.now();
+  const subject = String(topic.subject || 'General').slice(0, 100);
+  const title = stripSubjectPrefixFromTitle(topic.title || 'Untitled Topic', subject).slice(0, 200);
   return {
     id: String(topic.id).slice(0, 150),
-    title: String(topic.title || 'Untitled Topic').slice(0, 200),
-    subject: String(topic.subject || 'General').slice(0, 100),
+    title,
+    subject,
     description: String(topic.description || '').slice(0, 2000),
     lang: ['en', 'cs', 'both'].includes(topic.lang) ? topic.lang : 'en',
     studyNotes: Array.isArray(topic.studyNotes) ? topic.studyNotes.slice(0, 100) : [],
@@ -995,6 +1006,7 @@ function getSubjectIcon(subject = '') {
   const s = subject.toLowerCase();
   if (s.includes('fyzik')) return '⚡';
   if (s.includes('česk') || s.includes('cesk') || s.includes('literat')) return '📕';
+  if (s.includes('země') || s.includes('zeme')) return '🌍';
   if (s.includes('mat')) return '📐';
   if (s.includes('děj') || s.includes('dej')) return '🏛️';
   if (s.includes('angli') || s.includes('eng')) return '🇬🇧';
@@ -1123,7 +1135,7 @@ function renderTopicsGrid() {
     }
 
     const h3 = document.createElement('h3');
-    h3.textContent = tp.title;
+    h3.textContent = stripSubjectPrefixFromTitle(tp.title, tp.subject);
     if (tp.lang && tp.lang !== state.lang && tp.lang !== 'both') {
       h3.setAttribute('lang', tp.lang);
     }
@@ -1176,7 +1188,7 @@ function openStudyMode(topicId) {
   state.flashcardFlipped = false;
 
   document.getElementById('study-topic-subject').textContent = topic.subject;
-  document.getElementById('study-topic-title').textContent = topic.title;
+  document.getElementById('study-topic-title').textContent = stripSubjectPrefixFromTitle(topic.title, topic.subject);
   document.getElementById('study-topic-desc').textContent = topic.description || '';
 
   const notesList = document.getElementById('study-notes-list');
