@@ -1,0 +1,6 @@
+{
+  "updatedAt": "2026-11-09T23:59:00+01:00",
+  "description": "Drop or add book-photo generated topics into the 'topics' array below. The app automatically merges them into Honza's study library.",
+  "topics": []
+}
+

@@ -1,0 +1,217 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // This security rules file assumes the following data structures:
+    //
+    // Collection: topics
+    // Document ID: {topicId}
+    // Fields:
+    //   - title: string (required, 1..200 chars) - Topic or quiz title
+    //   - subject: string (required, 1..100 chars) - School subject name
+    //   - questions: list (required, 1..200 items) - Quiz questions array
+    //   - id: string (optional, 1..150 chars, immutable) - Topic identifier
+    //   - description: string (optional, 0..2000 chars) - Topic overview/instructions
+    //   - lang: string (optional, enum: 'en' | 'cs' | 'both') - Topic language mode
+    //   - studyNotes: list (optional, 0..100 items) - Study notes / key facts
+    //   - flashcards: list (optional, 0..200 items) - Study flashcards
+    //   - createdAt: number or timestamp (optional, immutable) - Creation timestamp
+    //   - updatedAt: number or timestamp (optional) - Last modification timestamp
+    //   - authorName: string (optional, 0..100 chars) - Name of parent/teacher author
+    //
+    // Collection: attempts
+    // Document ID: {attemptId}
+    // Fields (All immutable once created):
+    //   - topicId: string (required, 1..150 chars) - Associated topic ID
+    //   - topicTitle: string (required, 1..200 chars) - Associated topic title snapshot
+    //   - studentName: string (required, 1..100 chars) - Name of the student (e.g. Honza)
+    //   - score: int (required, 0..totalQuestions) - Number of correct answers
+    //   - totalQuestions: int (required, 1..200) - Total questions in the quiz attempt
+    //   - percentage: number (required, 0..100) - Score percentage
+    //   - answers: list (required, 1..200 items) - Detailed per-question review log
+    //   - completedAt: number or timestamp (required) - Completion timestamp
+    //   - id: string (optional, 1..150 chars) - Attempt identifier
+    //   - durationSeconds: int (optional, 0..86400) - Time spent in seconds
+    //   - mode: string (optional, enum: 'full' | 'mistakes') - Quiz mode
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return request.auth != null &&
+        (request.auth.token.email == 'admin@honza-study-space.app' ||
+         request.auth.token.email == 'janantl@gmail.com');
+    }
+
+    function isStarterTopic(topicId) {
+      return topicId in [
+        'solar-system-explorer',
+        'fractions-decimals-grade6',
+        'staroveke-recko-dejepis'
+      ];
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    function validStringLength(field, minLen, maxLen) {
+      return request.resource.data[field] is string &&
+        request.resource.data[field].size() >= minLen &&
+        request.resource.data[field].size() <= maxLen;
+    }
+
+    function isValidOptionalString(field, minLen, maxLen) {
+      return !(field in request.resource.data) ||
+        (request.resource.data[field] is string &&
+         request.resource.data[field].size() >= minLen &&
+         request.resource.data[field].size() <= maxLen);
+    }
+
+    function isValidList(listData, minSize, maxSize) {
+      return listData is list &&
+        listData.size() >= minSize &&
+        listData.size() <= maxSize;
+    }
+
+    function isValidOptionalList(field, maxSize) {
+      return !(field in request.resource.data) ||
+        (request.resource.data[field] is list &&
+         request.resource.data[field].size() <= maxSize);
+    }
+
+    function isValidTimeOrNumber(val) {
+      return (val is timestamp) || (val is int && val >= 0) || (val is float && val >= 0);
+    }
+
+    function isImmutableFieldUnchanged(field) {
+      return !(field in resource.data) ||
+        (field in request.resource.data && request.resource.data[field] == resource.data[field]);
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+
+    function isValidTopic(data) {
+      let allowedFields = [
+        'id',
+        'title',
+        'subject',
+        'description',
+        'lang',
+        'studyNotes',
+        'flashcards',
+        'questions',
+        'createdAt',
+        'updatedAt',
+        'authorName'
+      ];
+      let requiredFields = ['title', 'subject', 'questions'];
+
+      return hasOnlyAllowedFields(allowedFields) &&
+        hasRequiredFields(requiredFields) &&
+        validStringLength('title', 1, 200) &&
+        validStringLength('subject', 1, 100) &&
+        isValidList(data.questions, 1, 200) &&
+        isValidOptionalString('id', 1, 150) &&
+        isValidOptionalString('description', 0, 2000) &&
+        (!('lang' in data) || (data.lang is string && data.lang in ['en', 'cs', 'both'])) &&
+        isValidOptionalList('studyNotes', 100) &&
+        isValidOptionalList('flashcards', 200) &&
+        (!('createdAt' in data) || isValidTimeOrNumber(data.createdAt)) &&
+        (!('updatedAt' in data) || isValidTimeOrNumber(data.updatedAt)) &&
+        isValidOptionalString('authorName', 0, 100);
+    }
+
+    function isValidAttempt(data) {
+      let allowedFields = [
+        'id',
+        'topicId',
+        'topicTitle',
+        'studentName',
+        'score',
+        'totalQuestions',
+        'percentage',
+        'answers',
+        'completedAt',
+        'durationSeconds',
+        'mode'
+      ];
+      let requiredFields = [
+        'topicId',
+        'topicTitle',
+        'studentName',
+        'score',
+        'totalQuestions',
+        'percentage',
+        'answers',
+        'completedAt'
+      ];
+
+      return hasOnlyAllowedFields(allowedFields) &&
+        hasRequiredFields(requiredFields) &&
+        validStringLength('topicId', 1, 150) &&
+        validStringLength('topicTitle', 1, 200) &&
+        validStringLength('studentName', 1, 100) &&
+        data.score is int &&
+        data.score >= 0 &&
+        data.totalQuestions is int &&
+        data.totalQuestions >= 1 &&
+        data.totalQuestions <= 200 &&
+        data.score <= data.totalQuestions &&
+        (data.percentage is int || data.percentage is float) &&
+        data.percentage >= 0 &&
+        data.percentage <= 100 &&
+        isValidList(data.answers, 1, 200) &&
+        isValidTimeOrNumber(data.completedAt) &&
+        isValidOptionalString('id', 1, 150) &&
+        (!('durationSeconds' in data) || (data.durationSeconds is int && data.durationSeconds >= 0 && data.durationSeconds <= 86400)) &&
+        (!('mode' in data) || (data.mode is string && data.mode in ['full', 'mistakes']));
+    }
+
+    // ===============================================================
+    // Collection Rules
+    // ===============================================================
+
+    // Study topics and quizzes collection
+    match /topics/{topicId} {
+      allow read: if isSignedIn();
+      allow create: if (isAdmin() || (isSignedIn() && isStarterTopic(topicId))) &&
+        isValidTopic(request.resource.data);
+      allow update: if (isAdmin() || (isSignedIn() && isStarterTopic(topicId))) &&
+        isValidTopic(request.resource.data) &&
+        isImmutableFieldUnchanged('id') &&
+        isImmutableFieldUnchanged('createdAt');
+      allow delete: if isAdmin();
+    }
+
+    // Quiz attempts and score logs collection (immutable once created for score integrity)
+    match /attempts/{attemptId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isValidAttempt(request.resource.data);
+      allow update, delete: if false;
+    }
+
+    // Default deny for all other paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

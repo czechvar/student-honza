@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="Honzův studijní prostor — Interaktivní výpisky, kartičky, kvízy a přehled výsledků.">
+  <!-- iOS / Android PWA Home Screen Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Honza Studium">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
+  <link rel="apple-touch-icon" href="/icons/icon.svg">
+  <title>Učení a kvízy | Honzův studijní prostor</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "firebase/app": "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js",
+        "firebase/auth": "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js",
+        "firebase/firestore": "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js"
+      }
+    }
+  </script>
+</head>
+<body>
+  <a href="#main-heading" class="skip-link visually-hidden" data-i18n="skipToMain">Skip to main content</a>
+
+  <!-- Centralized polite live region for screen reader announcements -->
+  <div id="live-announcer" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-group">
+        <svg class="brand-logo" aria-hidden="true" viewBox="0 0 48 48" width="40" height="40">
+          <rect width="48" height="48" rx="12" fill="currentColor" opacity="0.15"/>
+          <path d="M10 15c0-2 1.5-3.5 3.5-3.5h8c2 0 3 1 3 2.5v19c0-1-1-1.5-3-1.5h-8c-2 0-3.5-1.5-3.5-3.5V15z" fill="currentColor"/>
+          <path d="M38 15c0-2-1.5-3.5-3.5-3.5h-8c-2 0-3 1-3 2.5v19c0-1 1-1.5 3-1.5h8c2 0 3.5-1.5 3.5-3.5V15z" fill="currentColor" opacity="0.75"/>
+          <polygon points="24,31 25.8,34.6 29.8,35.2 26.9,38 27.6,42 24,40.1 20.4,42 21.1,38 18.2,35.2 22.2,34.6" fill="#f59e0b"/>
+        </svg>
+        <div>
+          <span class="brand-title" data-i18n="appTitle">Honza's Study Space</span>
+          <span class="brand-subtitle" id="sync-status-badge" data-i18n="syncLocal">Local + Cloud Ready</span>
+        </div>
+      </div>
+
+      <nav aria-label="Primary" class="primary-nav" id="primary-nav" hidden>
+        <ul role="list" class="nav-list">
+          <li>
+            <button type="button" class="nav-btn is-active" data-nav="topics" aria-current="page">
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg>
+              <span data-i18n="navTopics">Study &amp; Quizzes</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="nav-btn" data-nav="scores">
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg>
+              <span data-i18n="navScores">Scores &amp; Review</span>
+              <span class="badge-pill" id="attempts-count-badge">0</span>
+            </button>
+          </li>
+          <li id="nav-studio-li" hidden>
+            <button type="button" class="nav-btn" data-nav="studio">
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+              <span data-i18n="navStudio">Parent Studio</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" class="user-profile-btn" id="open-login-btn" aria-label="Přepnout účet / Switch account">
+          <span id="current-user-avatar" aria-hidden="true">🔒</span>
+          <span id="current-user-label">Přihlásit</span>
+          <span class="switch-account-tag" id="switch-account-tag" hidden data-i18n="switchAccountShort">Přepnout</span>
+        </button>
+        <div class="lang-switch" role="group" aria-label="Jazyk rozhraní / Interface Language">
+          <button type="button" class="lang-btn" data-lang-switch="cs" aria-pressed="true">CZ</button>
+          <button type="button" class="lang-btn" data-lang-switch="en" aria-pressed="false">EN</button>
+        </div>
+        <button type="button" class="icon-action-btn" id="open-install-btn" data-i18n-aria="installAppAria" aria-label="Install on Android or iPhone">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14zm-1-6h-3V8h-2v5H8l4 4 4-4z"/></svg>
+          <span class="btn-label-desktop" data-i18n="installAppShort">Get App</span>
+        </button>
+        <button type="button" class="icon-action-btn" id="open-firebase-btn" hidden data-i18n-aria="cloudSettingsAria" aria-label="Firebase Cloud Settings">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
+          <span class="btn-label-desktop" data-i18n="cloudBtn">Firebase</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div class="hero-banner" id="hero-banner" hidden>
+      <div class="hero-text">
+        <h1 id="main-heading" tabindex="-1" data-i18n="heroHeading">Welcome back, Honza! Ready to level up?</h1>
+        <p id="hero-subtext" data-i18n="heroSub">Pick a topic to study notes and flashcards, then take the quiz and beat your high score.</p>
+      </div>
+      <div class="stats-strip" id="quick-stats-strip">
+        <div class="stat-chip">
+          <span class="stat-value" id="stat-quizzes-taken">0</span>
+          <span class="stat-label" data-i18n="statTestsCompleted">Tests Done</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-value" id="stat-avg-score">—</span>
+          <span class="stat-label" data-i18n="statAvgScore">Avg Score</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-value" id="stat-stars">0 ⭐</span>
+          <span class="stat-label" data-i18n="statStarsEarned">Stars Earned</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 1: TOPICS & STUDY HUB -->
+    <section id="view-topics" class="view-section" hidden>
+      <div class="toolbar-row">
+        <h2 data-i18n="availableTopicsHeading">Study Topics &amp; Quizzes</h2>
+        <search class="topic-search-box">
+          <form id="topic-filter-form" action="#view-topics" method="GET">
+            <label for="topic-search-input" class="visually-hidden" data-i18n="searchTopicsLabel">Filter topics by title or subject</label>
+            <input
+              type="search"
+              id="topic-search-input"
+              name="q"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              placeholder="Filter topics (e.g. Fyzika, Český jazyk)..."
+              data-i18n-placeholder="searchTopicsPlaceholder"
+            >
+          </form>
+        </search>
+      </div>
+
+      <div id="subject-filter-bar" class="subject-filter-bar" role="group" aria-label="Filtrovat podle předmětu"></div>
+
+      <ul role="list" id="topics-grid" class="topics-grid"></ul>
+    </section>
+
+    <!-- VIEW 2: ACTIVE STUDY & FLASHCARDS MODE -->
+    <section id="view-study" class="view-section" hidden>
+      <div class="session-topbar">
+        <button type="button" class="secondary-btn" id="back-from-study-btn">
+          ← <span data-i18n="backToTopics">Back to Topics</span>
+        </button>
+        <button type="button" class="primary-btn" id="start-quiz-from-study-btn">
+          <span data-i18n="startQuizNow">Start Quiz Now</span> →
+        </button>
+      </div>
+
+      <article class="study-card-container">
+        <header class="study-header">
+          <span class="subject-tag" id="study-topic-subject">Science</span>
+          <h2 id="study-topic-title">Topic Title</h2>
+          <p id="study-topic-desc" class="muted-text"></p>
+        </header>
+
+        <div class="study-columns">
+          <section class="study-notes-panel">
+            <h3 data-i18n="studyNotesHeading">📖 Key Study Notes</h3>
+            <ol id="study-notes-list" class="study-notes-list"></ol>
+          </section>
+
+          <section class="flashcards-panel">
+            <div class="flashcard-header-row">
+              <h3 data-i18n="flashcardsHeading">🃏 Flashcards Practice</h3>
+              <span id="flashcard-counter" class="badge-pill">1 / 5</span>
+            </div>
+            <div id="flashcard-stage" class="flashcard-stage">
+              <button type="button" id="flashcard-flip-btn" class="flashcard-box" aria-live="polite">
+                <span class="flashcard-side-badge" id="flashcard-side-label">QUESTION (Tap to flip)</span>
+                <p class="flashcard-text" id="flashcard-content">Front of card</p>
+              </button>
+              <div class="flashcard-controls">
+                <button type="button" class="secondary-btn" id="flashcard-prev-btn" data-i18n="prevCard">Previous</button>
+                <button type="button" class="secondary-btn" id="flashcard-flip-action-btn" data-i18n="flipCard">Flip Card</button>
+                <button type="button" class="primary-btn" id="flashcard-next-btn" data-i18n="nextCard">Next</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </article>
+    </section>
+
+    <!-- VIEW 3: INTERACTIVE QUIZ ENGINE -->
+    <section id="view-quiz" class="view-section" hidden>
+      <div class="session-topbar">
+        <button type="button" class="secondary-btn" id="quit-quiz-btn">
+          ✕ <span data-i18n="exitQuiz">Exit Quiz</span>
+        </button>
+        <div class="quiz-progress-wrapper">
+          <label for="quiz-progress-bar" id="quiz-progress-label" class="progress-text">Question 1 of 5</label>
+          <progress id="quiz-progress-bar" class="quiz-progress-bar" value="1" max="5" style="--brand-hue: 220;"></progress>
+        </div>
+        <span class="timer-pill" id="quiz-timer-display">00:00</span>
+      </div>
+
+      <article class="quiz-stage-card">
+        <header class="quiz-stage-header">
+          <span class="question-type-badge" id="quiz-question-type-badge">Multiple Choice</span>
+          <h2 id="quiz-question-prompt">Question prompt goes here?</h2>
+        </header>
+
+        <form id="quiz-answer-form" action="#view-quiz" method="POST" novalidate>
+          <div id="quiz-input-Mount"></div>
+
+          <div id="quiz-instant-feedback" class="quiz-feedback-box" hidden>
+            <p class="feedback-headline" id="quiz-feedback-headline"></p>
+            <p class="feedback-explanation" id="quiz-feedback-explanation"></p>
+          </div>
+
+          <div class="quiz-actions-footer">
+            <button type="submit" class="primary-btn lg-btn" id="quiz-submit-answer-btn" data-i18n="checkAnswerBtn">
+              Check Answer
+            </button>
+            <button type="button" class="primary-btn lg-btn" id="quiz-next-question-btn" hidden data-i18n="nextQuestionBtn">
+              Next Question →
+            </button>
+          </div>
+        </form>
+      </article>
+    </section>
+
+    <!-- VIEW 4: SCORES HISTORY & REVIEW DASHBOARD -->
+    <section id="view-scores" class="view-section" hidden>
+      <div class="toolbar-row">
+        <div>
+          <h2 data-i18n="scoresHistoryHeading">Honza's Test Scores &amp; Review History</h2>
+          <p class="muted-text" data-i18n="scoresHistorySub">Click any completed test to inspect every question, compare answers, and practice mistakes.</p>
+        </div>
+        <div class="filter-group">
+          <label for="scores-topic-filter" data-i18n="filterByTopicLabel">Filter by topic:</label>
+          <select id="scores-topic-filter" name="topicFilter">
+            <option value="all" data-i18n="allTopicsOption">All Topics</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="scores-empty-state" class="empty-state-card" hidden>
+        <h3 data-i18n="noScoresYetTitle">No completed quizzes yet!</h3>
+        <p data-i18n="noScoresYetSub">Once Honza finishes a quiz, his score, time, and full answer review will appear right here.</p>
+      </div>
+
+      <div class="table-scroll-container" id="scores-table-wrapper">
+        <table class="scores-table">
+          <caption class="visually-hidden" data-i18n="scoresTableCaption">Completed quiz attempts and scores</caption>
+          <thead>
+            <tr>
+              <th scope="col" data-i18n="colDate">Date &amp; Time</th>
+              <th scope="col" data-i18n="colTopic">Topic</th>
+              <th scope="col" data-i18n="colScore">Score</th>
+              <th scope="col" data-i18n="colTime">Time</th>
+              <th scope="col" data-i18n="colActions">Review &amp; Retry</th>
+            </tr>
+          </thead>
+          <tbody id="scores-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- VIEW 5: PARENT STUDIO (IN-APP EDITOR + BOOK PHOTO IMPORT) -->
+    <section id="view-studio" class="view-section" hidden>
+      <div class="toolbar-row">
+        <div>
+          <h2 data-i18n="parentStudioHeading">Parent Studio — Create &amp; Import Quizzes</h2>
+          <p class="muted-text" data-i18n="parentStudioSub">Create quizzes manually, or upload photos of Honza's textbook pages in Gemini chat to generate ready-to-import study packs.</p>
+        </div>
+        <div class="button-row">
+          <button type="button" class="primary-btn" id="create-new-topic-btn">
+            + <span data-i18n="newTopicBtn">Create New Quiz / Topic</span>
+          </button>
+          <button type="button" class="secondary-btn" id="open-import-modal-btn">
+            📥 <span data-i18n="importJsonBtn">Import Quiz JSON</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="studio-cards-grid">
+        <article class="studio-info-card">
+          <h3 data-i18n="bookPhotoWorkflowTitle">📸 How to turn Textbook Photos into Quizzes</h3>
+          <ol class="workflow-steps">
+            <li data-i18n="workflowStep1">Take a photo of 1–4 pages from Honza's textbook, workbook, or school notebook.</li>
+            <li data-i18n="workflowStep2">Drop the photo right here into our Gemini / Antigravity chat and say: "Make a quiz for Honza from this page".</li>
+            <li data-i18n="workflowStep3">I will automatically add the study notes, flashcards, and mixed quiz questions directly into your app (or give you a JSON block to paste via "Import Quiz JSON").</li>
+          </ol>
+          <details class="prompt-helper-details">
+            <summary data-i18n="copyAiPromptSummary">Copy AI Prompt for external Gemini / ChatGPT chats</summary>
+            <div class="details-body">
+              <p class="muted-text" data-i18n="copyAiPromptDesc">If you ever use Gemini on your phone with a book photo, copy this prompt so it outputs the exact JSON format for Honza's Study Space:</p>
+              <pre tabindex="0"><code id="ai-prompt-template">Create a JSON study topic for an 11-year-old student from the attached textbook photo(s). Return ONLY valid JSON matching this schema:
+{
+  "id": "unique-kebab-id",
+  "title": "Topic Title",
+  "subject": "Subject Name",
+  "lang": "en",
+  "description": "Short summary",
+  "studyNotes": ["Key point 1", "Key point 2"],
+  "flashcards": [{"front": "Question", "back": "Answer"}],
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Question?",
+      "options": ["A", "B", "C", "D"],
+      "correctAnswer": "A",
+      "explanation": "Why A is correct"
+    },
+    {
+      "id": "q2",
+      "type": "true-false",
+      "prompt": "Statement",
+      "options": ["True", "False"],
+      "correctAnswer": "True",
+      "explanation": "Explanation"
+    },
+    {
+      "id": "q3",
+      "type": "type-in",
+      "prompt": "Short answer question?",
+      "correctAnswer": "Answer",
+      "acceptedAnswers": ["answer", "alt answer"],
+      "explanation": "Explanation"
+    }
+  ]
+}</code></pre>
+              <button type="button" class="secondary-btn sm-btn" id="copy-prompt-btn" data-i18n="copyPromptBtn">Copy Prompt</button>
+            </div>
+          </details>
+        </article>
+
+        <article class="studio-info-card">
+          <h3 data-i18n="manageExistingTopicsTitle">📚 Manage Topics in Library</h3>
+          <ul role="list" id="studio-topics-list" class="studio-topics-list"></ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p data-i18n="footerText">Honza's Study Space • Works on Web, Android &amp; iPhone • Powered by Firebase Firestore</p>
+  </footer>
+
+  <!-- MODAL 1: ATTEMPT DETAILED REVIEW DIALOG -->
+  <dialog id="attempt-review-dialog" closedby="any" aria-labelledby="review-dialog-title">
+    <div class="dialog-inner">
+      <header class="dialog-header">
+        <div>
+          <span class="subject-tag" id="review-dialog-badge">Quiz Result Review</span>
+          <h2 id="review-dialog-title">Test Review</h2>
+        </div>
+        <form method="dialog">
+          <button type="submit" value="close" class="icon-close-btn" aria-label="Close review dialog">✕</button>
+        </form>
+      </header>
+
+      <div class="review-summary-banner" id="review-summary-banner"></div>
+
+      <div class="review-questions-list" id="review-questions-list"></div>
+
+      <footer class="dialog-footer">
+        <button type="button" class="secondary-btn" id="review-retry-mistakes-btn" hidden data-i18n="retryMistakesBtn">
+          🎯 Practice Missed Questions Only
+        </button>
+        <button type="button" class="primary-btn" id="review-retake-full-btn" data-i18n="retakeFullQuizBtn">
+          🔄 Retake Full Quiz
+        </button>
+        <form method="dialog">
+          <button type="submit" value="close" class="secondary-btn" data-i18n="closeBtn">Close</button>
+        </form>
+      </footer>
+    </div>
+  </dialog>
+
+  <!-- MODAL 2: IN-APP TOPIC & QUIZ EDITOR DIALOG -->
+  <dialog id="topic-editor-dialog" closedby="closerequest" aria-labelledby="editor-dialog-title">
+    <div class="dialog-inner dialog-wide">
+      <header class="dialog-header">
+        <h2 id="editor-dialog-title" data-i18n="editorModalTitle">Create / Edit Study Topic</h2>
+        <form method="dialog">
+          <button type="submit" value="cancel" class="icon-close-btn" aria-label="Close editor">✕</button>
+        </form>
+      </header>
+
+      <form id="topic-editor-form" action="#view-studio" method="POST" novalidate>
+        <input type="hidden" id="edit-topic-id" name="topicId">
+
+        <div class="form-grid-2">
+          <div class="field">
+            <label for="edit-topic-title" data-i18n="topicTitleLabel">Topic Title (Required)</label>
+            <span id="edit-title-hint" class="hint" data-i18n="topicTitleHint">E.g., Fractions &amp; Decimals or Starověké Řecko</span>
+            <input
+              type="text"
+              id="edit-topic-title"
+              name="title"
+              required
+              minlength="2"
+              maxlength="180"
+              aria-describedby="edit-title-hint"
+              aria-errormessage="edit-title-error"
+            >
+            <div id="edit-title-error" class="error-msg" data-i18n="topicTitleError">
+              <span aria-hidden="true">❌</span> Please enter a topic title (at least 2 characters).
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="edit-topic-subject" data-i18n="topicSubjectLabel">Subject (Required)</label>
+            <span id="edit-subject-hint" class="hint" data-i18n="topicSubjectHint">E.g., Math, Science, English, Dějepis, Přírodopis</span>
+            <input
+              type="text"
+              id="edit-topic-subject"
+              name="subject"
+              required
+              minlength="2"
+              maxlength="80"
+              aria-describedby="edit-subject-hint"
+              aria-errormessage="edit-subject-error"
+            >
+            <div id="edit-subject-error" class="error-msg" data-i18n="topicSubjectError">
+              <span aria-hidden="true">❌</span> Please enter a school subject.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="field">
+            <label for="edit-topic-desc" data-i18n="topicDescLabel">Short Description</label>
+            <span id="edit-desc-hint" class="hint" data-i18n="topicDescHint">What will Honza practice in this topic?</span>
+            <input
+              type="text"
+              id="edit-topic-desc"
+              name="description"
+              maxlength="500"
+              aria-describedby="edit-desc-hint"
+            >
+          </div>
+
+          <fieldset class="radio-fieldset">
+            <legend data-i18n="topicLangLegend">Content Language</legend>
+            <div class="radio-inline-group">
+              <label class="radio-option-label">
+                <input type="radio" name="lang" value="cs" checked>
+                <span>Čeština</span>
+              </label>
+              <label class="radio-option-label">
+                <input type="radio" name="lang" value="en">
+                <span>English</span>
+              </label>
+              <label class="radio-option-label">
+                <input type="radio" name="lang" value="both">
+                <span>Bilingual (CZ + EN)</span>
+              </label>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="field">
+          <label for="edit-study-notes" data-i18n="studyNotesInputLabel">Study Notes (One bullet point per line)</label>
+          <span id="edit-notes-hint" class="hint" data-i18n="studyNotesInputHint">Honza can read these summary facts before starting the quiz.</span>
+          <textarea
+            id="edit-study-notes"
+            name="studyNotes"
+            rows="4"
+            aria-describedby="edit-notes-hint"
+          ></textarea>
+        </div>
+
+        <div class="field">
+          <label for="edit-flashcards" data-i18n="flashcardsInputLabel">Flashcards (One per line in format: Question | Answer)</label>
+          <span id="edit-flashcards-hint" class="hint" data-i18n="flashcardsInputHint">Example: What is the capital of Italy? | Rome</span>
+          <textarea
+            id="edit-flashcards"
+            name="flashcards"
+            rows="3"
+            aria-describedby="edit-flashcards-hint"
+          ></textarea>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="questions-builder-header">
+          <h3 data-i18n="questionsBuilderHeading">Quiz Questions</h3>
+          <div class="button-row">
+            <button type="button" class="secondary-btn sm-btn" id="add-mc-question-btn">+ Multiple Choice</button>
+            <button type="button" class="secondary-btn sm-btn" id="add-tf-question-btn">+ True / False</button>
+            <button type="button" class="secondary-btn sm-btn" id="add-typein-question-btn">+ Type-in Answer</button>
+          </div>
+        </div>
+
+        <div id="editor-questions-container" class="editor-questions-container"></div>
+
+        <footer class="dialog-footer">
+          <button type="button" class="secondary-btn" id="cancel-editor-btn" data-i18n="cancelBtn">Cancel</button>
+          <button type="submit" class="primary-btn" id="save-topic-btn" data-i18n="saveTopicBtn">Save Topic &amp; Quiz</button>
+        </footer>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- MODAL 3: IMPORT QUIZ JSON DIALOG -->
+  <dialog id="import-dialog" closedby="any" aria-labelledby="import-dialog-title">
+    <div class="dialog-inner">
+      <header class="dialog-header">
+        <h2 id="import-dialog-title" data-i18n="importModalTitle">Import Quiz JSON</h2>
+        <form method="dialog">
+          <button type="submit" value="close" class="icon-close-btn" aria-label="Close import dialog">✕</button>
+        </form>
+      </header>
+
+      <form id="import-json-form" action="#view-studio" method="POST" novalidate>
+        <div class="field">
+          <label for="import-json-textarea" data-i18n="importJsonLabel">Paste Topic JSON</label>
+          <span id="import-json-hint" class="hint" data-i18n="importJsonHint">Paste a single topic object or an array of topics generated from textbook photos.</span>
+          <textarea
+            id="import-json-textarea"
+            name="jsonPayload"
+            rows="10"
+            required
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-describedby="import-json-hint"
+            aria-errormessage="import-json-error"
+          ></textarea>
+          <div id="import-json-error" class="error-msg">
+            <span aria-hidden="true">❌</span> <span id="import-json-error-text">Please paste valid JSON.</span>
+          </div>
+        </div>
+
+        <footer class="dialog-footer">
+          <button type="submit" class="primary-btn" data-i18n="importNowBtn">Import into Study Space</button>
+        </footer>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- MODAL 4: FIREBASE CLOUD SYNC SETTINGS DIALOG -->
+  <dialog id="firebase-config-dialog" closedby="any" aria-labelledby="firebase-dialog-title">
+    <div class="dialog-inner">
+      <header class="dialog-header">
+        <h2 id="firebase-dialog-title" data-i18n="firebaseModalTitle">Firebase Cloud Sync Settings</h2>
+        <form method="dialog">
+          <button type="submit" value="close" class="icon-close-btn" aria-label="Close Firebase settings">✕</button>
+        </form>
+      </header>
+
+      <p class="muted-text" id="firebase-status-detail" data-i18n="firebaseModalDesc">
+        Connect your Firebase project so Honza's quizzes and test scores sync automatically across your Android, iPhone, and computer.
+      </p>
+
+      <form id="firebase-config-form" action="#view-topics" method="POST" novalidate>
+        <div class="field">
+          <label for="firebase-config-input" data-i18n="firebaseConfigLabel">Firebase Web Config JSON (or JS snippet)</label>
+          <span id="firebase-config-hint" class="hint" data-i18n="firebaseConfigHint">Paste your firebaseConfig object (with apiKey, projectId, appId) or configure via Firebase CLI.</span>
+          <textarea
+            id="firebase-config-input"
+            name="firebaseConfigJson"
+            rows="7"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-describedby="firebase-config-hint"
+          ></textarea>
+        </div>
+
+        <div id="firebase-form-feedback" class="quiz-feedback-box" hidden></div>
+
+        <footer class="dialog-footer">
+          <button type="button" class="secondary-btn" id="sync-local-to-cloud-btn" data-i18n="pushLocalToCloudBtn">
+            ☁️ Upload All Local Quizzes &amp; Scores to Cloud
+          </button>
+          <button type="submit" class="primary-btn" data-i18n="saveFirebaseBtn">Save &amp; Connect</button>
+        </footer>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- MODAL 5: INSTALL AS APP ON ANDROID & IPHONE -->
+  <dialog id="install-pwa-dialog" closedby="any" aria-labelledby="install-dialog-title">
+    <div class="dialog-inner">
+      <header class="dialog-header">
+        <h2 id="install-dialog-title" data-i18n="installModalTitle">Add to Android &amp; iPhone Home Screen</h2>
+        <form method="dialog">
+          <button type="submit" value="close" class="icon-close-btn" aria-label="Close install instructions">✕</button>
+        </form>
+      </header>
+
+      <div class="install-guides-grid">
+        <div id="native-install-banner" class="install-box" hidden>
+          <h3 data-i18n="instantInstallHeading">📲 Instant Install Available</h3>
+          <p data-i18n="instantInstallDesc">Install Honza's Study Space directly on this device with one tap:</p>
+          <button type="button" class="primary-btn" id="trigger-native-install-btn" data-i18n="installNowAction">Install App Now</button>
+        </div>
+
+        <div class="install-box">
+          <h3>🤖 Android (Chrome)</h3>
+          <ol>
+            <li data-i18n="androidStep1">Open this page in Chrome on your Android phone or tablet.</li>
+            <li data-i18n="androidStep2">Tap the ⋮ menu (top-right) and choose "Add to Home screen" or "Install app".</li>
+            <li data-i18n="androidStep3">It launches full-screen just like a native app!</li>
+          </ol>
+        </div>
+
+        <div class="install-box">
+          <h3>🍎 iPhone / iPad (Safari)</h3>
+          <ol>
+            <li data-i18n="iosStep1">Open this link in Safari on your iPhone or iPad.</li>
+            <li data-i18n="iosStep2">Tap the Share button (square with arrow pointing up ↑ at the bottom).</li>
+            <li data-i18n="iosStep3">Scroll down and tap "Add to Home Screen", then tap "Add".</li>
+          </ol>
+        </div>
+      </div>
+
+      <footer class="dialog-footer">
+        <form method="dialog">
+          <button type="submit" value="close" class="primary-btn" data-i18n="gotItBtn">Got it!</button>
+        </form>
+      </footer>
+    </div>
+  </dialog>
+
+  <!-- MODAL 6: USER SIGN-IN DIALOG (HONZA vs PARENT ADMIN) -->
+  <dialog id="auth-login-dialog" closedby="none" aria-labelledby="auth-dialog-title">
+    <div class="dialog-inner">
+      <header class="dialog-header">
+        <div>
+          <span class="subject-tag" data-i18n="authBadgeLabel">Přihlášení uživatele</span>
+          <h2 id="auth-dialog-title" data-i18n="authModalTitle">Kdo se právě učí nebo spravuje kvízy?</h2>
+        </div>
+        <form method="dialog" id="auth-close-form" hidden>
+          <button type="submit" value="close" class="icon-close-btn" id="auth-close-btn" aria-label="Zavřít přihlášení">✕</button>
+        </form>
+      </header>
+
+      <form id="auth-login-form" action="#view-topics" method="POST" novalidate>
+        <fieldset class="quiz-options-fieldset">
+          <legend data-i18n="chooseAccountLegend">Vyberte účet:</legend>
+          <label class="quiz-radio-card">
+            <input type="radio" name="accountRole" value="honza" checked>
+            <div>
+              <strong data-i18n="honzaAccountTitle">👦 Honza (Student)</strong>
+              <span class="hint" data-i18n="honzaAccountSub">Učení, kartičky, kvízy a přehled vlastních výsledků</span>
+            </div>
+          </label>
+          <label class="quiz-radio-card">
+            <input type="radio" name="accountRole" value="admin">
+            <div>
+              <strong data-i18n="adminAccountTitle">🛡️ Rodič (Admin)</strong>
+              <span class="hint" data-i18n="adminAccountSub">Plný přístup + Rodičovské studio pro tvorbu a úpravu kvízů</span>
+            </div>
+          </label>
+        </fieldset>
+
+        <!-- Hidden username input for browser password manager autofill association -->
+        <label for="login-username" class="visually-hidden">Uživatelské jméno</label>
+        <input
+          type="text"
+          id="login-username"
+          name="username"
+          value="honza@honza-study-space.app"
+          autocomplete="username"
+          spellcheck="false"
+          autocorrect="off"
+          autocapitalize="off"
+          class="visually-hidden"
+          tabindex="-1"
+        >
+
+        <div class="field">
+          <label for="login-password" data-i18n="passwordLabel">Heslo</label>
+          <span id="login-password-hint" class="hint" data-i18n="loginPasswordHint">Zadejte heslo pro vybraný účet.</span>
+          <div class="password-input-row">
+            <input
+              type="password"
+              id="login-password"
+              name="password"
+              autocomplete="current-password"
+              required
+              minlength="6"
+              enterkeyhint="done"
+              aria-describedby="login-password-hint"
+              aria-errormessage="login-password-error"
+            >
+            <button
+              type="button"
+              class="secondary-btn sm-btn"
+              id="toggle-login-password-btn"
+              aria-pressed="false"
+              aria-describedby="toggle-pwd-warning"
+              data-i18n="showPasswordBtn"
+            >
+              Zobrazit
+            </button>
+            <span id="toggle-pwd-warning" class="visually-hidden" data-i18n="showPasswordWarning">Upozornění: zobrazí heslo na obrazovce.</span>
+          </div>
+          <div id="login-password-error" class="error-msg" data-i18n="passwordLengthError">
+            <span aria-hidden="true">❌</span> Zadejte prosím platné heslo (alespoň 6 znaků).
+          </div>
+        </div>
+
+        <div id="auth-login-feedback" class="quiz-feedback-box is-wrong" hidden></div>
+
+        <footer class="dialog-footer">
+          <button type="button" class="secondary-btn" id="auth-signout-btn" hidden data-i18n="signOutBtn">Odhlásit se</button>
+          <button type="submit" class="primary-btn lg-btn" id="auth-submit-btn" data-i18n="signInSubmitBtn">Přihlásit se</button>
+        </footer>
+      </form>
+    </div>
+  </dialog>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
+
