@@ -955,6 +955,14 @@ function applyTranslations() {
     btn.setAttribute('aria-pressed', isCurrent ? 'true' : 'false');
   }
 
+  const brandGroup = document.getElementById('brand-group');
+  if (brandGroup) {
+    const fullTitle = t('appTitle');
+    brandGroup.setAttribute('title', fullTitle);
+    brandGroup.setAttribute('data-tooltip', fullTitle);
+    brandGroup.setAttribute('aria-label', `HSP — ${fullTitle}`);
+  }
+
   updateSyncBadge();
   updateDocumentTitle();
 }
