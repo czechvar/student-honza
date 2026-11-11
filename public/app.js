@@ -1207,6 +1207,41 @@ function renderTopicsGrid() {
 // ============================================================================
 // Study Notes & Flashcards Mode
 // ============================================================================
+let studyNotesScrollObserver = null;
+
+function setupStudyNotesScrollFallback(notesList) {
+  if (studyNotesScrollObserver) {
+    studyNotesScrollObserver.disconnect();
+    studyNotesScrollObserver = null;
+  }
+  if (
+    typeof CSS === 'undefined' ||
+    typeof IntersectionObserver === 'undefined' ||
+    CSS.supports('(animation-timeline: view()) and (animation-range: entry)') ||
+    !window.matchMedia('(prefers-reduced-motion: no-preference)').matches
+  ) {
+    return;
+  }
+
+  const cards = notesList.querySelectorAll('.study-note-card');
+  const total = Math.max(1, cards.length);
+  studyNotesScrollObserver = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        const idx = Number(entry.target.getAttribute('data-note-index') || 1);
+        const targetScale = 0.92 + 0.08 * (idx / total);
+        const currentScale = targetScale + (1 - targetScale) * (1 - entry.intersectionRatio * 0.5);
+        entry.target.style.scale = String(Number(currentScale.toFixed(4)));
+      }
+    },
+    {
+      threshold: Array.from({ length: 21 }, (_, i) => i / 20)
+    }
+  );
+
+  cards.forEach((card) => studyNotesScrollObserver.observe(card));
+}
+
 function openStudyMode(topicId) {
   const topic = state.topics.find((tp) => tp.id === topicId);
   if (!topic) return;
@@ -1225,12 +1260,49 @@ function openStudyMode(topicId) {
     ? topic.studyNotes
     : ['Review the flashcards and start the quiz when ready!'];
 
-  for (const note of notes) {
-    const li = document.createElement('li');
-    li.textContent = note;
-    notesList.appendChild(li);
-  }
+  const totalNotes = notes.length;
+  notesList.style.setProperty('--notes-total', String(totalNotes));
 
+  notes.forEach((note, idx) => {
+    const stepNum = idx + 1;
+    const li = document.createElement('li');
+    li.className = 'study-note-item';
+    li.style.setProperty('--note-index', String(stepNum));
+
+    const card = document.createElement('div');
+    card.className = 'study-note-card';
+    card.setAttribute('data-note-index', String(stepNum));
+
+    const header = document.createElement('div');
+    header.className = 'study-note-card-header';
+
+    const badge = document.createElement('span');
+    badge.className = 'study-note-step-badge';
+    badge.textContent = `${String(stepNum).padStart(2, '0')} / ${String(totalNotes).padStart(2, '0')}`;
+    header.appendChild(badge);
+
+    const body = document.createElement('p');
+    body.className = 'study-note-body';
+
+    const colonIdx = typeof note === 'string' ? note.indexOf(':') : -1;
+    if (colonIdx > 1 && colonIdx <= 80) {
+      const headingText = note.slice(0, colonIdx).trim();
+      const restText = note.slice(colonIdx + 1).trim();
+      const headingEl = document.createElement('strong');
+      headingEl.className = 'study-note-heading';
+      headingEl.textContent = headingText;
+      header.appendChild(headingEl);
+      body.textContent = restText;
+    } else {
+      body.textContent = note;
+    }
+
+    card.append(header, body);
+    li.appendChild(card);
+    notesList.appendChild(li);
+  });
+
+  setupStudyNotesScrollFallback(notesList);
   renderActiveFlashcard();
   switchView('study');
 }
