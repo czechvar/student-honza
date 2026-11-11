@@ -698,21 +698,137 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
     gap: 1.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 768px) {
+    .flashcards-panel {
+      position: sticky;
+      inset-block-start: 5.25rem;
+      align-self: start;
+    }
   }
 
   .study-notes-list {
-    padding-inline-start: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-block-start: 0.75rem;
+    list-style: none;
+    padding-inline-start: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.35rem;
+    margin-block-start: 0.85rem;
+    padding-block-end: 1.5rem;
   }
 
-  .study-notes-list li {
+  .study-note-item {
+    position: sticky;
+    inset-block-start: calc(4.75rem + ((var(--note-index, 1) - 1) * 0.65rem));
+    z-index: var(--note-index, 1);
+  }
+
+  @supports (top: calc(sibling-index() * 1px)) {
+    .study-note-item {
+      inset-block-start: calc(4.75rem + ((sibling-index() - 1) * 0.65rem));
+      z-index: sibling-index();
+    }
+  }
+
+  .study-note-card {
+    --stack-target-scale: calc(0.92 + (0.08 * (var(--note-index, 1) / var(--notes-total, 10))));
+    background-color: var(--bg-surface);
+    border: 1px solid var(--ui-border);
+    border-block-start: 4px solid var(--color-brand);
+    border-radius: 14px;
+    padding: 1.15rem 1.25rem;
+    min-block-size: 12.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.6rem;
+    box-shadow:
+      0 -4px 14px rgba(15, 23, 42, 0.06),
+      0 10px 24px rgba(15, 23, 42, 0.08);
+    transform-origin: center top;
+    will-change: transform, scale;
+  }
+
+  @supports (scale: calc(sibling-index() / sibling-count())) {
+    .study-note-card {
+      --stack-target-scale: calc(0.92 + (0.08 * (sibling-index() / sibling-count())));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .study-note-card {
+      min-block-size: 14rem;
+    }
+  }
+
+  .study-note-card-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .study-note-step-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
     background-color: var(--bg-subtle);
-    padding: 0.85rem 1rem;
-    border-radius: 10px;
-    border-inline-start: 4px solid var(--color-brand);
+    color: var(--color-brand);
+    border: 1px solid var(--ui-border);
+    flex-shrink: 0;
+  }
+
+  .study-note-heading {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1.3;
+  }
+
+  .study-note-body {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--text-main);
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+      @keyframes study-note-enter {
+        from {
+          opacity: 0.35;
+          transform: translateY(1.25rem);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes study-note-stack-depth {
+        from {
+          scale: 1;
+        }
+        to {
+          scale: var(--stack-target-scale, 0.96);
+        }
+      }
+
+      .study-note-card {
+        animation:
+          study-note-enter auto linear backwards,
+          study-note-stack-depth auto linear forwards;
+        animation-timeline: view(block);
+        animation-range: entry 0% entry 85%, contain 15% contain 95%;
+      }
+    }
   }
 
   .flashcard-header-row {
