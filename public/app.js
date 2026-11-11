@@ -138,7 +138,8 @@ const I18N = {
     typeTfBadge: 'True / False',
     typeInputBadge: 'Type Your Answer',
     typeInLabel: 'Your Answer:',
-    typeInHint: 'Type your answer below (spelling is case-insensitive).',
+    typeInHint: 'Type your answer below (capital letters and diacritics don\'t matter).',
+    typeInSpellingTip: 'correct spelling:',
     selectOptionAlert: 'Please choose or type an answer first!',
     correctHeadline: '✅ Awesome job, Honza! Correct!',
     wrongHeadline: '❌ Not quite! Correct answer:',
@@ -277,7 +278,8 @@ const I18N = {
     typeTfBadge: 'Pravda / Lež',
     typeInputBadge: 'Napiš odpověď',
     typeInLabel: 'Tvoje odpověď:',
-    typeInHint: 'Napiš odpověď níže (na velikosti písmen nezáleží).',
+    typeInHint: 'Napiš odpověď níže (na velkých písmenech ani diakritice nezáleží).',
+    typeInSpellingTip: 'správně se píše:',
     selectOptionAlert: 'Nejprve prosím vyber nebo napiš odpověď!',
     correctHeadline: '✅ Skvělá práce, Honzo! Správně!',
     wrongHeadline: '❌ Těsně vedle! Správná odpověď:',
@@ -369,21 +371,34 @@ function isAnswerCorrect(question, userRawAnswer) {
   if (question.type === 'multiple-choice') {
     return normalizeAnswer(userRawAnswer) === normalizeAnswer(question.correctAnswer);
   }
-  // For type-in questions: check exact normalized match or diacritic-stripped match against correctAnswer + acceptedAnswers
+  // For type-in questions: ignore letter case, diacritics, punctuation and spacing
   const candidates = [
     question.correctAnswer,
     ...(Array.isArray(question.acceptedAnswers) ? question.acceptedAnswers : [])
   ].filter(Boolean);
 
-  const userExact = normalizeAnswer(userRawAnswer, false);
-  const userAscii = normalizeAnswer(userRawAnswer, true);
+  const userLoose = normalizeTypeInAnswer(userRawAnswer);
+  if (!userLoose) return false;
+  return candidates.some((cand) => normalizeTypeInAnswer(cand) === userLoose);
+}
 
-  return candidates.some((cand) => {
-    return (
-      normalizeAnswer(cand, false) === userExact ||
-      normalizeAnswer(cand, true) === userAscii
-    );
-  });
+// Very tolerant normalization for typed answers:
+// "Mléčná dráha." === "mlecna draha" === "MLECNA  DRAHA", "H₂O" === "h2o", "6 378" === "6378"
+function normalizeTypeInAnswer(val) {
+  return String(val ?? '')
+    .normalize('NFKD') // also folds subscripts/superscripts (₂ → 2, ² → 2)
+    .replace(/[\u0300-\u036f]/g, '') // strip diacritics (á → a, ů → u, ě → e …)
+    .toLowerCase()
+    .replace(/[\s.,;:!?'"„“”‚‘’«»()[\]{}\-–—_/\\]+/g, ''); // drop punctuation and spaces
+}
+
+// True when the typed answer matched only after ignoring diacritics/case (used for a gentle spelling tip)
+function typedAnswerDiffersInSpelling(question, userRawAnswer) {
+  const typed = String(userRawAnswer ?? '').trim().replace(/\s+/g, ' ');
+  const correct = String(question.correctAnswer ?? '').trim().replace(/\s+/g, ' ');
+  if (!typed || !correct) return false;
+  const all = [correct, ...(Array.isArray(question.acceptedAnswers) ? question.acceptedAnswers : [])];
+  return !all.some((cand) => String(cand).trim().replace(/\s+/g, ' ').toLowerCase() === typed.toLowerCase());
 }
 
 // ============================================================================
@@ -1552,6 +1567,10 @@ function renderCurrentQuizQuestion() {
     input.name = 'quizTypeIn';
     input.required = true;
     input.autocomplete = 'off';
+    // Stop phone keyboards from auto-capitalizing, autocorrecting words or adding a trailing period
+    input.setAttribute('autocapitalize', 'off');
+    input.setAttribute('autocorrect', 'off');
+    input.spellcheck = false;
     input.setAttribute('aria-describedby', 'quiz-typein-hint');
     input.setAttribute('enterkeyhint', 'done');
 
@@ -1638,6 +1657,9 @@ function handleQuizCheckAnswer() {
   headline.textContent = correct
     ? t('correctHeadline')
     : `${t('wrongHeadline')} ${q.correctAnswer}`;
+  if (correct && q.type === 'type-in' && typedAnswerDiffersInSpelling(q, userAnswer)) {
+    headline.textContent = `${t('correctHeadline')} (${t('typeInSpellingTip')} ${q.correctAnswer})`;
+  }
   expl.textContent = q.explanation || '';
 
   announce(`${headline.textContent} ${expl.textContent}`);
