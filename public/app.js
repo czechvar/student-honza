@@ -2493,7 +2493,7 @@ function initEvents() {
 
   // Sortable table column headers (preserves row DOM nodes via moveBefore/append)
   document.getElementById('topics-table')?.addEventListener('click', (e) => {
-    const btn = e.target.closest('th[data-sort-col] > button');
+    const btn = e.target.closest('.table-sort-btn');
     if (!btn) return;
     const th = btn.closest('th[data-sort-col]');
     const col = th.getAttribute('data-sort-col');
