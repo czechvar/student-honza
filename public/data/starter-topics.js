@@ -1674,12 +1674,12 @@ export const STARTER_TOPICS = [
   {
     "id": "matematika-prevody-jednotek",
     "lang": "cs",
-    "title": "Převody jednotek - 16. 11., od 8:55 do 9:40",
+    "title": "Převody jednotek - pondělí 16. 11., od 8:55 do 9:40",
     "subject": "Matematika",
     "description": "Příprava na písemku (16. 11., od 8:55 do 9:40, 6.C): Převody jednotek délky (mm, cm, dm, m, km), hmotnosti (mg, g, dkg, kg, q, t), obsahu (mm², cm², dm², m², a, ha, km²), objemu (mm³, cm³, dm³, m³, ml, dl, l, hl) a času (s, min, h, den).",
     "authorName": "Táta & Gemini",
     "createdAt": 1794523113538,
-    "updatedAt": 1794523113538,
+    "updatedAt": 1794523403677,
     "studyNotes": [
       "Základní princip převodů: Z větší jednotky na menší NÁSOBÍME (přidáváme nuly / posouváme desetinnou čárku doprava). Z menší jednotky na větší DĚLÍME (ubíráme nuly / posouváme desetinnou čárku doleva).",
       "Jednotky délky: 1 km = 1 000 m, 1 m = 10 dm = 100 cm = 1 000 mm, 1 dm = 10 cm = 100 mm, 1 cm = 10 mm. Mezi sousedními jednotkami m–dm–cm–mm je krok 10, mezi km a m je 1 000.",
