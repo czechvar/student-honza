@@ -6,7 +6,9 @@ const STORAGE_KEYS = {
   TOPICS: 'honza_study_topics_v2',
   ATTEMPTS: 'honza_study_attempts_v1',
   FIREBASE_CFG: 'honza_firebase_config_v1',
-  AUTH_ROLE: 'honza_auth_role_v1'
+  AUTH_ROLE: 'honza_auth_role_v1',
+  TOPICS_SORT: 'honza_topics_sort_v1',
+  TOPICS_VIEW: 'honza_topics_view_v1'
 };
 
 const AUTH_ACCOUNTS = {
@@ -163,7 +165,24 @@ const I18N = {
     signOutBtn: 'Sign Out',
     signInSubmitBtn: 'Sign In',
     invalidPasswordError: 'Incorrect password. Please try again.',
-    footerText: "Honza's Study Space • Web, Android & iPhone"
+    footerText: "Honza's Study Space • Web, Android & iPhone",
+    sortTopicsLabel: 'Sort:',
+    sortPriority: 'Math first',
+    sortNewest: 'Newest first',
+    sortTitleAsc: 'Title (A–Z)',
+    sortSubjectAsc: 'Subject (A–Z)',
+    sortQuestionsDesc: 'Most questions',
+    sortLowestScore: 'Practice (lowest score)',
+    viewModeAria: 'Topics layout view',
+    viewGrid: 'Grid',
+    viewTable: 'Table',
+    topicsTableCaption: 'Study topics and quizzes overview',
+    colSubject: 'Subject',
+    colMaterials: 'Materials',
+    colBestScore: 'Best Score',
+    colActionsTable: 'Actions',
+    studyShortBtn: '📖 Study',
+    quizShortBtn: '🚀 Quiz'
   },
   cs: {
     skipToMain: 'Přeskočit na hlavní obsah',
@@ -303,7 +322,24 @@ const I18N = {
     signOutBtn: 'Odhlásit se',
     signInSubmitBtn: 'Přihlásit se',
     invalidPasswordError: 'Nesprávné heslo. Zkuste to prosím znovu.',
-    footerText: 'Honzův studijní prostor • Web, Android a iPhone'
+    footerText: 'Honzův studijní prostor • Web, Android a iPhone',
+    sortTopicsLabel: 'Seřadit:',
+    sortPriority: 'Matematika první',
+    sortNewest: 'Nejnovější',
+    sortTitleAsc: 'Název (A–Z)',
+    sortSubjectAsc: 'Předmět (A–Z)',
+    sortQuestionsDesc: 'Nejvíce otázek',
+    sortLowestScore: 'Procvičit (nejnižší rekord)',
+    viewModeAria: 'Zobrazení témat',
+    viewGrid: 'Karty',
+    viewTable: 'Tabulka',
+    topicsTableCaption: 'Přehled studijních témat a kvízů',
+    colSubject: 'Předmět',
+    colMaterials: 'Materiály',
+    colBestScore: 'Rekord',
+    colActionsTable: 'Akce',
+    studyShortBtn: '📖 Výpisky',
+    quizShortBtn: '🚀 Kvíz'
   }
 };
 
@@ -315,6 +351,10 @@ const state = {
   attempts: [],
   searchQuery: '',
   selectedSubject: 'all',
+  topicsSort: localStorage.getItem(STORAGE_KEYS.TOPICS_SORT) || 'priority',
+  topicsView: localStorage.getItem(STORAGE_KEYS.TOPICS_VIEW) === 'table' ? 'table' : 'grid',
+  tableSortCol: null,
+  tableSortDir: 'ascending',
   scoresTopicFilter: 'all',
   // Auth state
   auth: null,
@@ -1137,11 +1177,13 @@ function getBestScoreForTopic(topicId) {
   return Math.max(...matches.map((a) => Number(a.percentage) || 0));
 }
 
-function renderTopicsGrid() {
-  const grid = document.getElementById('topics-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
+function getTopicPriorityRank(tp) {
+  const subj = (tp.subject || '').toLowerCase();
+  if (subj.includes('mat')) return 0;
+  return 1;
+}
 
+function getFilteredAndSortedTopics() {
   const q = state.searchQuery.trim().toLowerCase();
   const filtered = state.topics.filter((tp) => {
     if (state.selectedSubject !== 'all' && tp.subject !== state.selectedSubject) {
@@ -1154,6 +1196,231 @@ function renderTopicsGrid() {
       (tp.description || '').toLowerCase().includes(q)
     );
   });
+
+  const collator = new Intl.Collator(state.lang === 'cs' ? 'cs' : 'en', {
+    numeric: true,
+    sensitivity: 'base'
+  });
+
+  const sorted = [...filtered].sort((a, b) => {
+    // If a table column sort is active in table view, honor it
+    if (state.topicsView === 'table' && state.tableSortCol) {
+      const dir = state.tableSortDir === 'descending' ? -1 : 1;
+      if (state.tableSortCol === 'subject') {
+        const cmp = collator.compare(a.subject || '', b.subject || '');
+        if (cmp !== 0) return dir * cmp;
+      } else if (state.tableSortCol === 'title') {
+        const tA = stripSubjectPrefixFromTitle(a.title, a.subject);
+        const tB = stripSubjectPrefixFromTitle(b.title, b.subject);
+        const cmp = collator.compare(tA, tB);
+        if (cmp !== 0) return dir * cmp;
+      } else if (state.tableSortCol === 'questions') {
+        const qA = Array.isArray(a.questions) ? a.questions.length : 0;
+        const qB = Array.isArray(b.questions) ? b.questions.length : 0;
+        if (qA !== qB) return dir * (qA - qB);
+      } else if (state.tableSortCol === 'score') {
+        const sA = getBestScoreForTopic(a.id);
+        const sB = getBestScoreForTopic(b.id);
+        const vA = sA === null ? -1 : sA;
+        const vB = sB === null ? -1 : sB;
+        if (vA !== vB) return dir * (vA - vB);
+      }
+      return (Number(b.createdAt) || 0) - (Number(a.createdAt) || 0);
+    }
+
+    switch (state.topicsSort) {
+      case 'newest':
+        return (Number(b.createdAt) || 0) - (Number(a.createdAt) || 0);
+      case 'title-asc':
+        return collator.compare(
+          stripSubjectPrefixFromTitle(a.title, a.subject),
+          stripSubjectPrefixFromTitle(b.title, b.subject)
+        );
+      case 'subject-asc': {
+        const cmp = collator.compare(a.subject || '', b.subject || '');
+        if (cmp !== 0) return cmp;
+        return collator.compare(
+          stripSubjectPrefixFromTitle(a.title, a.subject),
+          stripSubjectPrefixFromTitle(b.title, b.subject)
+        );
+      }
+      case 'questions-desc': {
+        const qA = Array.isArray(a.questions) ? a.questions.length : 0;
+        const qB = Array.isArray(b.questions) ? b.questions.length : 0;
+        if (qB !== qA) return qB - qA;
+        return collator.compare(a.title || '', b.title || '');
+      }
+      case 'best-score-asc': {
+        const sA = getBestScoreForTopic(a.id);
+        const sB = getBestScoreForTopic(b.id);
+        const vA = sA === null ? -1 : sA;
+        const vB = sB === null ? -1 : sB;
+        if (vA !== vB) return vA - vB;
+        return getTopicPriorityRank(a) - getTopicPriorityRank(b);
+      }
+      case 'priority':
+      default: {
+        const rankDiff = getTopicPriorityRank(a) - getTopicPriorityRank(b);
+        if (rankDiff !== 0) return rankDiff;
+        return (Number(b.createdAt) || 0) - (Number(a.createdAt) || 0);
+      }
+    }
+  });
+
+  return sorted;
+}
+
+function updateTopicsControlsUI(count) {
+  const countEl = document.getElementById('topics-count-label');
+  if (countEl) {
+    if (state.lang === 'cs') {
+      const noun = count === 1 ? 'téma' : count >= 2 && count <= 4 ? 'témata' : 'témat';
+      countEl.textContent = `${count} ${noun}`;
+    } else {
+      countEl.textContent = `${count} ${count === 1 ? 'topic' : 'topics'}`;
+    }
+  }
+
+  const sortSelect = document.getElementById('topics-sort-select');
+  if (sortSelect && sortSelect.value !== state.topicsSort) {
+    sortSelect.value = state.topicsSort;
+  }
+
+  for (const btn of document.querySelectorAll('[data-topics-view]')) {
+    const active = btn.getAttribute('data-topics-view') === state.topicsView;
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+  }
+
+  const grid = document.getElementById('topics-grid');
+  const tableRegion = document.getElementById('topics-table-region');
+  if (grid) grid.hidden = state.topicsView !== 'grid';
+  if (tableRegion) tableRegion.hidden = state.topicsView !== 'table';
+
+  const headers = document.querySelectorAll('#topics-table thead th[data-sort-col]');
+  for (const th of headers) {
+    const col = th.getAttribute('data-sort-col');
+    if (state.topicsView === 'table' && state.tableSortCol === col) {
+      th.setAttribute('aria-sort', state.tableSortDir);
+    } else {
+      th.removeAttribute('aria-sort');
+    }
+  }
+}
+
+function reorderTableRowsWithTransition(tbody, orderedRows) {
+  const table = document.getElementById('topics-table');
+  const applyOrder = () => {
+    const useMoveBefore = typeof Element.prototype.moveBefore === 'function';
+    for (const row of orderedRows) {
+      if (useMoveBefore) {
+        tbody.moveBefore(row, null);
+      } else {
+        tbody.append(row);
+      }
+    }
+  };
+
+  if (table && typeof table.startViewTransition === 'function') {
+    table.startViewTransition(applyOrder);
+  } else if (typeof document.startViewTransition === 'function') {
+    document.startViewTransition(applyOrder);
+  } else {
+    applyOrder();
+  }
+}
+
+function renderTopicsTable(filtered) {
+  const tbody = document.getElementById('topics-table-body');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  for (const tp of filtered) {
+    const tr = document.createElement('tr');
+    tr.dataset.topicId = tp.id;
+
+    const bestPct = getBestScoreForTopic(tp.id);
+    const qCount = Array.isArray(tp.questions) ? tp.questions.length : 0;
+    const nCount = Array.isArray(tp.studyNotes) ? tp.studyNotes.length : 0;
+    const cCount = Array.isArray(tp.flashcards) ? tp.flashcards.length : 0;
+
+    // 1. Subject
+    const tdSubject = document.createElement('td');
+    const subjTag = document.createElement('span');
+    subjTag.className = 'subject-tag';
+    subjTag.textContent = `${getSubjectIcon(tp.subject)} ${tp.subject}`;
+    tdSubject.appendChild(subjTag);
+
+    // 2. Title
+    const tdTitle = document.createElement('td');
+    const titleDiv = document.createElement('div');
+    titleDiv.className = 'topics-table-title';
+    titleDiv.textContent = stripSubjectPrefixFromTitle(tp.title, tp.subject);
+    if (tp.lang && tp.lang !== state.lang && tp.lang !== 'both') {
+      titleDiv.setAttribute('lang', tp.lang);
+    }
+    tdTitle.appendChild(titleDiv);
+
+    // 3. Materials count
+    const tdMaterials = document.createElement('td');
+    const metaSub = document.createElement('span');
+    metaSub.className = 'topics-table-meta-sub';
+    metaSub.textContent = `❓ ${qCount} • 📝 ${nCount} • 🃏 ${cCount}`;
+    tdMaterials.appendChild(metaSub);
+
+    // 4. Best score
+    const tdScore = document.createElement('td');
+    if (bestPct !== null) {
+      const bestPill = document.createElement('span');
+      bestPill.className = 'best-score-pill';
+      bestPill.textContent = `🏆 ${bestPct}%`;
+      tdScore.appendChild(bestPill);
+    } else {
+      const dash = document.createElement('span');
+      dash.className = 'muted-text';
+      dash.textContent = '—';
+      tdScore.appendChild(dash);
+    }
+
+    // 5. Actions
+    const tdActions = document.createElement('td');
+    const actionsDiv = document.createElement('div');
+    actionsDiv.className = 'topics-table-actions';
+
+    const studyBtn = document.createElement('button');
+    studyBtn.type = 'button';
+    studyBtn.className = 'secondary-btn sm-btn';
+    studyBtn.textContent = t('studyShortBtn');
+    studyBtn.setAttribute('aria-label', `${t('studyBtn')} — ${tp.title}`);
+    studyBtn.addEventListener('click', () => openStudyMode(tp.id));
+
+    const quizBtn = document.createElement('button');
+    quizBtn.type = 'button';
+    quizBtn.className = 'primary-btn sm-btn';
+    quizBtn.textContent = t('quizShortBtn');
+    quizBtn.setAttribute('aria-label', `${t('startQuizBtn')} — ${tp.title}`);
+    quizBtn.addEventListener('click', () => startQuiz(tp.id, 'full'));
+
+    actionsDiv.append(studyBtn, quizBtn);
+    tdActions.appendChild(actionsDiv);
+
+    tr.append(tdSubject, tdTitle, tdMaterials, tdScore, tdActions);
+    tbody.appendChild(tr);
+  }
+}
+
+function renderTopicsGrid() {
+  const grid = document.getElementById('topics-grid');
+  if (!grid) return;
+
+  const filtered = getFilteredAndSortedTopics();
+  updateTopicsControlsUI(filtered.length);
+
+  if (state.topicsView === 'table') {
+    renderTopicsTable(filtered);
+    return;
+  }
+
+  grid.innerHTML = '';
 
   for (const tp of filtered) {
     const li = document.createElement('li');
@@ -2198,6 +2465,56 @@ function initEvents() {
   searchInput?.addEventListener('input', (e) => {
     state.searchQuery = e.target.value;
     renderTopicsGrid();
+  });
+
+  // Topics sorting & Grid/Table view switcher
+  const sortSelect = document.getElementById('topics-sort-select');
+  sortSelect?.addEventListener('change', (e) => {
+    state.topicsSort = e.target.value;
+    state.tableSortCol = null;
+    localStorage.setItem(STORAGE_KEYS.TOPICS_SORT, state.topicsSort);
+    renderTopicsGrid();
+    const statusEl = document.getElementById('topics-sort-status');
+    const selectedLabel = sortSelect.selectedOptions?.[0]?.textContent?.trim() || state.topicsSort;
+    if (statusEl) {
+      statusEl.textContent = `${selectedLabel}`;
+    }
+  });
+
+  for (const viewBtn of document.querySelectorAll('[data-topics-view]')) {
+    viewBtn.addEventListener('click', () => {
+      const nextView = viewBtn.getAttribute('data-topics-view') === 'table' ? 'table' : 'grid';
+      if (state.topicsView === nextView) return;
+      state.topicsView = nextView;
+      localStorage.setItem(STORAGE_KEYS.TOPICS_VIEW, nextView);
+      renderTopicsGrid();
+    });
+  }
+
+  // Sortable table column headers (preserves row DOM nodes via moveBefore/append)
+  document.getElementById('topics-table')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('th[data-sort-col] > button');
+    if (!btn) return;
+    const th = btn.closest('th[data-sort-col]');
+    const col = th.getAttribute('data-sort-col');
+    const nextDir =
+      state.tableSortCol === col && state.tableSortDir === 'ascending' ? 'descending' : 'ascending';
+    state.tableSortCol = col;
+    state.tableSortDir = nextDir;
+
+    const sorted = getFilteredAndSortedTopics();
+    updateTopicsControlsUI(sorted.length);
+
+    const tbody = document.getElementById('topics-table-body');
+    if (tbody) {
+      const rowMap = new Map([...tbody.rows].map((r) => [r.dataset.topicId, r]));
+      const orderedRows = sorted.map((tp) => rowMap.get(tp.id)).filter(Boolean);
+      reorderTableRowsWithTransition(tbody, orderedRows);
+      const statusEl = document.getElementById('topics-sort-status');
+      if (statusEl) {
+        statusEl.textContent = `${btn.textContent.trim()}, ${nextDir}, ${orderedRows.length}`;
+      }
+    }
   });
 
   // Study mode controls
