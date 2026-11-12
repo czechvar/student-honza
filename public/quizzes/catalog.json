@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T21:16:55.678Z",
+  "updatedAt": "2026-11-12T22:38:33.539Z",
   "topics": [
     {
       "lang": "cs",
@@ -1666,6 +1666,443 @@
         }
       ],
       "createdAt": 1794343650000
+    },
+    {
+      "id": "matematika-prevody-jednotek",
+      "lang": "cs",
+      "title": "Převody jednotek - 16. 11., od 8:55 do 9:40",
+      "subject": "Matematika",
+      "description": "Příprava na písemku (16. 11., od 8:55 do 9:40, 6.C): Převody jednotek délky (mm, cm, dm, m, km), hmotnosti (mg, g, dkg, kg, q, t), obsahu (mm², cm², dm², m², a, ha, km²), objemu (mm³, cm³, dm³, m³, ml, dl, l, hl) a času (s, min, h, den).",
+      "authorName": "Táta & Gemini",
+      "createdAt": 1794523113538,
+      "updatedAt": 1794523113538,
+      "studyNotes": [
+        "Základní princip převodů: Z větší jednotky na menší NÁSOBÍME (přidáváme nuly / posouváme desetinnou čárku doprava). Z menší jednotky na větší DĚLÍME (ubíráme nuly / posouváme desetinnou čárku doleva).",
+        "Jednotky délky: 1 km = 1 000 m, 1 m = 10 dm = 100 cm = 1 000 mm, 1 dm = 10 cm = 100 mm, 1 cm = 10 mm. Mezi sousedními jednotkami m–dm–cm–mm je krok 10, mezi km a m je 1 000.",
+        "Jednotky hmotnosti: 1 t (tuna) = 1 000 kg = 10 q (metrický cent), 1 kg = 1 000 g = 100 dkg, 1 dkg (dekagram) = 10 g, 1 g = 1 000 mg. Pozor: 1 tuna má 1 000 kg, nikoliv 100 kg.",
+        "Jednotky obsahu (plošné míry): Každý krok mezi sousedními jednotkami má převodní poměr 100 (dvě nuly / dvě desetinná místa): 1 km² = 100 ha, 1 ha (hektar) = 100 a (arů) = 10 000 m², 1 a = 100 m², 1 m² = 100 dm², 1 dm² = 100 cm², 1 cm² = 100 mm².",
+        "Jednotky objemu (krychlové): Každý krok mezi sousedními jednotkami má převodní poměr 1 000 (tři nuly / tři desetinná místa): 1 m³ = 1 000 dm³, 1 dm³ = 1 000 cm³, 1 cm³ = 1 000 mm³.",
+        "Duté míry (objem kapalin) a vztah k objemu: 1 hl (hektolitr) = 100 l, 1 l (litr) = 10 dl = 100 cl = 1 000 ml. Klíčové rovnosti: 1 l = 1 dm³, 1 ml = 1 cm³, 1 m³ = 1 000 l = 10 hl.",
+        "Jednotky času: 1 den = 24 h, 1 h = 60 min = 3 600 s, 1 min = 60 s. Pozor na desetinné části hodiny: 0,5 h = 30 min (polovina ze 60), 0,25 h = 15 min (čtvrtina ze 60), 1,5 min = 90 s.",
+        "Desetinná čísla při převodech: Např. 2,5 km = 2 500 m (posun čárky o 3 místa doprava), 45 cm = 0,45 m (o 2 místa doleva), 3,2 m² = 320 dm² (o 2 místa doprava), 0,8 m³ = 800 dm³ (o 3 místa doprava).",
+        "Porovnávání veličin v různých jednotkách: Než porovnáš dvě hodnoty (např. 0,4 t a 380 kg nebo 2 ha a 15 000 m²), vždy je nejprve převeď na STEJNOU jednotku (0,4 t = 400 kg > 380 kg).",
+        "Nejčastější chyby v písemkách: Záměna kroku 10 (délka), 100 (obsah) a 1 000 (objem); záměna 1 ha = 10 000 m² vs. 1 a = 100 m²; převod 1,5 h jako 150 min místo správných 90 min."
+      ],
+      "flashcards": [
+        {
+          "front": "Kolik metrů má 1 kilometr (1 km)?",
+          "back": "1 000 m"
+        },
+        {
+          "front": "Kolik milimetrů má 1 metr (1 m)?",
+          "back": "1 000 mm (1 m = 10 dm = 100 cm = 1 000 mm)"
+        },
+        {
+          "front": "Kolik kilogramů má 1 tuna (1 t)?",
+          "back": "1 000 kg (a 1 t = 10 q)"
+        },
+        {
+          "front": "Kolik dekagramů (dkg) má 1 kilogram (1 kg)?",
+          "back": "100 dkg (1 dkg = 10 g, 1 kg = 1 000 g)"
+        },
+        {
+          "front": "Jaký je převodní poměr mezi sousedními jednotkami obsahu (m² → dm² → cm²)?",
+          "back": "100 (při každém kroku posouváme desetinnou čárku o 2 místa)"
+        },
+        {
+          "front": "Kolik metrů čtverečních (m²) má 1 ar (1 a) a 1 hektar (1 ha)?",
+          "back": "1 a = 100 m²; 1 ha = 100 a = 10 000 m²"
+        },
+        {
+          "front": "Kolik hektarů (ha) má 1 km²?",
+          "back": "100 ha"
+        },
+        {
+          "front": "Jaký je převodní poměr mezi sousedními jednotkami objemu (m³ → dm³ → cm³)?",
+          "back": "1 000 (při každém kroku posouváme desetinnou čárku o 3 místa)"
+        },
+        {
+          "front": "Kolik dm³ je 1 litr (1 l)?",
+          "back": "1 l = 1 dm³"
+        },
+        {
+          "front": "Kolik cm³ je 1 mililitr (1 ml)?",
+          "back": "1 ml = 1 cm³"
+        },
+        {
+          "front": "Kolik litrů je 1 m³ a 1 hektolitr (1 hl)?",
+          "back": "1 m³ = 1 000 l = 10 hl; 1 hl = 100 l"
+        },
+        {
+          "front": "Kolik sekund má 1 hodina (1 h)?",
+          "back": "3 600 s (60 min × 60 s)"
+        },
+        {
+          "front": "Kolik minut je 0,5 hodiny a 0,25 hodiny?",
+          "back": "0,5 h = 30 min; 0,25 h = 15 min"
+        },
+        {
+          "front": "Jak převádíme z větší jednotky na menší (např. m → cm)?",
+          "back": "Násobíme (desetinná čárka jde doprava)."
+        },
+        {
+          "front": "Jak převádíme z menší jednotky na větší (např. g → kg)?",
+          "back": "Dělíme (desetinná čárka jde doleva)."
+        },
+        {
+          "front": "Kolik cm² je 0,08 m²?",
+          "back": "800 cm² (0,08 m² = 8 dm² = 800 cm²)"
+        }
+      ],
+      "questions": [
+        {
+          "id": "mat-q1",
+          "type": "multiple-choice",
+          "prompt": "Kolik metrů je 3,5 km?",
+          "options": [
+            "35 m",
+            "350 m",
+            "3 500 m",
+            "35 000 m"
+          ],
+          "correctAnswer": "3 500 m",
+          "explanation": "1 km = 1 000 m. Při převodu z km na m násobíme 1 000 (posuneme čárku o 3 místa doprava): 3,5 × 1 000 = 3 500 m."
+        },
+        {
+          "id": "mat-q2",
+          "type": "multiple-choice",
+          "prompt": "Převeď 45 cm na metry:",
+          "options": [
+            "4,5 m",
+            "0,45 m",
+            "0,045 m",
+            "450 m"
+          ],
+          "correctAnswer": "0,45 m",
+          "explanation": "1 m = 100 cm. Z cm na m dělíme 100 (posun čárky o 2 místa doleva): 45 : 100 = 0,45 m."
+        },
+        {
+          "id": "mat-q3",
+          "type": "type-in",
+          "prompt": "Kolik milimetrů je 7,2 dm? (Napiš jen číslo)",
+          "correctAnswer": "720",
+          "acceptedAnswers": [
+            "720",
+            "720 mm"
+          ],
+          "explanation": "1 dm = 10 cm = 100 mm. Proto 7,2 dm = 7,2 × 100 = 720 mm."
+        },
+        {
+          "id": "mat-q4",
+          "type": "true-false",
+          "prompt": "Pravda nebo lež: 1 metr se rovná 1 000 milimetrů.",
+          "options": [
+            "Pravda",
+            "Lež"
+          ],
+          "correctAnswer": "Pravda",
+          "explanation": "1 m = 10 dm = 100 cm = 1 000 mm."
+        },
+        {
+          "id": "mat-q5",
+          "type": "multiple-choice",
+          "prompt": "Která z následujících délek je NEJVĚTŠÍ?",
+          "options": [
+            "0,8 km",
+            "750 m",
+            "82 000 cm",
+            "7 900 dm"
+          ],
+          "correctAnswer": "82 000 cm",
+          "explanation": "Převedeme vše na metry: 0,8 km = 800 m; 750 m = 750 m; 82 000 cm = 820 m; 7 900 dm = 790 m. Největší je 82 000 cm (820 m)."
+        },
+        {
+          "id": "mat-q6",
+          "type": "type-in",
+          "prompt": "Kolik kilogramů je 2,4 tuny? (Napiš jen číslo)",
+          "correctAnswer": "2400",
+          "acceptedAnswers": [
+            "2400",
+            "2 400",
+            "2400 kg",
+            "2 400 kg"
+          ],
+          "explanation": "1 t = 1 000 kg. Proto 2,4 t = 2,4 × 1 000 = 2 400 kg."
+        },
+        {
+          "id": "mat-q7",
+          "type": "multiple-choice",
+          "prompt": "Převeď 350 g na kilogramy:",
+          "options": [
+            "3,5 kg",
+            "0,35 kg",
+            "0,035 kg",
+            "35 kg"
+          ],
+          "correctAnswer": "0,35 kg",
+          "explanation": "1 kg = 1 000 g. Z gramů na kilogramy dělíme 1 000: 350 : 1 000 = 0,35 kg."
+        },
+        {
+          "id": "mat-q8",
+          "type": "multiple-choice",
+          "prompt": "Kolik dekagramů (dkg) je 0,5 kg?",
+          "options": [
+            "5 dkg",
+            "50 dkg",
+            "500 dkg",
+            "0,05 dkg"
+          ],
+          "correctAnswer": "50 dkg",
+          "explanation": "1 kg = 100 dkg (nebo 0,5 kg = 500 g = 50 dkg)."
+        },
+        {
+          "id": "mat-q9",
+          "type": "true-false",
+          "prompt": "Pravda nebo lež: 1 tuna je 100 kilogramů.",
+          "options": [
+            "Pravda",
+            "Lež"
+          ],
+          "correctAnswer": "Lež",
+          "explanation": "Lež! 1 tuna = 1 000 kg. (100 kg je 1 metrický cent, neboli 1 q)."
+        },
+        {
+          "id": "mat-q10",
+          "type": "type-in",
+          "prompt": "Kolik gramů je 1,5 kg? (Napiš jen číslo)",
+          "correctAnswer": "1500",
+          "acceptedAnswers": [
+            "1500",
+            "1 500",
+            "1500 g",
+            "1 500 g"
+          ],
+          "explanation": "1 kg = 1 000 g, tedy 1,5 × 1 000 = 1 500 g."
+        },
+        {
+          "id": "mat-q11",
+          "type": "multiple-choice",
+          "prompt": "Jaký je převodní poměr mezi sousedními jednotkami obsahu (např. m² a dm²)?",
+          "options": [
+            "10",
+            "100",
+            "1 000",
+            "10 000"
+          ],
+          "correctAnswer": "100",
+          "explanation": "U plošných jednotek (na druhou) je každý krok mezi sousedními jednotkami násobkem 100 (10 × 10 = 100)."
+        },
+        {
+          "id": "mat-q12",
+          "type": "type-in",
+          "prompt": "Kolik dm² je 4 m²? (Napiš jen číslo)",
+          "correctAnswer": "400",
+          "acceptedAnswers": [
+            "400",
+            "400 dm2",
+            "400 dm²"
+          ],
+          "explanation": "1 m² = 100 dm², takže 4 m² = 400 dm²."
+        },
+        {
+          "id": "mat-q13",
+          "type": "multiple-choice",
+          "prompt": "Kolik metrů čtverečních (m²) má 1 hektar (1 ha)?",
+          "options": [
+            "100 m²",
+            "1 000 m²",
+            "10 000 m²",
+            "100 000 m²"
+          ],
+          "correctAnswer": "10 000 m²",
+          "explanation": "1 ha = 100 a a 1 a = 100 m², takže 1 ha = 100 × 100 = 10 000 m² (čtverec 100 m × 100 m)."
+        },
+        {
+          "id": "mat-q14",
+          "type": "multiple-choice",
+          "prompt": "Převeď 3,2 ha na ary (a):",
+          "options": [
+            "32 a",
+            "320 a",
+            "3 200 a",
+            "0,032 a"
+          ],
+          "correctAnswer": "320 a",
+          "explanation": "1 ha = 100 a. Proto 3,2 ha = 3,2 × 100 = 320 a."
+        },
+        {
+          "id": "mat-q15",
+          "type": "multiple-choice",
+          "prompt": "Převeď 650 mm² na cm²:",
+          "options": [
+            "65 cm²",
+            "6,5 cm²",
+            "0,65 cm²",
+            "6 500 cm²"
+          ],
+          "correctAnswer": "6,5 cm²",
+          "explanation": "1 cm² = 100 mm². Z mm² na cm² dělíme 100 (posun o 2 místa doleva): 650 : 100 = 6,5 cm²."
+        },
+        {
+          "id": "mat-q16",
+          "type": "true-false",
+          "prompt": "Pravda nebo lež: 1 km² se rovná 100 hektarů (ha).",
+          "options": [
+            "Pravda",
+            "Lež"
+          ],
+          "correctAnswer": "Pravda",
+          "explanation": "Ano! 1 km² = 1 000 000 m² a 1 ha = 10 000 m², takže 1 km² = 100 ha."
+        },
+        {
+          "id": "mat-q17",
+          "type": "multiple-choice",
+          "prompt": "Kolik cm² je 0,08 m²?",
+          "options": [
+            "8 cm²",
+            "80 cm²",
+            "800 cm²",
+            "8 000 cm²"
+          ],
+          "correctAnswer": "800 cm²",
+          "explanation": "1 m² = 100 dm² = 10 000 cm² (posun o 4 místa doprava): 0,08 m² = 8 dm² = 800 cm²."
+        },
+        {
+          "id": "mat-q18",
+          "type": "multiple-choice",
+          "prompt": "Jaký je převodní poměr mezi sousedními krychlovými jednotkami objemu (např. m³ a dm³)?",
+          "options": [
+            "10",
+            "100",
+            "1 000",
+            "10 000"
+          ],
+          "correctAnswer": "1 000",
+          "explanation": "U jednotek objemu (na třetí) je mezi sousedními jednotkami poměr 1 000 (10 × 10 × 10 = 1 000)."
+        },
+        {
+          "id": "mat-q19",
+          "type": "type-in",
+          "prompt": "Kolik litrů je 2 m³? (Napiš jen číslo)",
+          "correctAnswer": "2000",
+          "acceptedAnswers": [
+            "2000",
+            "2 000",
+            "2000 l",
+            "2 000 l"
+          ],
+          "explanation": "1 m³ = 1 000 dm³ = 1 000 l. Proto 2 m³ = 2 000 litrů."
+        },
+        {
+          "id": "mat-q20",
+          "type": "true-false",
+          "prompt": "Pravda nebo lež: 1 litr (l) má přesně stejný objem jako 1 dm³.",
+          "options": [
+            "Pravda",
+            "Lež"
+          ],
+          "correctAnswer": "Pravda",
+          "explanation": "Ano, 1 l = 1 dm³ a stejně tak platí 1 ml = 1 cm³."
+        },
+        {
+          "id": "mat-q21",
+          "type": "multiple-choice",
+          "prompt": "Kolik mililitrů (ml) je 250 cm³?",
+          "options": [
+            "2,5 ml",
+            "25 ml",
+            "250 ml",
+            "2 500 ml"
+          ],
+          "correctAnswer": "250 ml",
+          "explanation": "Protože 1 cm³ = 1 ml, platí přímo 250 cm³ = 250 ml."
+        },
+        {
+          "id": "mat-q22",
+          "type": "multiple-choice",
+          "prompt": "Převeď 0,45 m³ na dm³:",
+          "options": [
+            "4,5 dm³",
+            "45 dm³",
+            "450 dm³",
+            "4 500 dm³"
+          ],
+          "correctAnswer": "450 dm³",
+          "explanation": "1 m³ = 1 000 dm³ (posun o 3 místa doprava): 0,45 × 1 000 = 450 dm³."
+        },
+        {
+          "id": "mat-q23",
+          "type": "type-in",
+          "prompt": "Kolik litrů je 3,5 hektolitru (hl)? (Napiš jen číslo)",
+          "correctAnswer": "350",
+          "acceptedAnswers": [
+            "350",
+            "350 l"
+          ],
+          "explanation": "1 hl = 100 l, takže 3,5 hl = 3,5 × 100 = 350 litrů."
+        },
+        {
+          "id": "mat-q24",
+          "type": "multiple-choice",
+          "prompt": "Kolik minut je 1,5 hodiny?",
+          "options": [
+            "75 minut",
+            "90 minut",
+            "105 minut",
+            "150 minut"
+          ],
+          "correctAnswer": "90 minut",
+          "explanation": "1 h = 60 min a 0,5 h = 30 min. Dohromady 60 + 30 = 90 minut (pozor: hodina nemá 100 minut!)."
+        },
+        {
+          "id": "mat-q25",
+          "type": "type-in",
+          "prompt": "Kolik sekund je 3 minuty a 20 sekund? (Napiš jen číslo)",
+          "correctAnswer": "200",
+          "acceptedAnswers": [
+            "200",
+            "200 s"
+          ],
+          "explanation": "3 min = 3 × 60 = 180 s. Přičteme 20 s: 180 + 20 = 200 s."
+        },
+        {
+          "id": "mat-q26",
+          "type": "multiple-choice",
+          "prompt": "Převeď 2 hodiny a 45 minut na minuty:",
+          "options": [
+            "125 minut",
+            "145 minut",
+            "165 minut",
+            "245 minut"
+          ],
+          "correctAnswer": "165 minut",
+          "explanation": "2 hodiny = 2 × 60 = 120 minut. 120 + 45 = 165 minut."
+        },
+        {
+          "id": "mat-q27",
+          "type": "true-false",
+          "prompt": "Pravda nebo lež: 0,25 hodiny je 25 minut.",
+          "options": [
+            "Pravda",
+            "Lež"
+          ],
+          "correctAnswer": "Lež",
+          "explanation": "Lež! Hodina má 60 minut, takže 0,25 h (čtvrt hodiny) je 60 : 4 = 15 minut."
+        },
+        {
+          "id": "mat-q28",
+          "type": "multiple-choice",
+          "prompt": "Porovnej 0,4 t a 380 kg. Které tvrzení je správné?",
+          "options": [
+            "0,4 t > 380 kg (protože 0,4 t = 400 kg)",
+            "0,4 t < 380 kg (protože 0,4 t = 40 kg)",
+            "0,4 t = 380 kg",
+            "Nelze porovnat"
+          ],
+          "correctAnswer": "0,4 t > 380 kg (protože 0,4 t = 400 kg)",
+          "explanation": "0,4 t = 0,4 × 1 000 = 400 kg, a 400 kg je více než 380 kg."
+        }
+      ]
     }
   ]
 }
