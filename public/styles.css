@@ -641,6 +641,10 @@
   }
 
   .best-score-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    white-space: nowrap;
     font-size: 0.8rem;
     font-weight: 700;
     padding: 0.2rem 0.6rem;
@@ -1544,6 +1548,10 @@
     border-block-end: 1px solid var(--ui-border);
     vertical-align: middle;
     font-size: 0.92rem;
+  }
+
+  .topics-table .subject-tag {
+    white-space: nowrap;
   }
 
   .topics-table tbody tr:last-child td {
