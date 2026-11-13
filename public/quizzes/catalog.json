@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T12:57:37.926Z",
+  "updatedAt": "2026-11-13T13:45:59.478Z",
   "topics": [
     {
       "lang": "cs",
@@ -2534,6 +2534,373 @@
             "august"
           ],
           "explanation": "Srpen = August."
+        }
+      ]
+    },
+    {
+      "id": "obcanska-vychova-vitaminy",
+      "lang": "cs",
+      "title": "Vitamíny - středa 18. 11., od 10:00 do 10:45",
+      "subject": "Občanská výchova",
+      "description": "Příprava na písemku (středa 18. 11., od 10:00 do 10:45, 6.C): Druhy vitamínů (rozpustné v tucích A, D, E, K a ve vodě B, C), jejich funkce v těle, projevy nedostatku a potraviny, ve kterých se nacházejí.",
+      "authorName": "Táta & Gemini",
+      "createdAt": 1794577559477,
+      "updatedAt": 1794577559477,
+      "studyNotes": [
+        "Co jsou vitamíny: Jsou to důležité organické látky nezbytné pro správné fungování těla, růst a obranyschopnost. Tělo si je většinou neumí samo vyrobit (výjimkou je hlavně vitamín D ze slunce), proto je musíme přijímat v potravě.",
+        "Rozdělení vitamínů — rozpustné v tucích (ADEK): Vitamíny A, D, E, K se rozpouštějí v tucích. Tělo si je ukládá do zásoby (v játrech a tukové tkáni) a ke vstřebání potřebují trochu tuku (např. kapku oleje do mrkvového salátu).",
+        "Rozdělení vitamínů — rozpustné ve vodě (B, C): Vitamíny skupiny B a vitamín C se v těle neukládají do zásoby (přebytek odchází močí), proto je musíme doplňovat pravidelně každý den.",
+        "Vitamín A (retinol): Důležitý pro dobrý zrak (vidění za šera), zdravou kůži a sliznice. Nedostatek způsobuje šeroslepost. Najdeš ho v mrkvi (betakaroten), rajčatech, paprice, špenátu, játrech, másle a vaječném žloutku.",
+        "Vitamíny skupiny B (B-komplex: B1, B2, B6, B12…): Podporují nervovou soustavu, soustředění, krvetvorbu a získávání energie z jídla. Nedostatek se projevuje únavou, podrážděností nebo praskajícími koutky úst. Zdroje: celozrnné pečivo, ovesné vločky, luštěniny, ořechy, droždí, maso, mléko a vejce.",
+        "Vitamín C (kyselina askorbová): Posiluje imunitu (odolnost proti nachlazení), urychluje hojení ran, pomáhá vstřebávat železo a udržuje zdravé dásně. Nedostatek vede k únavě, krvácení dásní a v těžkých případech ke kurdějím. Zdroje: šípky, černý rybíz, rakytník, citrusy, kiwi, paprika, brokolice a kysané zelí (ničí se vařením!).",
+        "Vitamín D (kalciferol): Pomáhá tělu vstřebávat vápník a fosfor — je klíčový pro pevné kosti a zdravé zuby. Tělo si ho tvoří v kůži při pobytu na slunci. Nedostatek u dětí způsobuje křivici (měknutí kostí). Zdroje: sluneční záření, tučné mořské ryby (losos, makrela), rybí tuk, vejce a mléčné výrobky.",
+        "Vitamín E (tokoferol): Silný antioxidant — chrání buňky před poškozením a stárnutím, prospívá kůži a cévám. Najdeš ho v rostlinných olejích (slunečnicový, olivový), ořeších, semínkách, avokádu a obilných klíčcích.",
+        "Vitamín K: Nezbytný pro správnou srážlivost krve (zastavení krvácení) a stavbu kostí. Hlavním zdrojem je zelená listová zelenina (špenát, brokolice, kapusta, hlávkový salát).",
+        "Poruchy z nedostatku a nadbytku vitamínů: HYPOVITAMINÓZA = částečný nedostatek vitamínu (např. únava, prasklé koutky). AVITAMINÓZA = úplný/těžký nedostatek (např. kurděje, křivice, šeroslepost). HYPERVITAMINÓZA = nadbytek vitamínu (hrozí hlavně u A, D, E, K z doplňků stravy)."
+      ],
+      "flashcards": [
+        {
+          "front": "Které 4 vitamíny jsou rozpustné v tucích? (Pomůcka: slovo)",
+          "back": "A, D, E, K (snadná pomůcka: ADEK)"
+        },
+        {
+          "front": "Které vitamíny jsou rozpustné ve vodě?",
+          "back": "Vitamíny skupiny B a vitamín C"
+        },
+        {
+          "front": "Který vitamín je klíčový pro dobrý zrak (a je v mrkvi)?",
+          "back": "Vitamín A (nedostatek způsobuje šeroslepost)"
+        },
+        {
+          "front": "Který vitamín posiluje imunitu a jeho nedostatek způsoboval námořníkům kurděje?",
+          "back": "Vitamín C"
+        },
+        {
+          "front": "Který vitamín si tělo vytváří v kůži díky slunečnímu záření?",
+          "back": "Vitamín D (pomáhá ukládat vápník do kostí a zubů)"
+        },
+        {
+          "front": "Co způsobuje u dětí nedostatek vitamínu D?",
+          "back": "Křivici (měknutí a křivení kostí)"
+        },
+        {
+          "front": "Který vitamín zajišťuje správnou srážlivost krve?",
+          "back": "Vitamín K (najdeme ho v zelené listové zelenině)"
+        },
+        {
+          "front": "Který vitamín je důležitý antioxidant a je v rostlinných olejích a ořeších?",
+          "back": "Vitamín E"
+        },
+        {
+          "front": "Která skupina vitamínů podporuje nervovou soustavu a je v celozrnném pečivu či droždí?",
+          "back": "Vitamíny skupiny B (B-komplex)"
+        },
+        {
+          "front": "Proč je dobré dát do strouhaného mrkvového salátu kapku oleje?",
+          "back": "Protože vitamín A je rozpustný v tucích — bez tuku by ho tělo dobře nevstřebalo."
+        },
+        {
+          "front": "Co ničí vitamín C v zelenině a ovoci?",
+          "back": "Vysoká teplota (dlouhé vaření) a dlouhé skladování."
+        },
+        {
+          "front": "Jaký je rozdíl mezi hypovitaminózou a avitaminózou?",
+          "back": "Hypovitaminóza = částečný nedostatek vitamínu; Avitaminóza = úplný/těžký nedostatek vitamínu."
+        },
+        {
+          "front": "Co je to hypervitaminóza?",
+          "back": "Nadbytek (předávkování) vitamíny — hrozí hlavně u vitamínů rozpustných v tucích (A, D, E, K)."
+        },
+        {
+          "front": "Vyjmenuj alespoň 3 bohaté zdroje vitamínu C:",
+          "back": "Šípky, černý rybíz, paprika, citrusy, kiwi, brokolice, kysané zelí."
+        },
+        {
+          "front": "Jaké potraviny obsahují vitamín D?",
+          "back": "Tučné mořské ryby (losos, makrela), rybí tuk, vejce, mléčné výrobky (+ slunce)."
+        },
+        {
+          "front": "Proč musíme vitamín C a B doplňovat každý den, na rozdíl od A, D, E, K?",
+          "back": "Protože jsou rozpustné ve vodě a tělo si je neumí uložit do zásoby."
+        }
+      ],
+      "questions": [
+        {
+          "id": "ov-q1",
+          "type": "multiple-choice",
+          "prompt": "Která čtveřice vitamínů patří mezi vitamíny rozpustné v TUCÍCH?",
+          "options": [
+            "A, B, C, D",
+            "A, D, E, K",
+            "B, C, E, K",
+            "C, D, E, B"
+          ],
+          "correctAnswer": "A, D, E, K",
+          "explanation": "V tucích jsou rozpustné vitamíny A, D, E, K (pomůcka: ADEK). Vitamíny B a C jsou rozpustné ve vodě."
+        },
+        {
+          "id": "ov-q2",
+          "type": "multiple-choice",
+          "prompt": "Které vitamíny si tělo NEUMÍ ukládat do zásoby a jejich přebytek vyloučí močí?",
+          "options": [
+            "Vitamíny A a D",
+            "Vitamíny E a K",
+            "Vitamíny skupiny B a vitamín C",
+            "Všechny vitamíny se ukládají na celý rok"
+          ],
+          "correctAnswer": "Vitamíny skupiny B a vitamín C",
+          "explanation": "Vitamíny rozpustné ve vodě (B a C) se v těle neukládají do zásoby, proto je musíme jíst pravidelně každý den."
+        },
+        {
+          "id": "ov-q3",
+          "type": "type-in",
+          "prompt": "Který vitamín (napiš jeho písmeno) je nejdůležitější pro dobrý zrak a jeho nedostatek způsobuje šeroslepost?",
+          "correctAnswer": "A",
+          "acceptedAnswers": [
+            "a",
+            "vitamín a",
+            "vitamin a"
+          ],
+          "explanation": "Vitamín A (retinol) chrání zrak, kůži a sliznice. Jeho nedostatek vede k šerosleposti."
+        },
+        {
+          "id": "ov-q4",
+          "type": "multiple-choice",
+          "prompt": "Proč se do mrkvového salátu často přidává kapka rostlinného oleje?",
+          "options": [
+            "Aby mrkev nezhnědla",
+            "Protože vitamín A (a betakaroten) je rozpustný v tucích a lépe se vstřebá",
+            "Aby se zničil vitamín C",
+            "Protože olej obsahuje hodně vitamínu C"
+          ],
+          "correctAnswer": "Protože vitamín A (a betakaroten) je rozpustný v tucích a lépe se vstřebá",
+          "explanation": "Vitamín A patří mezi vitamíny rozpustné v tucích (ADEK), takže tuk pomáhá tělu ho využít."
+        },
+        {
+          "id": "ov-q5",
+          "type": "multiple-choice",
+          "prompt": "Která z těchto nemocí vzniká při těžkém nedostatku vitamínu C (trpěli jí dříve námořníci bez čerstvého ovoce)?",
+          "options": [
+            "Křivice",
+            "Kurděje",
+            "Šeroslepost",
+            "Angína"
+          ],
+          "correctAnswer": "Kurděje",
+          "explanation": "Těžký nedostatek vitamínu C způsobuje kurděje (krvácení dásní, vypadávání zubů, velká únava)."
+        },
+        {
+          "id": "ov-q6",
+          "type": "multiple-choice",
+          "prompt": "Kde najdeš nejvíce vitamínu C?",
+          "options": [
+            "V másle a sádle",
+            "V šípcích, černém rybízu, paprice a citrusech",
+            "V bílém cukru a soli",
+            "V olivovém oleji"
+          ],
+          "correctAnswer": "V šípcích, černém rybízu, paprice a citrusech",
+          "explanation": "Vitamín C je hlavně v čerstvém ovoci a zelenině: šípky, černý rybíz, paprika, kiwi, citrusy, brokolice nebo kysané zelí."
+        },
+        {
+          "id": "ov-q7",
+          "type": "true-false",
+          "prompt": "Pravda nebo lež: Dlouhé vaření při vysoké teplotě velkou část vitamínu C zničí.",
+          "options": [
+            "Pravda",
+            "Lež"
+          ],
+          "correctAnswer": "Pravda",
+          "explanation": "Pravda! Vitamín C je citlivý na teplo a kyslík, proto je nejzdravější jíst ovoce a zeleninu syrové nebo je jen krátce podusit."
+        },
+        {
+          "id": "ov-q8",
+          "type": "type-in",
+          "prompt": "Který vitamín (napiš jen písmeno) si lidské tělo dokáže vytvořit samo v kůži díky slunečnímu záření?",
+          "correctAnswer": "D",
+          "acceptedAnswers": [
+            "d",
+            "vitamín d",
+            "vitamin d"
+          ],
+          "explanation": "Vitamín D se tvoří v kůži působením slunečního záření a je důležitý pro pevné kosti a zuby."
+        },
+        {
+          "id": "ov-q9",
+          "type": "multiple-choice",
+          "prompt": "K čemu tělo nejvíce potřebuje vitamín D?",
+          "options": [
+            "Ke srážení krve při říznutí",
+            "Ke vstřebávání vápníku pro pevné kosti a zuby",
+            "K vidění ve tmě",
+            "K trávení cukru"
+          ],
+          "correctAnswer": "Ke vstřebávání vápníku pro pevné kosti a zuby",
+          "explanation": "Vitamín D umožňuje ukládání vápníku a fosforu do kostí a zubů. Jeho nedostatek u dětí způsobuje křivici."
+        },
+        {
+          "id": "ov-q10",
+          "type": "multiple-choice",
+          "prompt": "Ve kterých potravinách najdeme přirozeně hodně vitamínu D?",
+          "options": [
+            "V tučných mořských rybách (losos, makrela), rybím tuku a vejcích",
+            "V jablkách a hruškách",
+            "V bílém pečivu a těstovinách",
+            "V mrkvi a okurce"
+          ],
+          "correctAnswer": "V tučných mořských rybách (losos, makrela), rybím tuku a vejcích",
+          "explanation": "Kromě slunečního záření získáváme vitamín D hlavně z tučných mořských ryb, rybího tuku, vajec a mléčných výrobků."
+        },
+        {
+          "id": "ov-q11",
+          "type": "multiple-choice",
+          "prompt": "Který vitamín je klíčový pro správnou SRÁŽLIVOST KRVE (aby se zastavilo krvácení)?",
+          "options": [
+            "Vitamín A",
+            "Vitamín C",
+            "Vitamín E",
+            "Vitamín K"
+          ],
+          "correctAnswer": "Vitamín K",
+          "explanation": "Vitamín K zajišťuje srážlivost krve a najdeme ho hlavně v zelené listové zelenině (špenát, brokolice, kapusta)."
+        },
+        {
+          "id": "ov-q12",
+          "type": "multiple-choice",
+          "prompt": "V jakých potravinách najdeme nejvíce vitamínu K?",
+          "options": [
+            "V zelené listové zelenině (špenát, brokolice, salát)",
+            "V pomerančích a citronech",
+            "V cukru a čokoládě",
+            "V rýži"
+          ],
+          "correctAnswer": "V zelené listové zelenině (špenát, brokolice, salát)",
+          "explanation": "Zelená listová zelenina (špenát, kapusta, brokolice, salát) je hlavním zdrojem vitamínu K."
+        },
+        {
+          "id": "ov-q13",
+          "type": "multiple-choice",
+          "prompt": "Který vitamín působí jako silný ANTIOXIDANT, chrání buňky a nachází se v rostlinných olejích, ořeších a semínkách?",
+          "options": [
+            "Vitamín B12",
+            "Vitamín C",
+            "Vitamín E",
+            "Vitamín K"
+          ],
+          "correctAnswer": "Vitamín E",
+          "explanation": "Vitamín E (tokoferol) chrání buňky před poškozením a najdeme ho v rostlinných olejích, ořeších, semínkách a avokádu."
+        },
+        {
+          "id": "ov-q14",
+          "type": "multiple-choice",
+          "prompt": "Proč potřebujeme vitamíny skupiny B (B-komplex)?",
+          "options": [
+            "Podporují nervovou soustavu, soustředění, krvetvorbu a energii",
+            "Způsobují opálení kůže",
+            "Slouží jen ke srážení krve",
+            "Nahrazují pitný režim"
+          ],
+          "correctAnswer": "Podporují nervovou soustavu, soustředění, krvetvorbu a energii",
+          "explanation": "Vitamíny skupiny B jsou důležité pro nervy, soustředění, kůži, krvetvorbu a přeměnu energie z potravy."
+        },
+        {
+          "id": "ov-q15",
+          "type": "multiple-choice",
+          "prompt": "Kde najdeš bohatý zdroj vitamínů skupiny B?",
+          "options": [
+            "V celozrnném pečivu, ovesných vločkách, luštěninách, droždí, mase a vejcích",
+            "Pouze v citronech a pomerančích",
+            "V perlivé vodě a cukru",
+            "Jen v jablkách"
+          ],
+          "correctAnswer": "V celozrnném pečivu, ovesných vločkách, luštěninách, droždí, mase a vejcích",
+          "explanation": "Vitamíny skupiny B najdeme v celozrnných obilovinách, ovesných vločkách, luštěninách, droždí, ořeších, mase, mléce a vejcích."
+        },
+        {
+          "id": "ov-q16",
+          "type": "multiple-choice",
+          "prompt": "Co znamená pojem AVITAMINÓZA?",
+          "options": [
+            "Úplný nebo těžký nedostatek určitého vitamínu v těle",
+            "Zdravý jídelníček plný ovoce",
+            "Předávkování vitamíny z tablet",
+            "Alergie na citrusy"
+          ],
+          "correctAnswer": "Úplný nebo těžký nedostatek určitého vitamínu v těle",
+          "explanation": "Avitaminóza je úplný/těžký nedostatek vitamínu (např. kurděje, křivice). Částečný nedostatek se nazývá hypovitaminóza."
+        },
+        {
+          "id": "ov-q17",
+          "type": "multiple-choice",
+          "prompt": "Co znamená pojem HYPERVITAMINÓZA?",
+          "options": [
+            "Nedostatek vitamínu C v zimě",
+            "Nadbytek (předávkování) vitamíny v těle",
+            "Vitamín rozpustný ve vodě",
+            "Příliš málo slunce"
+          ],
+          "correctAnswer": "Nadbytek (předávkování) vitamíny v těle",
+          "explanation": "Hypervitaminóza je nadbytek vitamínů (hrozí hlavně při nadměrném užívání doplňků s vitamíny A, D, E, K)."
+        },
+        {
+          "id": "ov-q18",
+          "type": "true-false",
+          "prompt": "Pravda nebo lež: Zelená paprika obsahuje dokonce více vitamínu C na 100 g než citron.",
+          "options": [
+            "Pravda",
+            "Lež"
+          ],
+          "correctAnswer": "Pravda",
+          "explanation": "Pravda! Paprika, šípky nebo černý rybíz mají ještě více vitamínu C než citrusové plody."
+        },
+        {
+          "id": "ov-q19",
+          "type": "multiple-choice",
+          "prompt": "Které z těchto potíží mohou ukazovat na nedostatek vitamínů skupiny B (hypovitaminózu)?",
+          "options": [
+            "Praskající koutky úst, únava a podrážděnost",
+            "Zlomenina nohy",
+            "Šeroslepost",
+            "Zelené zbarvení kůže"
+          ],
+          "correctAnswer": "Praskající koutky úst, únava a podrážděnost",
+          "explanation": "Prasklé koutky úst, afty, únava a horší soustředění jsou typické projevy nedostatku vitamínů skupiny B."
+        },
+        {
+          "id": "ov-q20",
+          "type": "type-in",
+          "prompt": "Jak se jmenuje oranžové barvivo v mrkvi, ze kterého si tělo umí vytvořit vitamín A?",
+          "correctAnswer": "betakaroten",
+          "acceptedAnswers": [
+            "betakaroten",
+            "beta-karoten",
+            "karoten"
+          ],
+          "explanation": "Betakaroten (provitamín A) dodává mrkvi oranžovou barvu a v těle se mění na vitamín A."
+        },
+        {
+          "id": "ov-q21",
+          "type": "true-false",
+          "prompt": "Pravda nebo lež: Vitamíny dodávají tělu velké množství kalorií (energie) stejně jako cukry a tuky.",
+          "options": [
+            "Pravda",
+            "Lež"
+          ],
+          "correctAnswer": "Lež",
+          "explanation": "Lež! Vitamíny samy o sobě nemají žádnou kalorickou hodnotu, ale pomáhají tělu energii z potravy uvolnit a správně fungovat."
+        },
+        {
+          "id": "ov-q22",
+          "type": "multiple-choice",
+          "prompt": "Který vitamín pomáhá tělu lépe VSTŘEBÁVAT ŽELEZO z rostlinné stravy?",
+          "options": [
+            "Vitamín C",
+            "Vitamín D",
+            "Vitamín K",
+            "Vitamín E"
+          ],
+          "correctAnswer": "Vitamín C",
+          "explanation": "Vitamín C výrazně zlepšuje vstřebávání železa a podporuje imunitní systém."
         }
       ]
     }
