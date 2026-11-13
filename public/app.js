@@ -1093,6 +1093,7 @@ function getSubjectIcon(subject = '') {
   if (s.includes('mat')) return '📐';
   if (s.includes('děj') || s.includes('dej')) return '🏛️';
   if (s.includes('angli') || s.includes('eng')) return '🇬🇧';
+  if (s.includes('občan') || s.includes('obcan') || s.includes('výchov')) return '🧭';
   return '📘';
 }
 
@@ -1181,7 +1182,8 @@ function getTopicPriorityRank(tp) {
   const subj = (tp.subject || '').toLowerCase();
   if (subj.includes('mat')) return 0;
   if (subj.includes('angli') || subj.includes('eng')) return 1;
-  return 2;
+  if (subj.includes('občan') || subj.includes('obcan') || subj.includes('výchov')) return 2;
+  return 3;
 }
 
 function getFilteredAndSortedTopics() {
