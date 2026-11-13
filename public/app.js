@@ -1180,7 +1180,8 @@ function getBestScoreForTopic(topicId) {
 function getTopicPriorityRank(tp) {
   const subj = (tp.subject || '').toLowerCase();
   if (subj.includes('mat')) return 0;
-  return 1;
+  if (subj.includes('angli') || subj.includes('eng')) return 1;
+  return 2;
 }
 
 function getFilteredAndSortedTopics() {
