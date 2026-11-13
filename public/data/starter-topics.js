@@ -2107,5 +2107,438 @@ export const STARTER_TOPICS = [
         "explanation": "0,4 t = 0,4 × 1 000 = 400 kg, a 400 kg je více než 380 kg."
       }
     ]
+  },
+  {
+    "id": "anglicky-jazyk-lekce-1",
+    "lang": "both",
+    "title": "Lekce 1 (souhrnný test) - pondělí 16. 11., od 10:55 do 11:40",
+    "subject": "Anglický jazyk",
+    "description": "Příprava na souhrnný test (pondělí 16. 11., od 10:55 do 11:40, 6.C): Práce s textem, přítomný čas prostý (tvoření otázky, hledání chyby ve větě), slovní zásoba k tématu „at home“ (lekce 1D, učebnice str. 14) a měsíce v roce.",
+    "authorName": "Táta & Gemini",
+    "createdAt": 1794574657925,
+    "updatedAt": 1794574657925,
+    "studyNotes": [
+      "Přítomný čas prostý (Present Simple) — kladná věta: Pro I, you, we, they použijeme základní tvar slovesa (I play, they live). Pro 3. osobu jednotného čísla (he, she, it) přidáváme ke slovesu -s / -es (he plays, she watches, it goes).",
+      "Tvoření otázky (Do / Does): Otázku tvoříme pomocným slovesem DO (I, you, we, they) nebo DOES (he, she, it) na začátku otázky. POZOR: Po DOES už sloveso NEMÁ koncovku -s! (Does he play? — NIKOLIV Does he plays?).",
+      "Krátké odpovědi (Short answers): Yes, I do. / No, I don't. Pro 3. osobu: Yes, he/she/it does. / No, he/she/it doesn't. Otázky se slovesem BE (am/is/are) NEPOUŽÍVAJÍ do/does (např. Are you at home? Is she 12?).",
+      "Zápor v přítomném čase prostém: Používáme don't (do not) pro I/you/we/they a doesn't (does not) pro he/she/it. Po doesn't je sloveso v základním tvaru bez -s (She doesn't like... — NIKOLIV She doesn't likes).",
+      "Hledání chyby ve větě (Error spotting): Kontroluj 4 nejčastější chyby: 1) Chybějící -s u he/she/it (He live → He lives). 2) Přidané -s po does/doesn't (Does she works? → Does she work?). 3) Záměna do/does a am/is/are (Do you are happy? → Are you happy?). 4) Špatný slovosled v otázce.",
+      "Slovní zásoba „At home“ (lekce 1D — domov a domácí práce): room (pokoj), bedroom (ložnice), kitchen (kuchyně), living room (obývací pokoj), bathroom (koupelna), hall (předsíň), garden (zahrada), make the bed (ustlat postel), tidy up (uklidit), wash the dishes / do the washing-up (umýt nádobí), take out the rubbish (vynést odpadky), vacuum / hoover (vysávat), cook dinner (uvařit večeři).",
+      "Měsíce v roce (Months — píší se VŽDY s velkým počátečním písmenem!): January (leden), February (únor), March (březen), April (duben), May (květen), June (červen), July (červenec), August (srpen), September (září), October (říjen), November (listopad), December (prosinec).",
+      "Předložky času (in / on / at): S měsíci a ročními obdobími používáme IN (in January, in November). Se dny v týdnu a daty používáme ON (on Monday, on 16th November). S přesným časem používáme AT (at 10:55).",
+      "Práce s textem (Reading comprehension): Nejprve si přečti otázky, pak hledej klíčová slova v textu. Dávej pozor na zápor (doesn't / never) a na osoby (he vs. she vs. they).",
+      "Záludný pravopis: February (má dvě r: Feb-ru-a-ry), August, September, November, kitchen, bathroom, vacuum, rubbish."
+    ],
+    "flashcards": [
+      {
+        "front": "Jak utvoříš otázku z věty: „She plays tennis.“?",
+        "back": "Does she play tennis? (Po Does už není -s!)"
+      },
+      {
+        "front": "Jak utvoříš otázku z věty: „They live in Prague.“?",
+        "back": "Do they live in Prague?"
+      },
+      {
+        "front": "Jak zní krátká záporná odpověď na „Does Tom like Maths?“",
+        "back": "No, he doesn't."
+      },
+      {
+        "front": "Najdi a oprav chybu: „Does your brother goes to school by bus?“",
+        "back": "Does your brother go to school by bus? (Po Does je sloveso bez -es!)"
+      },
+      {
+        "front": "Najdi a oprav chybu: „My mum don't cook on Sundays.“",
+        "back": "My mum doesn't cook on Sundays. (My mum = she → doesn't)"
+      },
+      {
+        "front": "Co znamená „tidy up my room“?",
+        "back": "Uklidit si pokoj."
+      },
+      {
+        "front": "Co znamená „take out the rubbish“?",
+        "back": "Vynést odpadky."
+      },
+      {
+        "front": "Co znamená „make the bed“?",
+        "back": "Ustlat postel."
+      },
+      {
+        "front": "Co znamená „do the washing-up“ / „wash the dishes“?",
+        "back": "Umýt nádobí."
+      },
+      {
+        "front": "Jak se anglicky řekne „obývací pokoj“ a „kuchyně“?",
+        "back": "living room / kitchen"
+      },
+      {
+        "front": "Jak se anglicky řekne „ložnice“ a „koupelna“?",
+        "back": "bedroom / bathroom"
+      },
+      {
+        "front": "Jak se anglicky řekne „únor“? (Pozor na pravopis!)",
+        "back": "February (s velkým F)"
+      },
+      {
+        "front": "Jak se anglicky řekne „srpen“ a „září“?",
+        "back": "August / September"
+      },
+      {
+        "front": "Jak se anglicky řekne „listopad“ a „prosinec“?",
+        "back": "November / December"
+      },
+      {
+        "front": "Kterou předložku dáš před měsíc (např. ___ November)?",
+        "back": "in (in November)"
+      },
+      {
+        "front": "Jaký je rozdíl mezi „Do you have…“ / „Have you got…“ a „Are you…“?",
+        "back": "U slovesa BE (am/is/are) nikdy nepoužíváme Do/Does (Are you at home?)."
+      }
+    ],
+    "questions": [
+      {
+        "id": "aj-q1",
+        "type": "multiple-choice",
+        "prompt": "Vyber správně utvořenou otázku v přítomném čase prostém:",
+        "options": [
+          "Does she plays the piano?",
+          "Do she play the piano?",
+          "Does she play the piano?",
+          "Is she play the piano?"
+        ],
+        "correctAnswer": "Does she play the piano?",
+        "explanation": "Pro 3. osobu (she) tvoříme otázku pomocí Does a významové sloveso zůstává v základním tvaru bez -s (play)."
+      },
+      {
+        "id": "aj-q2",
+        "type": "multiple-choice",
+        "prompt": "Doplň správné slovo do otázky: „___ your parents work in an office?“",
+        "options": [
+          "Does",
+          "Do",
+          "Are",
+          "Is"
+        ],
+        "correctAnswer": "Do",
+        "explanation": "„Your parents“ (oni = they) je množné číslo, proto v přítomném čase prostém použijeme pomocné sloveso Do."
+      },
+      {
+        "id": "aj-q3",
+        "type": "type-in",
+        "prompt": "Doplň chybějící slovo do otázky: „___ Tom walk to school every day?“",
+        "correctAnswer": "Does",
+        "acceptedAnswers": [
+          "does"
+        ],
+        "explanation": "Tom = he (3. osoba jednotného čísla), proto otázka začíná na Does."
+      },
+      {
+        "id": "aj-q4",
+        "type": "multiple-choice",
+        "prompt": "Jaká je správná krátká odpověď na otázku „Does Honza like English?“",
+        "options": [
+          "Yes, he do.",
+          "Yes, he likes.",
+          "Yes, he does.",
+          "Yes, does he."
+        ],
+        "correctAnswer": "Yes, he does.",
+        "explanation": "V krátké odpovědi opakujeme pomocné sloveso z otázky (Does → Yes, he does.)."
+      },
+      {
+        "id": "aj-q5",
+        "type": "multiple-choice",
+        "prompt": "Která otázka má SPRÁVNÝ slovosled?",
+        "options": [
+          "Where do live your friends?",
+          "Where your friends do live?",
+          "Where do your friends live?",
+          "Do where your friends live?"
+        ],
+        "correctAnswer": "Where do your friends live?",
+        "explanation": "Slovosled otázky s tázacím slovem: Tázací slovo (Where) + do/does + podmět (your friends) + sloveso (live)."
+      },
+      {
+        "id": "aj-q6",
+        "type": "multiple-choice",
+        "prompt": "Odhal chybu — která z následujících vět je GRAMATICKY ŠPATNĚ?",
+        "options": [
+          "I don't watch TV in the morning.",
+          "My sister goes to bed at nine.",
+          "Does your dad works on Saturdays?",
+          "We tidy up our room every week."
+        ],
+        "correctAnswer": "Does your dad works on Saturdays?",
+        "explanation": "Po pomocném slovese Does už sloveso nemá koncovku -s. Správně má být: Does your dad work on Saturdays?"
+      },
+      {
+        "id": "aj-q7",
+        "type": "multiple-choice",
+        "prompt": "Najdi chybu ve větě: „He don't like washing the dishes.“ Jak zní správná oprava?",
+        "options": [
+          "He doesn't likes washing the dishes.",
+          "He doesn't like washing the dishes.",
+          "He not like washing the dishes.",
+          "He isn't like washing the dishes."
+        ],
+        "correctAnswer": "He doesn't like washing the dishes.",
+        "explanation": "Pro he/she/it používáme v záporu doesn't a sloveso bez koncovky -s (like)."
+      },
+      {
+        "id": "aj-q8",
+        "type": "multiple-choice",
+        "prompt": "Která z těchto vět je NAPROSTO SPRÁVNĚ (bez chyby)?",
+        "options": [
+          "Do you are at home?",
+          "She watchs films on Friday.",
+          "My brother doesn't help at home.",
+          "What time does the lesson starts?"
+        ],
+        "correctAnswer": "My brother doesn't help at home.",
+        "explanation": "1) Are you at home? 2) She watches (po -ch přidáváme -es). 3) My brother doesn't help je správně. 4) What time does the lesson start? (bez -s)."
+      },
+      {
+        "id": "aj-q9",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Věta „Does Lucy has a dog?“ je napsaná gramaticky správně.",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Lež",
+        "explanation": "Lež! Po Does musí být základní tvar slovesa (have, nikoliv has). Správně: Does Lucy have a dog?"
+      },
+      {
+        "id": "aj-q10",
+        "type": "type-in",
+        "prompt": "Oprav chybu — napiš správný tvar slovesa v závorce: „Does Peter (plays) football after school?“",
+        "correctAnswer": "play",
+        "acceptedAnswers": [
+          "play"
+        ],
+        "explanation": "Protože je v otázce pomocné sloveso Does, sloveso je v základním tvaru: play."
+      },
+      {
+        "id": "aj-q11",
+        "type": "multiple-choice",
+        "prompt": "Co znamená anglické spojení „take out the rubbish“ (téma At home)?",
+        "options": [
+          "Ustlat postel",
+          "Vynést odpadky",
+          "Umýt nádobí",
+          "Vyluxovat koberec"
+        ],
+        "correctAnswer": "Vynést odpadky",
+        "explanation": "Take out the rubbish = vynést odpadky (trash/rubbish)."
+      },
+      {
+        "id": "aj-q12",
+        "type": "multiple-choice",
+        "prompt": "Jak se anglicky řekne „ustlat postel“?",
+        "options": [
+          "do the bed",
+          "make the bed",
+          "tidy the bed",
+          "clean the bed"
+        ],
+        "correctAnswer": "make the bed",
+        "explanation": "Ustlat postel se v angličtině říká ustáleně „make the bed“."
+      },
+      {
+        "id": "aj-q13",
+        "type": "multiple-choice",
+        "prompt": "Který výraz znamená „umýt nádobí“?",
+        "options": [
+          "set the table",
+          "feed the dog",
+          "do the washing-up",
+          "vacuum the floor"
+        ],
+        "correctAnswer": "do the washing-up",
+        "explanation": "Do the washing-up (nebo wash the dishes) = umýt nádobí."
+      },
+      {
+        "id": "aj-q14",
+        "type": "type-in",
+        "prompt": "Napiš anglicky místnost v domě, kde vaříme jídlo („kuchyně“):",
+        "correctAnswer": "kitchen",
+        "acceptedAnswers": [
+          "kitchen",
+          "the kitchen"
+        ],
+        "explanation": "Kuchyně = kitchen."
+      },
+      {
+        "id": "aj-q15",
+        "type": "multiple-choice",
+        "prompt": "Co znamená věta „I usually tidy up my room on Saturday“?",
+        "options": [
+          "V sobotu si obvykle uklízím pokoj.",
+          "V sobotu obvykle nakupuji v obchodě.",
+          "V sobotu obvykle chodím ven se psem.",
+          "V sobotu obvykle vařím oběd."
+        ],
+        "correctAnswer": "V sobotu si obvykle uklízím pokoj.",
+        "explanation": "Tidy up = uklidit, my room = můj pokoj, usually = obvykle."
+      },
+      {
+        "id": "aj-q16",
+        "type": "multiple-choice",
+        "prompt": "Které anglické slovo znamená „koupelna“?",
+        "options": [
+          "bedroom",
+          "living room",
+          "bathroom",
+          "garden"
+        ],
+        "correctAnswer": "bathroom",
+        "explanation": "Bathroom = koupelna, bedroom = ložnice, living room = obývací pokoj, garden = zahrada."
+      },
+      {
+        "id": "aj-q17",
+        "type": "multiple-choice",
+        "prompt": "Který měsíc je v angličtině napsaný SPRÁVNĚ?",
+        "options": [
+          "Febuary",
+          "february",
+          "February",
+          "Februari"
+        ],
+        "correctAnswer": "February",
+        "explanation": "Měsíce se v angličtině píší vždy s velkým počátečním písmenem a únor má uprostřed „r“: February."
+      },
+      {
+        "id": "aj-q18",
+        "type": "type-in",
+        "prompt": "Napiš anglicky měsíc „leden“:",
+        "correctAnswer": "January",
+        "acceptedAnswers": [
+          "january"
+        ],
+        "explanation": "Leden = January."
+      },
+      {
+        "id": "aj-q19",
+        "type": "type-in",
+        "prompt": "Napiš anglicky měsíc „listopad“:",
+        "correctAnswer": "November",
+        "acceptedAnswers": [
+          "november"
+        ],
+        "explanation": "Listopad = November."
+      },
+      {
+        "id": "aj-q20",
+        "type": "multiple-choice",
+        "prompt": "Jak jdou za sebou letní prázdninové měsíce červen, červenec a srpen?",
+        "options": [
+          "July, June, August",
+          "June, July, August",
+          "June, August, July",
+          "May, June, July"
+        ],
+        "correctAnswer": "June, July, August",
+        "explanation": "Červen = June, červenec = July, srpen = August."
+      },
+      {
+        "id": "aj-q21",
+        "type": "multiple-choice",
+        "prompt": "Doplň správnou předložku: „Our English test is ___ November.“",
+        "options": [
+          "on",
+          "at",
+          "in",
+          "to"
+        ],
+        "correctAnswer": "in",
+        "explanation": "Před samotným názvem měsíce používáme vždy předložku „in“ (in November)."
+      },
+      {
+        "id": "aj-q22",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Měsíc „September“ je devátý měsíc v roce (září).",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Pravda",
+        "explanation": "Pravda! September je září (9. měsíc), October říjen (10.), November listopad (11.), December prosinec (12.)."
+      },
+      {
+        "id": "aj-q23",
+        "type": "multiple-choice",
+        "prompt": "Přečti si krátký text: „My name is Ben. I live in a small house with my parents and my sister Mia. Every morning I make my bed, and Mia feeds our cat. In the afternoon, I don't vacuum, I do the washing-up.“ — Co dělá Ben každé ráno?",
+        "options": [
+          "Krmí kočku.",
+          "Ustele si postel.",
+          "Vysává podlahu.",
+          "Myje nádobí."
+        ],
+        "correctAnswer": "Ustele si postel.",
+        "explanation": "V textu stojí: „Every morning I make my bed“ = každé ráno si ustelu postel. (Kočku krmí sestra Mia, nádobí Ben myje odpoledne.)"
+      },
+      {
+        "id": "aj-q24",
+        "type": "multiple-choice",
+        "prompt": "Ze stejného textu o Benovi: „In the afternoon, I don't vacuum, I do the washing-up.“ — Vysává Ben odpoledne?",
+        "options": [
+          "Yes, he does.",
+          "No, he doesn't.",
+          "Yes, he is.",
+          "No, he don't."
+        ],
+        "correctAnswer": "No, he doesn't.",
+        "explanation": "Ben říká „I don't vacuum“, takže na otázku o Benovi (he) odpovíme záporně: No, he doesn't."
+      },
+      {
+        "id": "aj-q25",
+        "type": "multiple-choice",
+        "prompt": "Přečti si text: „Clara's favourite month is October because her birthday is on 14th October. Her brother Alex loves December because he likes winter and Christmas. They both hate August because it's too hot.“ — Kdy má Clara narozeniny?",
+        "options": [
+          "V srpnu",
+          "V prosinci",
+          "V říjnu",
+          "V listopadu"
+        ],
+        "correctAnswer": "V říjnu",
+        "explanation": "Clara má narozeniny „on 14th October“ = 14. října."
+      },
+      {
+        "id": "aj-q26",
+        "type": "multiple-choice",
+        "prompt": "Ze stejného textu o Claře a Alexovi: Proč nemají rádi srpen (August)?",
+        "options": [
+          "Protože začíná škola.",
+          "Protože hodně prší.",
+          "Protože je příliš horko.",
+          "Protože musí uklízet."
+        ],
+        "correctAnswer": "Protože je příliš horko.",
+        "explanation": "V textu je: „They both hate August because it's too hot.“ = Oba nesnášejí srpen, protože je moc horko."
+      },
+      {
+        "id": "aj-q27",
+        "type": "multiple-choice",
+        "prompt": "Doplň správně otázku: „What ___ you usually ___ at home after school?“",
+        "options": [
+          "does / do",
+          "do / does",
+          "do / do",
+          "are / do"
+        ],
+        "correctAnswer": "do / do",
+        "explanation": "První „do“ je pomocné sloveso pro otázku s „you“, druhé „do“ je významové sloveso „dělat“."
+      },
+      {
+        "id": "aj-q28",
+        "type": "type-in",
+        "prompt": "Napiš anglicky měsíc „srpen“:",
+        "correctAnswer": "August",
+        "acceptedAnswers": [
+          "august"
+        ],
+        "explanation": "Srpen = August."
+      }
+    ]
   }
 ];
