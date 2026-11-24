@@ -1368,6 +1368,66 @@
     color: var(--color-brand-text);
   }
 
+  /* Exam Time Filter Bar (Upcoming / Previous / All) */
+  .exam-time-filter-bar {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    padding: 0.3rem;
+    margin-block-end: 0.85rem;
+    background-color: var(--bg-subtle);
+    border: 1px solid var(--ui-border);
+    border-radius: 14px;
+  }
+
+  .time-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-block-size: 40px;
+    padding-inline: 0.9rem;
+    padding-block: 0.4rem;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .time-filter-btn:hover:not([aria-pressed="true"]) {
+    color: var(--text-main);
+    background-color: var(--bg-surface);
+  }
+
+  .time-filter-btn[aria-pressed="true"] {
+    background-color: var(--color-brand);
+    color: var(--color-brand-text);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  }
+
+  .time-filter-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: 1.45rem;
+    padding-inline: 0.4rem;
+    padding-block: 0.08rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    background-color: rgba(15, 23, 42, 0.08);
+    color: inherit;
+  }
+
+  .time-filter-btn[aria-pressed="true"] .time-filter-count {
+    background-color: rgba(255, 255, 255, 0.24);
+    color: var(--color-brand-text);
+  }
+
   /* Topics Sort & View Mode Controls */
   .topics-controls-bar {
     display: flex;

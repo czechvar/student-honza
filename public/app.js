@@ -182,7 +182,14 @@ const I18N = {
     colBestScore: 'Best Score',
     colActionsTable: 'Actions',
     studyShortBtn: '📖 Study',
-    quizShortBtn: '🚀 Quiz'
+    quizShortBtn: '🚀 Quiz',
+    examTimeFilterAria: 'Filter by exam date',
+    timeFilterUpcoming: '📅 Upcoming',
+    timeFilterPrevious: '🗂️ Previous',
+    timeFilterAll: '📚 All',
+    noUpcomingTopicsTitle: 'No upcoming exams right now!',
+    noUpcomingTopicsSub: 'You can review previous tests or switch to all topics.',
+    showAllTopicsBtn: 'Show All Topics'
   },
   cs: {
     skipToMain: 'Přeskočit na hlavní obsah',
@@ -339,7 +346,14 @@ const I18N = {
     colBestScore: 'Rekord',
     colActionsTable: 'Akce',
     studyShortBtn: '📖 Výpisky',
-    quizShortBtn: '🚀 Kvíz'
+    quizShortBtn: '🚀 Kvíz',
+    examTimeFilterAria: 'Filtrovat podle termínu písemky',
+    timeFilterUpcoming: '📅 Nadcházející',
+    timeFilterPrevious: '🗂️ Proběhlé',
+    timeFilterAll: '📚 Všechny',
+    noUpcomingTopicsTitle: 'Žádné nadcházející písemky!',
+    noUpcomingTopicsSub: 'Můžeš si zopakovat proběhlé testy nebo zobrazit všechna témata.',
+    showAllTopicsBtn: 'Zobrazit všechny písemky'
   }
 };
 
@@ -350,6 +364,7 @@ const state = {
   topics: [],
   attempts: [],
   searchQuery: '',
+  topicsTimeFilter: 'upcoming', // 'upcoming' | 'previous' | 'all' (upcoming by default)
   selectedSubject: 'all',
   topicsSort: localStorage.getItem(STORAGE_KEYS.TOPICS_SORT) || 'priority',
   topicsView: localStorage.getItem(STORAGE_KEYS.TOPICS_VIEW) === 'table' ? 'table' : 'grid',
@@ -1079,10 +1094,79 @@ function switchView(viewName) {
 
 function renderAll() {
   renderStatsStrip();
+  renderExamTimeFilterBar();
   renderSubjectFilterBar();
   renderTopicsGrid();
   renderScoresTable();
   renderStudioTopicsList();
+}
+
+// Parse Czech exam date (e.g. "25. 11., od 10:55 do 11:40") into local end timestamp (ms)
+function getTopicExamEndTimestamp(tp) {
+  if (!tp) return null;
+  if (tp.examDate) {
+    const parsed = Date.parse(tp.examDate);
+    if (!Number.isNaN(parsed)) return parsed;
+  }
+  const source = `${tp.title || ''} ${tp.description || ''}`;
+  const dateMatch = source.match(/(\d{1,2})\.\s*(\d{1,2})\./);
+  if (!dateMatch) return null;
+
+  const day = Number(dateMatch[1]);
+  const month = Number(dateMatch[2]);
+  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+
+  const refDate = Number(tp.createdAt) ? new Date(Number(tp.createdAt)) : new Date();
+  let year = refDate.getFullYear();
+  let candidate = new Date(year, month - 1, day, 23, 59, 59, 999);
+  // Handle school-year rollover (e.g. created in December for a January exam)
+  const sixMonthsMs = 180 * 24 * 60 * 60 * 1000;
+  if (candidate.getTime() < refDate.getTime() - sixMonthsMs) {
+    year += 1;
+    candidate = new Date(year, month - 1, day, 23, 59, 59, 999);
+  }
+
+  const endTimeMatch = source.match(/do\s+(\d{1,2}):(\d{2})/i);
+  if (endTimeMatch) {
+    candidate.setHours(Number(endTimeMatch[1]), Number(endTimeMatch[2]), 59, 999);
+  }
+  return candidate.getTime();
+}
+
+function isTopicUpcoming(tp, nowMs = Date.now()) {
+  const endTs = getTopicExamEndTimestamp(tp);
+  // Undated custom topics stay visible under Upcoming
+  if (endTs === null) return true;
+  return endTs >= nowMs;
+}
+
+function getTopicsByTimeFilter(filter = state.topicsTimeFilter) {
+  const nowMs = Date.now();
+  if (filter === 'all') return state.topics;
+  if (filter === 'previous') return state.topics.filter((tp) => !isTopicUpcoming(tp, nowMs));
+  return state.topics.filter((tp) => isTopicUpcoming(tp, nowMs));
+}
+
+function renderExamTimeFilterBar() {
+  const nowMs = Date.now();
+  let upcomingCount = 0;
+  let previousCount = 0;
+  for (const tp of state.topics) {
+    if (isTopicUpcoming(tp, nowMs)) upcomingCount += 1;
+    else previousCount += 1;
+  }
+
+  const upEl = document.getElementById('time-count-upcoming');
+  const prevEl = document.getElementById('time-count-previous');
+  const allEl = document.getElementById('time-count-all');
+  if (upEl) upEl.textContent = String(upcomingCount);
+  if (prevEl) prevEl.textContent = String(previousCount);
+  if (allEl) allEl.textContent = String(state.topics.length);
+
+  for (const btn of document.querySelectorAll('[data-time-filter]')) {
+    const val = btn.getAttribute('data-time-filter');
+    btn.setAttribute('aria-pressed', val === state.topicsTimeFilter ? 'true' : 'false');
+  }
 }
 
 function getSubjectIcon(subject = '') {
@@ -1102,8 +1186,9 @@ function renderSubjectFilterBar() {
   if (!bar) return;
   bar.innerHTML = '';
 
+  const timeScopedTopics = getTopicsByTimeFilter();
   const counts = new Map();
-  for (const tp of state.topics) {
+  for (const tp of timeScopedTopics) {
     const subj = (tp.subject || '').trim();
     if (!subj) continue;
     counts.set(subj, (counts.get(subj) || 0) + 1);
@@ -1119,8 +1204,8 @@ function renderSubjectFilterBar() {
   allBtn.setAttribute('aria-pressed', state.selectedSubject === 'all' ? 'true' : 'false');
   allBtn.textContent =
     state.lang === 'cs'
-      ? `📚 Všechny předměty (${state.topics.length})`
-      : `📚 All Subjects (${state.topics.length})`;
+      ? `📚 Všechny předměty (${timeScopedTopics.length})`
+      : `📚 All Subjects (${timeScopedTopics.length})`;
   allBtn.addEventListener('click', () => {
     state.selectedSubject = 'all';
     renderSubjectFilterBar();
@@ -1190,7 +1275,8 @@ function getTopicPriorityRank(tp) {
 
 function getFilteredAndSortedTopics() {
   const q = state.searchQuery.trim().toLowerCase();
-  const filtered = state.topics.filter((tp) => {
+  const timeScoped = getTopicsByTimeFilter();
+  const filtered = timeScoped.filter((tp) => {
     if (state.selectedSubject !== 'all' && tp.subject !== state.selectedSubject) {
       return false;
     }
@@ -1202,6 +1288,7 @@ function getFilteredAndSortedTopics() {
     );
   });
 
+  const nowMs = Date.now();
   const collator = new Intl.Collator(state.lang === 'cs' ? 'cs' : 'en', {
     numeric: true,
     sensitivity: 'base'
@@ -1265,6 +1352,17 @@ function getFilteredAndSortedTopics() {
       }
       case 'priority':
       default: {
+        const upA = isTopicUpcoming(a, nowMs);
+        const upB = isTopicUpcoming(b, nowMs);
+        if (upA !== upB) return upA ? -1 : 1;
+        const tsA = getTopicExamEndTimestamp(a);
+        const tsB = getTopicExamEndTimestamp(b);
+        if (upA && tsA !== null && tsB !== null && tsA !== tsB) {
+          return tsA - tsB; // Soonest upcoming exam first
+        }
+        if (!upA && tsA !== null && tsB !== null && tsA !== tsB) {
+          return tsB - tsA; // Most recent previous exam first
+        }
         const rankDiff = getTopicPriorityRank(a) - getTopicPriorityRank(b);
         if (rankDiff !== 0) return rankDiff;
         return (Number(b.createdAt) || 0) - (Number(a.createdAt) || 0);
@@ -1298,8 +1396,11 @@ function updateTopicsControlsUI(count) {
 
   const grid = document.getElementById('topics-grid');
   const tableRegion = document.getElementById('topics-table-region');
-  if (grid) grid.hidden = state.topicsView !== 'grid';
-  if (tableRegion) tableRegion.hidden = state.topicsView !== 'table';
+  const emptyState = document.getElementById('topics-empty-state');
+  const isEmpty = count === 0;
+  if (emptyState) emptyState.hidden = !isEmpty;
+  if (grid) grid.hidden = isEmpty || state.topicsView !== 'grid';
+  if (tableRegion) tableRegion.hidden = isEmpty || state.topicsView !== 'table';
 
   const headers = document.querySelectorAll('#topics-table thead th[data-sort-col]');
   for (const th of headers) {
@@ -2462,6 +2563,29 @@ function initEvents() {
       if (state.currentView === 'quiz') renderCurrentQuizQuestion();
     });
   }
+
+  // Exam time filter (Upcoming / Previous / All)
+  for (const timeBtn of document.querySelectorAll('[data-time-filter]')) {
+    timeBtn.addEventListener('click', () => {
+      const nextFilter = timeBtn.getAttribute('data-time-filter');
+      if (!['upcoming', 'previous', 'all'].includes(nextFilter)) return;
+      if (state.topicsTimeFilter === nextFilter) return;
+      state.topicsTimeFilter = nextFilter;
+      renderExamTimeFilterBar();
+      renderSubjectFilterBar();
+      renderTopicsGrid();
+    });
+  }
+  document.getElementById('topics-empty-show-all-btn')?.addEventListener('click', () => {
+    state.topicsTimeFilter = 'all';
+    state.selectedSubject = 'all';
+    state.searchQuery = '';
+    const searchEl = document.getElementById('topic-search-input');
+    if (searchEl) searchEl.value = '';
+    renderExamTimeFilterBar();
+    renderSubjectFilterBar();
+    renderTopicsGrid();
+  });
 
   // Search filter
   const searchForm = document.getElementById('topic-filter-form');
