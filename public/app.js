@@ -1179,11 +1179,13 @@ function getBestScoreForTopic(topicId) {
 }
 
 function getTopicPriorityRank(tp) {
+  if (tp.id === 'fyzika-delka-prevody-jednotek') return 0;
+  if (tp.id === 'matematika-nasobeni-desetinnych-cisel') return 1;
   const subj = (tp.subject || '').toLowerCase();
-  if (subj.includes('mat')) return 0;
-  if (subj.includes('angli') || subj.includes('eng')) return 1;
-  if (subj.includes('občan') || subj.includes('obcan') || subj.includes('výchov')) return 2;
-  return 3;
+  if (subj.includes('mat')) return 2;
+  if (subj.includes('angli') || subj.includes('eng')) return 3;
+  if (subj.includes('občan') || subj.includes('obcan') || subj.includes('výchov')) return 4;
+  return 5;
 }
 
 function getFilteredAndSortedTopics() {
