@@ -139,6 +139,21 @@
         </search>
       </div>
 
+      <div id="exam-time-filter-bar" class="exam-time-filter-bar" role="group" data-i18n-aria="examTimeFilterAria" aria-label="Filtrovat podle termínu písemky">
+        <button type="button" class="time-filter-btn" data-time-filter="upcoming" aria-pressed="true">
+          <span data-i18n="timeFilterUpcoming">📅 Nadcházející</span>
+          <span class="time-filter-count" id="time-count-upcoming">0</span>
+        </button>
+        <button type="button" class="time-filter-btn" data-time-filter="previous" aria-pressed="false">
+          <span data-i18n="timeFilterPrevious">🗂️ Proběhlé</span>
+          <span class="time-filter-count" id="time-count-previous">0</span>
+        </button>
+        <button type="button" class="time-filter-btn" data-time-filter="all" aria-pressed="false">
+          <span data-i18n="timeFilterAll">📚 Všechny</span>
+          <span class="time-filter-count" id="time-count-all">0</span>
+        </button>
+      </div>
+
       <div id="subject-filter-bar" class="subject-filter-bar" role="group" aria-label="Filtrovat podle předmětu"></div>
 
       <div class="topics-controls-bar">
@@ -171,6 +186,12 @@
       <p id="topics-sort-status" role="status" class="visually-hidden"></p>
 
       <ul role="list" id="topics-grid" class="topics-grid"></ul>
+
+      <div id="topics-empty-state" class="empty-state-card" hidden>
+        <h3 id="topics-empty-title" data-i18n="noUpcomingTopicsTitle">Žádné nadcházející písemky!</h3>
+        <p id="topics-empty-sub" data-i18n="noUpcomingTopicsSub">Můžeš si zopakovat proběhlé testy nebo zobrazit všechna témata.</p>
+        <button type="button" class="primary-btn" id="topics-empty-show-all-btn" data-i18n="showAllTopicsBtn">Zobrazit všechny písemky</button>
+      </div>
 
       <div id="topics-table-region" class="topics-table-wrapper" tabindex="0" role="region" aria-labelledby="topics-table-caption" hidden>
         <table id="topics-table" class="topics-table">
