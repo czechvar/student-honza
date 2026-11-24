@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T13:45:59.478Z",
+  "updatedAt": "2026-11-24T10:59:00.851Z",
   "topics": [
     {
       "lang": "cs",
@@ -2901,6 +2901,833 @@
           ],
           "correctAnswer": "Vitamín C",
           "explanation": "Vitamín C výrazně zlepšuje vstřebávání železa a podporuje imunitní systém."
+        }
+      ]
+    },
+    {
+      "id": "fyzika-delka-prevody-jednotek",
+      "lang": "cs",
+      "title": "Délka - převody jednotek - středa 25. 11., od 10:55 do 11:40",
+      "subject": "Fyzika",
+      "description": "Příprava na písemku (středa 25. 11., od 10:55 do 11:40, 6.C — 12 příkladů na převody jednotek délky): Fyzikální veličina délka (l, s, d), základní jednotka metr (m), předpony kilo-, deci-, centi-, mili- a převody km, m, dm, cm, mm včetně desetinných čísel.",
+      "authorName": "Táta & Gemini",
+      "createdAt": 1795517941849,
+      "updatedAt": 1795517941849,
+      "studyNotes": [
+        "Fyzikální veličina délka: Značka veličiny bývá nejčastěji l (délka), s (dráha), d (průměr/tloušťka), h nebo v (výška). Základní jednotkou délky v soustavě SI je METR (značka m).",
+        "Přehledná řada jednotek délky: km (kilometr) — [× 1 000] — m (metr) — [× 10] — dm (decimetr) — [× 10] — cm (centimetr) — [× 10] — mm (milimetr).",
+        "Zlaté pravidlo směru převodu: Z VĚTŠÍ jednotky na MENŠÍ násobíme (desetinná čárka jde DOPRAVA / přidáváme nuly). Z MENŠÍ jednotky na VĚTŠÍ dělíme (desetinná čárka jde DOLEVA / ubíráme nuly).",
+        "Převody s metrem (m): 1 km = 1 000 m; 1 m = 10 dm = 100 cm = 1 000 mm. Naopak: 1 m = 0,001 km; 1 dm = 0,1 m; 1 cm = 0,01 m; 1 mm = 0,001 m.",
+        "Převody mezi dm, cm a mm: 1 dm = 10 cm = 100 mm; 1 cm = 10 mm. Naopak: 1 mm = 0,1 cm = 0,01 dm; 1 cm = 0,1 dm.",
+        "Fyzikální předpony jednotek: kilo- (k) = 1 000× větší; deci- (d) = 10× menší (0,1); centi- (c) = 100× menší (0,01); mili- (m) = 1 000× menší (0,001); mikro- (μ) = 1 000 000× menší (1 mm = 1 000 μm).",
+        "Skoky přes více jednotek: km → dm (× 10 000, 4 místa doprava), km → cm (× 100 000, 5 míst doprava), km → mm (× 1 000 000, 6 míst doprava), m → mm (× 1 000, 3 místa doprava).",
+        "Desetinná čísla v převodech: 0,45 m = 45 cm = 450 mm; 3,2 km = 3 200 m; 65 mm = 6,5 cm = 0,65 dm = 0,065 m; 12,5 dm = 1,25 m = 125 cm.",
+        "Složené údaje (např. 2 m 35 cm): Nejprve převeď obě části na požadovanou jednotku a pak je sečti: 2 m 35 cm = 200 cm + 35 cm = 235 cm = 2,35 m.",
+        "Kontrola výsledku v písemce: Po každém příkladu si řekni: „Převádím na menší jednotku, číslo tedy musí být VĚTŠÍ“ (např. 0,5 m na cm → 50 cm, ne 0,005 cm!)."
+      ],
+      "flashcards": [
+        {
+          "front": "Jaká je základní jednotka délky v soustavě SI a její značka?",
+          "back": "Metr (m)"
+        },
+        {
+          "front": "Co znamenají předpony kilo-, deci-, centi-, mili-?",
+          "back": "kilo = 1 000; deci = 0,1 (desetina); centi = 0,01 (setina); mili = 0,001 (tisícina)"
+        },
+        {
+          "front": "Kolik metrů je 0,75 km?",
+          "back": "750 m (0,75 × 1 000)"
+        },
+        {
+          "front": "Kolik kilometrů je 420 m?",
+          "back": "0,42 km (420 : 1 000)"
+        },
+        {
+          "front": "Kolik centimetrů je 1,8 m?",
+          "back": "180 cm (1,8 × 100)"
+        },
+        {
+          "front": "Kolik metrů je 35 cm?",
+          "back": "0,35 m (35 : 100)"
+        },
+        {
+          "front": "Kolik milimetrů je 0,6 m?",
+          "back": "600 mm (0,6 × 1 000)"
+        },
+        {
+          "front": "Kolik metrů je 85 mm?",
+          "back": "0,085 m (85 : 1 000)"
+        },
+        {
+          "front": "Kolik milimetrů je 4,5 dm?",
+          "back": "450 mm (4,5 × 100)"
+        },
+        {
+          "front": "Kolik decimetrů je 28 mm?",
+          "back": "0,28 dm (28 : 100)"
+        },
+        {
+          "front": "Kolik centimetrů je 1 km?",
+          "back": "100 000 cm (1 km = 1 000 m = 100 000 cm)"
+        },
+        {
+          "front": "Kolik milimetrů je 0,05 dm?",
+          "back": "5 mm (0,05 × 100)"
+        },
+        {
+          "front": "Kolik metrů je 3 m 8 cm?",
+          "back": "3,08 m (pozor na nulu na místě desetin!)"
+        },
+        {
+          "front": "Kolik centimetrů je 7,4 mm?",
+          "back": "0,74 cm (7,4 : 10)"
+        },
+        {
+          "front": "Kolik decimetrů je 0,09 km?",
+          "back": "900 dm (0,09 km = 90 m = 900 dm)"
+        },
+        {
+          "front": "Která délka je větší: 0,65 m nebo 620 mm?",
+          "back": "0,65 m (= 650 mm > 620 mm)"
+        }
+      ],
+      "questions": [
+        {
+          "id": "fyd-q1",
+          "type": "multiple-choice",
+          "prompt": "Jaká je základní jednotka fyzikální veličiny délka v soustavě SI?",
+          "options": [
+            "Kilometr (km)",
+            "Metr (m)",
+            "Centimetr (cm)",
+            "Milimetr (mm)"
+          ],
+          "correctAnswer": "Metr (m)",
+          "explanation": "Základní jednotkou délky v mezinárodní soustavě jednotek SI je metr (m)."
+        },
+        {
+          "id": "fyd-q2",
+          "type": "type-in",
+          "prompt": "Převeď: 4,2 km = ___ m (napiš jen číslo)",
+          "correctAnswer": "4200",
+          "acceptedAnswers": [
+            "4200",
+            "4 200",
+            "4200 m",
+            "4 200 m"
+          ],
+          "explanation": "1 km = 1 000 m, posouváme čárku o 3 místa doprava: 4,2 × 1 000 = 4 200 m."
+        },
+        {
+          "id": "fyd-q3",
+          "type": "multiple-choice",
+          "prompt": "Převeď 380 m na kilometry (km):",
+          "options": [
+            "3,8 km",
+            "0,38 km",
+            "0,038 km",
+            "38 km"
+          ],
+          "correctAnswer": "0,38 km",
+          "explanation": "Z metrů na kilometry dělíme 1 000 (posun o 3 místa doleva): 380 : 1 000 = 0,38 km."
+        },
+        {
+          "id": "fyd-q4",
+          "type": "multiple-choice",
+          "prompt": "Převeď 0,06 km na metry (m):",
+          "options": [
+            "6 m",
+            "60 m",
+            "600 m",
+            "0,6 m"
+          ],
+          "correctAnswer": "60 m",
+          "explanation": "0,06 × 1 000 = 60 m (posun desetinné čárky o 3 místa doprava)."
+        },
+        {
+          "id": "fyd-q5",
+          "type": "type-in",
+          "prompt": "Převeď: 2,35 m = ___ cm (napiš jen číslo)",
+          "correctAnswer": "235",
+          "acceptedAnswers": [
+            "235",
+            "235 cm"
+          ],
+          "explanation": "1 m = 100 cm, posun o 2 místa doprava: 2,35 × 100 = 235 cm."
+        },
+        {
+          "id": "fyd-q6",
+          "type": "multiple-choice",
+          "prompt": "Převeď 7 cm na metry (m):",
+          "options": [
+            "0,7 m",
+            "0,07 m",
+            "0,007 m",
+            "700 m"
+          ],
+          "correctAnswer": "0,07 m",
+          "explanation": "1 m = 100 cm, dělíme 100 (o 2 místa doleva): 7 : 100 = 0,07 m."
+        },
+        {
+          "id": "fyd-q7",
+          "type": "type-in",
+          "prompt": "Převeď: 0,85 m = ___ mm (napiš jen číslo)",
+          "correctAnswer": "850",
+          "acceptedAnswers": [
+            "850",
+            "850 mm"
+          ],
+          "explanation": "1 m = 1 000 mm, násobíme 1 000: 0,85 × 1 000 = 850 mm."
+        },
+        {
+          "id": "fyd-q8",
+          "type": "multiple-choice",
+          "prompt": "Převeď 45 mm na metry (m):",
+          "options": [
+            "4,5 m",
+            "0,45 m",
+            "0,045 m",
+            "0,0045 m"
+          ],
+          "correctAnswer": "0,045 m",
+          "explanation": "1 m = 1 000 mm, dělíme 1 000 (o 3 místa doleva): 45 : 1 000 = 0,045 m."
+        },
+        {
+          "id": "fyd-q9",
+          "type": "type-in",
+          "prompt": "Převeď: 6,4 dm = ___ mm (napiš jen číslo)",
+          "correctAnswer": "640",
+          "acceptedAnswers": [
+            "640",
+            "640 mm"
+          ],
+          "explanation": "1 dm = 10 cm = 100 mm, proto 6,4 × 100 = 640 mm."
+        },
+        {
+          "id": "fyd-q10",
+          "type": "multiple-choice",
+          "prompt": "Převeď 125 mm na decimetry (dm):",
+          "options": [
+            "12,5 dm",
+            "1,25 dm",
+            "0,125 dm",
+            "1 250 dm"
+          ],
+          "correctAnswer": "1,25 dm",
+          "explanation": "1 dm = 100 mm, dělíme 100 (o 2 místa doleva): 125 : 100 = 1,25 dm."
+        },
+        {
+          "id": "fyd-q11",
+          "type": "multiple-choice",
+          "prompt": "Převeď 8,5 mm na centimetry (cm):",
+          "options": [
+            "85 cm",
+            "0,85 cm",
+            "0,085 cm",
+            "850 cm"
+          ],
+          "correctAnswer": "0,85 cm",
+          "explanation": "1 cm = 10 mm, z mm na cm dělíme 10 (o 1 místo doleva): 8,5 : 10 = 0,85 cm."
+        },
+        {
+          "id": "fyd-q12",
+          "type": "type-in",
+          "prompt": "Převeď: 14,5 cm = ___ mm (napiš jen číslo)",
+          "correctAnswer": "145",
+          "acceptedAnswers": [
+            "145",
+            "145 mm"
+          ],
+          "explanation": "1 cm = 10 mm, násobíme 10: 14,5 × 10 = 145 mm."
+        },
+        {
+          "id": "fyd-q13",
+          "type": "multiple-choice",
+          "prompt": "Převeď 0,04 m na centimetry (cm):",
+          "options": [
+            "0,4 cm",
+            "4 cm",
+            "40 cm",
+            "400 cm"
+          ],
+          "correctAnswer": "4 cm",
+          "explanation": "1 m = 100 cm, posouváme čárku o 2 místa doprava: 0,04 × 100 = 4 cm."
+        },
+        {
+          "id": "fyd-q14",
+          "type": "multiple-choice",
+          "prompt": "Převeď 3,6 dm na metry (m):",
+          "options": [
+            "36 m",
+            "0,36 m",
+            "0,036 m",
+            "360 m"
+          ],
+          "correctAnswer": "0,36 m",
+          "explanation": "1 m = 10 dm, dělíme 10 (o 1 místo doleva): 3,6 : 10 = 0,36 m."
+        },
+        {
+          "id": "fyd-q15",
+          "type": "type-in",
+          "prompt": "Převeď: 0,05 km = ___ dm (napiš jen číslo)",
+          "correctAnswer": "500",
+          "acceptedAnswers": [
+            "500",
+            "500 dm"
+          ],
+          "explanation": "0,05 km = 50 m = 500 dm (1 km = 10 000 dm)."
+        },
+        {
+          "id": "fyd-q16",
+          "type": "multiple-choice",
+          "prompt": "Převeď 25 000 cm na kilometry (km):",
+          "options": [
+            "2,5 km",
+            "0,25 km",
+            "0,025 km",
+            "25 km"
+          ],
+          "correctAnswer": "0,25 km",
+          "explanation": "25 000 cm = 250 m = 0,25 km (1 km = 100 000 cm)."
+        },
+        {
+          "id": "fyd-q17",
+          "type": "true-false",
+          "prompt": "Pravda nebo lež: 0,003 km je přesně 3 metry.",
+          "options": [
+            "Pravda",
+            "Lež"
+          ],
+          "correctAnswer": "Pravda",
+          "explanation": "Pravda! 0,003 × 1 000 = 3 m."
+        },
+        {
+          "id": "fyd-q18",
+          "type": "true-false",
+          "prompt": "Pravda nebo lež: 2 m 5 cm se rovná 2,5 m.",
+          "options": [
+            "Pravda",
+            "Lež"
+          ],
+          "correctAnswer": "Lež",
+          "explanation": "Lež! 5 cm = 0,05 m, takže 2 m 5 cm = 2,05 m (2,5 m by bylo 2 m 50 cm!)."
+        },
+        {
+          "id": "fyd-q19",
+          "type": "multiple-choice",
+          "prompt": "Zapiš složenou délku 4 m 8 cm v metrech:",
+          "options": [
+            "4,8 m",
+            "4,08 m",
+            "4,008 m",
+            "40,8 m"
+          ],
+          "correctAnswer": "4,08 m",
+          "explanation": "8 cm = 0,08 m, proto 4 m + 0,08 m = 4,08 m."
+        },
+        {
+          "id": "fyd-q20",
+          "type": "type-in",
+          "prompt": "Zapiš složenou délku 1 m 25 cm v milimetrech (napiš jen číslo):",
+          "correctAnswer": "1250",
+          "acceptedAnswers": [
+            "1250",
+            "1 250",
+            "1250 mm",
+            "1 250 mm"
+          ],
+          "explanation": "1 m = 1 000 mm a 25 cm = 250 mm. Dohromady 1 000 + 250 = 1 250 mm."
+        },
+        {
+          "id": "fyd-q21",
+          "type": "multiple-choice",
+          "prompt": "Co znamená fyzikální předpona „mili-“ (např. milimetr)?",
+          "options": [
+            "1 000× větší",
+            "100× menší (0,01)",
+            "1 000× menší (0,001)",
+            "10× menší (0,1)"
+          ],
+          "correctAnswer": "1 000× menší (0,001)",
+          "explanation": "Předpona mili- znamená tisícinu (0,001), tedy 1 mm = 0,001 m."
+        },
+        {
+          "id": "fyd-q22",
+          "type": "multiple-choice",
+          "prompt": "Která z těchto délek je NEJKRATŠÍ?",
+          "options": [
+            "0,12 m",
+            "1,5 dm",
+            "11 cm",
+            "130 mm"
+          ],
+          "correctAnswer": "11 cm",
+          "explanation": "Převedeme na cm: 0,12 m = 12 cm; 1,5 dm = 15 cm; 11 cm = 11 cm; 130 mm = 13 cm. Nejkratší je 11 cm."
+        },
+        {
+          "id": "fyd-q23",
+          "type": "multiple-choice",
+          "prompt": "Převeď 0,009 m na milimetry (mm):",
+          "options": [
+            "0,9 mm",
+            "9 mm",
+            "90 mm",
+            "900 mm"
+          ],
+          "correctAnswer": "9 mm",
+          "explanation": "1 m = 1 000 mm, posun o 3 místa doprava: 0,009 × 1 000 = 9 mm."
+        },
+        {
+          "id": "fyd-q24",
+          "type": "multiple-choice",
+          "prompt": "Převeď 50 m na kilometry (km):",
+          "options": [
+            "0,5 km",
+            "0,05 km",
+            "0,005 km",
+            "5 km"
+          ],
+          "correctAnswer": "0,05 km",
+          "explanation": "50 : 1 000 = 0,05 km (tři desetinná místa doleva)."
+        },
+        {
+          "id": "fyd-q25",
+          "type": "type-in",
+          "prompt": "Kolik centimetrů je 0,15 km? (Napiš jen číslo)",
+          "correctAnswer": "15000",
+          "acceptedAnswers": [
+            "15000",
+            "15 000",
+            "15000 cm",
+            "15 000 cm"
+          ],
+          "explanation": "0,15 km = 150 m = 15 000 cm."
+        },
+        {
+          "id": "fyd-q26",
+          "type": "true-false",
+          "prompt": "Pravda nebo lež: 450 mm je přesně totéž co 4,5 dm.",
+          "options": [
+            "Pravda",
+            "Lež"
+          ],
+          "correctAnswer": "Pravda",
+          "explanation": "Pravda! 450 mm = 45 cm = 4,5 dm."
+        }
+      ]
+    },
+    {
+      "id": "matematika-nasobeni-desetinnych-cisel",
+      "lang": "cs",
+      "title": "Násobení desetinných čísel - čtvrtek 26. 11., od 10:00 do 10:45",
+      "subject": "Matematika",
+      "description": "Příprava na písemku (čtvrtek 26. 11., od 10:00 do 10:45, 6.C): Násobení 10, 100, 1 000 i 0,1; 0,01; 0,001, násobení desetinného čísla přirozeným číslem, násobení dvou desetinných čísel, určování počtu desetinných míst, odhad výsledku a slovní úlohy.",
+      "authorName": "Táta & Gemini",
+      "createdAt": 1795517940849,
+      "updatedAt": 1795517940849,
+      "studyNotes": [
+        "Násobení 10, 100, 1 000: Desetinnou čárku posouváme DOPRAVA o tolik míst, kolik má číslo nul (× 10 o 1 místo, × 100 o 2 místa, × 1 000 o 3 místa). Chybějící místa doplníme nulami: 2,4 × 100 = 240.",
+        "Násobení 0,1; 0,01; 0,001: Desetinnou čárku posouváme DOLEVA o tolik míst, kolik má činitel desetinných míst (× 0,1 je stejné jako : 10). Např. 34,5 × 0,1 = 3,45; 7 × 0,01 = 0,07.",
+        "Násobení desetinného čísla přirozeným číslem: Vynásob čísla bez desetinné čárky jako celá čísla a ve výsledku odděl odzadu tolik desetinných míst, kolik jich mělo desetinné číslo. Např. 0,4 × 7 → 4 × 7 = 28 → 2,8.",
+        "Násobení dvou desetinných čísel (HLAVNÍ PRAVIDLO): Vynásob čísla jako přirozená bez čárek. Ve výsledku odděl odzadu SOUČET počtu desetinných míst obou činitelů! Např. 0,3 × 0,4 (1 + 1 = 2 místa) → 12 → 0,12.",
+        "Pozor na nuly před číslem: Když vyjde méně cifer, než kolik potřebuješ desetinných míst, doplň před výsledek nuly! Např. 0,2 × 0,3 (1 + 1 = 2 místa) → 2 × 3 = 6 → 0,06 (NIKOLIV 0,6!).",
+        "Pozor na koncové nuly před oddělením čárky: Nejprve odděl správný počet desetinných míst a TEPRVE POTOM škrtni přebytečné nuly na konci! Např. 2,5 × 0,4 → 25 × 4 = 100 → odděl 2 místa = 1,00 = 1.",
+        "Zmenšení při násobení číslem menším než 1: Když násobíš kladné číslo číslem menším než 1 (např. 0,5 nebo 0,2), výsledek je MENŠÍ než původní číslo! Např. 8 × 0,5 = 4 (polovina z 8).",
+        "Užitečné rychlé dvojice z hlavy: 0,5 × 2 = 1; 0,25 × 4 = 1; 0,125 × 8 = 1; 2,5 × 4 = 10; 1,25 × 8 = 10; 0,2 × 5 = 1.",
+        "Odhad výsledku jako pojistka: Před nebo po písemném násobení si činitele zaokrouhli! Např. 3,9 × 5,1 ≈ 4 × 5 = 20. Pokud ti vyšlo 1,989 nebo 198,9, hned poznáš, že čárka je špatně (správně 19,89).",
+        "Písemné násobení pod sebou: Při písemném násobení NEZAROVNÁVÁME desetinné čárky pod sebe (to platí jen pro sčítání a odčítání!). Čísla zarovnáme doprava jako přirozená čísla a čárku dáme až na konci."
+      ],
+      "flashcards": [
+        {
+          "front": "Jak posouváme desetinnou čárku při násobení 10, 100, 1 000?",
+          "back": "DOPRAVA o 1, 2 nebo 3 místa (podle počtu nul)."
+        },
+        {
+          "front": "Jak posouváme desetinnou čárku při násobení 0,1; 0,01; 0,001?",
+          "back": "DOLEVA o 1, 2 nebo 3 místa (stejné jako dělení 10, 100, 1 000)."
+        },
+        {
+          "front": "Kolik desetinných míst má součin 1,25 × 0,3?",
+          "back": "3 desetinná místa (2 + 1 = 3): 1,25 × 0,3 = 0,375."
+        },
+        {
+          "front": "Vypočítej z hlavy: 0,2 × 0,3 =",
+          "back": "0,06 (1 + 1 = 2 desetinná místa!)"
+        },
+        {
+          "front": "Vypočítej z hlavy: 0,4 × 0,5 =",
+          "back": "0,2 (4 × 5 = 20 → 0,20 = 0,2)"
+        },
+        {
+          "front": "Vypočítej z hlavy: 2,5 × 4 =",
+          "back": "10"
+        },
+        {
+          "front": "Vypočítej z hlavy: 1,25 × 8 =",
+          "back": "10"
+        },
+        {
+          "front": "Vypočítej z hlavy: 0,07 × 6 =",
+          "back": "0,42"
+        },
+        {
+          "front": "Vypočítej z hlavy: 3,45 × 100 =",
+          "back": "345"
+        },
+        {
+          "front": "Vypočítej z hlavy: 48 × 0,01 =",
+          "back": "0,48"
+        },
+        {
+          "front": "Zarovnáváme při písemném NÁSOBENÍ desetinné čárky pod sebe?",
+          "back": "NE! Čárky se zarovnávají jen při sčítání a odčítání. Při násobení zarovnáváme čísla doprava."
+        },
+        {
+          "front": "Je součin 12 × 0,8 větší nebo menší než 12?",
+          "back": "Menší (12 × 0,8 = 9,6), protože násobíme číslem menším než 1."
+        },
+        {
+          "front": "Vypočítej z hlavy: 0,1 × 0,1 =",
+          "back": "0,01"
+        },
+        {
+          "front": "Vypočítej z hlavy: 1,5 × 0,2 =",
+          "back": "0,3 (15 × 2 = 30 → 0,30 = 0,3)"
+        },
+        {
+          "front": "Jaký je odhad součinu 4,89 × 3,12?",
+          "back": "Přibližně 5 × 3 = 15 (přesně 15,2568)."
+        },
+        {
+          "front": "Kolik stojí 2,5 kg jablek, když 1 kg stojí 30 Kč?",
+          "back": "75 Kč (2 × 30 + 0,5 × 30 = 60 + 15 = 75 Kč)"
+        }
+      ],
+      "questions": [
+        {
+          "id": "mn-q1",
+          "type": "type-in",
+          "prompt": "Vypočítej: 3,75 × 100 = (napiš číslo)",
+          "correctAnswer": "375",
+          "acceptedAnswers": [
+            "375"
+          ],
+          "explanation": "Při násobení 100 posouváme desetinnou čárku o 2 místa doprava: 3,75 × 100 = 375."
+        },
+        {
+          "id": "mn-q2",
+          "type": "multiple-choice",
+          "prompt": "Vypočítej: 0,045 × 1 000 =",
+          "options": [
+            "4,5",
+            "45",
+            "450",
+            "0,45"
+          ],
+          "correctAnswer": "45",
+          "explanation": "Násobení 1 000 posouvá čárku o 3 místa doprava: 0,045 × 1 000 = 45."
+        },
+        {
+          "id": "mn-q3",
+          "type": "multiple-choice",
+          "prompt": "Vypočítej: 62,4 × 0,1 =",
+          "options": [
+            "624",
+            "6,24",
+            "0,624",
+            "62,41"
+          ],
+          "correctAnswer": "6,24",
+          "explanation": "Násobení 0,1 posouvá desetinnou čárku o 1 místo doleva: 62,4 × 0,1 = 6,24."
+        },
+        {
+          "id": "mn-q4",
+          "type": "multiple-choice",
+          "prompt": "Vypočítej: 8,5 × 0,01 =",
+          "options": [
+            "0,85",
+            "0,085",
+            "850",
+            "0,0085"
+          ],
+          "correctAnswer": "0,085",
+          "explanation": "Násobení 0,01 posouvá čárku o 2 místa doleva: 8,5 → 0,085."
+        },
+        {
+          "id": "mn-q5",
+          "type": "multiple-choice",
+          "prompt": "Vypočítej z hlavy: 0,6 × 7 =",
+          "options": [
+            "42",
+            "4,2",
+            "0,42",
+            "0,042"
+          ],
+          "correctAnswer": "4,2",
+          "explanation": "6 × 7 = 42, činitel 0,6 má 1 desetinné místo → 4,2."
+        },
+        {
+          "id": "mn-q6",
+          "type": "multiple-choice",
+          "prompt": "Vypočítej: 0,08 × 4 =",
+          "options": [
+            "3,2",
+            "0,32",
+            "0,032",
+            "32"
+          ],
+          "correctAnswer": "0,32",
+          "explanation": "8 × 4 = 32, oddělíme 2 desetinná místa → 0,32."
+        },
+        {
+          "id": "mn-q7",
+          "type": "type-in",
+          "prompt": "Vypočítej z hlavy: 2,5 × 4 = (napiš číslo)",
+          "correctAnswer": "10",
+          "acceptedAnswers": [
+            "10",
+            "10,0"
+          ],
+          "explanation": "25 × 4 = 100, oddělíme 1 desetinné místo → 10,0 = 10."
+        },
+        {
+          "id": "mn-q8",
+          "type": "type-in",
+          "prompt": "Vypočítej z hlavy: 1,25 × 8 = (napiš číslo)",
+          "correctAnswer": "10",
+          "acceptedAnswers": [
+            "10",
+            "10,0",
+            "10,00"
+          ],
+          "explanation": "125 × 8 = 1 000, oddělíme 2 desetinná místa → 10,00 = 10."
+        },
+        {
+          "id": "mn-q9",
+          "type": "multiple-choice",
+          "prompt": "Vypočítej: 0,2 × 0,3 =",
+          "options": [
+            "0,6",
+            "0,06",
+            "0,006",
+            "6"
+          ],
+          "correctAnswer": "0,06",
+          "explanation": "2 × 3 = 6. Činitelé mají dohromady 1 + 1 = 2 desetinná místa, musíme doplnit nulu: 0,06."
+        },
+        {
+          "id": "mn-q10",
+          "type": "multiple-choice",
+          "prompt": "Vypočítej: 0,4 × 0,7 =",
+          "options": [
+            "2,8",
+            "0,28",
+            "0,028",
+            "28"
+          ],
+          "correctAnswer": "0,28",
+          "explanation": "4 × 7 = 28, dohromady 1 + 1 = 2 desetinná místa → 0,28."
+        },
+        {
+          "id": "mn-q11",
+          "type": "multiple-choice",
+          "prompt": "Vypočítej: 1,2 × 0,4 =",
+          "options": [
+            "4,8",
+            "0,48",
+            "0,048",
+            "48"
+          ],
+          "correctAnswer": "0,48",
+          "explanation": "12 × 4 = 48, dohromady 1 + 1 = 2 desetinná místa → 0,48."
+        },
+        {
+          "id": "mn-q12",
+          "type": "multiple-choice",
+          "prompt": "Vypočítej: 0,5 × 0,6 =",
+          "options": [
+            "3",
+            "0,3",
+            "0,03",
+            "30"
+          ],
+          "correctAnswer": "0,3",
+          "explanation": "5 × 6 = 30, oddělíme 2 desetinná místa → 0,30 = 0,3."
+        },
+        {
+          "id": "mn-q13",
+          "type": "multiple-choice",
+          "prompt": "Vypočítej: 0,15 × 0,2 =",
+          "options": [
+            "0,3",
+            "0,03",
+            "0,003",
+            "3"
+          ],
+          "correctAnswer": "0,03",
+          "explanation": "15 × 2 = 30, dohromady 2 + 1 = 3 desetinná místa → 0,030 = 0,03."
+        },
+        {
+          "id": "mn-q14",
+          "type": "type-in",
+          "prompt": "Vypočítej: 2,5 × 0,4 = (napiš číslo)",
+          "correctAnswer": "1",
+          "acceptedAnswers": [
+            "1",
+            "1,0",
+            "1,00"
+          ],
+          "explanation": "25 × 4 = 100, oddělíme 1 + 1 = 2 desetinná místa → 1,00 = 1."
+        },
+        {
+          "id": "mn-q15",
+          "type": "multiple-choice",
+          "prompt": "Víme, že 23 × 14 = 322. Kolik je 2,3 × 1,4?",
+          "options": [
+            "32,2",
+            "3,22",
+            "0,322",
+            "322"
+          ],
+          "correctAnswer": "3,22",
+          "explanation": "Činitelé 2,3 a 1,4 mají dohromady 1 + 1 = 2 desetinná místa → 3,22."
+        },
+        {
+          "id": "mn-q16",
+          "type": "multiple-choice",
+          "prompt": "Víme, že 35 × 12 = 420. Kolik je 0,35 × 1,2?",
+          "options": [
+            "4,2",
+            "0,42",
+            "0,042",
+            "42"
+          ],
+          "correctAnswer": "0,42",
+          "explanation": "0,35 (2 místa) × 1,2 (1 místo) → 3 desetinná místa: 0,420 = 0,42."
+        },
+        {
+          "id": "mn-q17",
+          "type": "multiple-choice",
+          "prompt": "Vypočítej písemně nebo rozkladem: 2,4 × 1,5 =",
+          "options": [
+            "3,6",
+            "0,36",
+            "36",
+            "3,2"
+          ],
+          "correctAnswer": "3,6",
+          "explanation": "24 × 15 = 360, oddělíme 2 desetinná místa → 3,60 = 3,6 (nebo 2,4 + polovina z 2,4 = 2,4 + 1,2 = 3,6)."
+        },
+        {
+          "id": "mn-q18",
+          "type": "multiple-choice",
+          "prompt": "Vypočítej: 3,2 × 2,5 =",
+          "options": [
+            "0,8",
+            "8",
+            "80",
+            "7,5"
+          ],
+          "correctAnswer": "8",
+          "explanation": "32 × 25 = 800, oddělíme 2 desetinná místa → 8,00 = 8."
+        },
+        {
+          "id": "mn-q19",
+          "type": "true-false",
+          "prompt": "Pravda nebo lež: Při písemném násobení desetinných čísel pod sebou musíme vždy zarovnat desetinné čárky přesně pod sebe.",
+          "options": [
+            "Pravda",
+            "Lež"
+          ],
+          "correctAnswer": "Lež",
+          "explanation": "Lež! Desetinné čárky se zarovnávají pod sebe jen při sčítání a odčítání. Při násobení zarovnáváme čísla doprava."
+        },
+        {
+          "id": "mn-q20",
+          "type": "true-false",
+          "prompt": "Pravda nebo lež: Součin 15 × 0,9 je menší než 15.",
+          "options": [
+            "Pravda",
+            "Lež"
+          ],
+          "correctAnswer": "Pravda",
+          "explanation": "Pravda! Když kladné číslo násobíme číslem menším než 1 (0,9 < 1), výsledek se zmenší (15 × 0,9 = 13,5)."
+        },
+        {
+          "id": "mn-q21",
+          "type": "multiple-choice",
+          "prompt": "Který výsledek je správný podle ODHADU pro součin 6,1 × 4,9?",
+          "options": [
+            "2,989",
+            "29,89",
+            "298,9",
+            "0,2989"
+          ],
+          "correctAnswer": "29,89",
+          "explanation": "Odhad: 6,1 × 4,9 ≈ 6 × 5 = 30. Jediný výsledek blízký 30 je 29,89."
+        },
+        {
+          "id": "mn-q22",
+          "type": "type-in",
+          "prompt": "Slovní úloha: 1 kg jablek stojí 32 Kč. Kolik Kč zaplatí Honza za 2,5 kg jablek? (Napiš jen číslo)",
+          "correctAnswer": "80",
+          "acceptedAnswers": [
+            "80",
+            "80 kč",
+            "80 kc"
+          ],
+          "explanation": "2,5 × 32 = 2 × 32 + 0,5 × 32 = 64 + 16 = 80 Kč."
+        },
+        {
+          "id": "mn-q23",
+          "type": "multiple-choice",
+          "prompt": "Slovní úloha: Obdélník má strany a = 2,5 m a b = 1,2 m. Jaký je jeho obsah (S = a × b)?",
+          "options": [
+            "30 m²",
+            "3 m²",
+            "0,3 m²",
+            "3,7 m²"
+          ],
+          "correctAnswer": "3 m²",
+          "explanation": "2,5 × 1,2 → 25 × 12 = 300 → oddělíme 2 desetinná místa = 3,00 = 3 m²."
+        },
+        {
+          "id": "mn-q24",
+          "type": "multiple-choice",
+          "prompt": "Vypočítej: 0,1 × 0,01 =",
+          "options": [
+            "0,1",
+            "0,01",
+            "0,001",
+            "0,0001"
+          ],
+          "correctAnswer": "0,001",
+          "explanation": "1 × 1 = 1 a celkem 1 + 2 = 3 desetinná místa → 0,001."
+        },
+        {
+          "id": "mn-q25",
+          "type": "type-in",
+          "prompt": "Vypočítej: 0,25 × 40 = (napiš číslo)",
+          "correctAnswer": "10",
+          "acceptedAnswers": [
+            "10",
+            "10,0",
+            "10,00"
+          ],
+          "explanation": "25 × 40 = 1 000, oddělíme 2 desetinná místa → 10,00 = 10."
+        },
+        {
+          "id": "mn-q26",
+          "type": "multiple-choice",
+          "prompt": "Vypočítej: 1,3 × 0,3 =",
+          "options": [
+            "3,9",
+            "0,39",
+            "0,039",
+            "0,36"
+          ],
+          "correctAnswer": "0,39",
+          "explanation": "13 × 3 = 39, dohromady 1 + 1 = 2 desetinná místa → 0,39."
         }
       ]
     }
