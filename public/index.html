@@ -18,9 +18,10 @@
   <script type="importmap">
     {
       "imports": {
-        "firebase/app": "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js",
-        "firebase/auth": "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js",
-        "firebase/firestore": "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js"
+        "firebase/app": "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js",
+        "firebase/auth": "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js",
+        "firebase/firestore": "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js",
+        "firebase/ai": "https://www.gstatic.com/firebasejs/11.9.1/firebase-ai.js"
       }
     }
   </script>
@@ -248,6 +249,13 @@
           <p id="study-topic-desc" class="muted-text"></p>
         </header>
 
+        <div id="study-topic-detail-image-box" class="study-detail-image-box" hidden>
+          <details class="study-detail-image-details" open>
+            <summary class="study-detail-image-summary" data-i18n="studyDetailImageHeading">🖼️ Zadání písemky / Fotky k tématu</summary>
+            <div id="study-topic-detail-images-mount" class="study-detail-images-mount"></div>
+          </details>
+        </div>
+
         <div class="study-columns">
           <section class="study-notes-panel">
             <h3 data-i18n="studyNotesHeading">📖 Key Study Notes</h3>
@@ -431,7 +439,12 @@
 
   <footer class="site-footer" id="site-footer">
     <p data-i18n="footerText">Honzův studijní prostor • Web, Android a iPhone</p>
-    <span class="brand-subtitle" id="sync-status-badge" data-i18n="syncLocal">Offline režim (Uloženo v zařízení)</span>
+    <div class="footer-right-actions">
+      <span class="brand-subtitle" id="sync-status-badge" data-i18n="syncLocal">Offline režim (Uloženo v zařízení)</span>
+      <button type="button" class="secondary-btn sm-btn footer-reload-btn" id="footer-reload-btn" data-i18n="reloadAppBtn">
+        🔄 Načíst novinky
+      </button>
+    </div>
   </footer>
 
   <!-- MODAL 1: ATTEMPT DETAILED REVIEW DIALOG -->
@@ -478,6 +491,53 @@
       <form id="topic-editor-form" action="#view-studio" method="POST" novalidate>
         <input type="hidden" id="edit-topic-id" name="topicId">
 
+        <!-- PHOTO UPLOAD & AI TOPIC GENERATOR -->
+        <div class="editor-photo-upload-card">
+          <div class="editor-photo-header">
+            <div>
+              <h3 class="editor-photo-title" data-i18n="photoUploadBoxTitle">📸 Nahrát fotky učebnice, zápisků nebo zadání písemky</h3>
+              <p class="hint" data-i18n="photoUploadBoxSub">Nahrajte fotku stránky z učebnice, sešitu nebo screenshot z Bakalářů. Fotka se přiloží k tématu a AI z ní může rovnou vytvořit výpisky, kartičky i kvíz!</p>
+            </div>
+            <label for="editor-photo-input" class="secondary-btn photo-upload-trigger-btn">
+              📷 <span data-i18n="selectPhotosBtn">Vybrat fotky...</span>
+            </label>
+            <input
+              type="file"
+              id="editor-photo-input"
+              accept="image/*"
+              multiple
+              class="visually-hidden"
+            >
+          </div>
+
+          <div id="editor-photo-preview-list" class="editor-photo-preview-list" hidden></div>
+
+          <div id="editor-photo-ai-actions" class="editor-photo-ai-actions" hidden>
+            <button type="button" class="primary-btn" id="editor-generate-ai-btn" data-i18n="generateFromPhotosBtn">
+              ✨ Vygenerovat téma a kvíz z fotek (AI)
+            </button>
+            <button type="button" class="secondary-btn sm-btn" id="editor-clear-photos-btn" data-i18n="clearPhotosBtn">
+              🗑️ Odebrat fotky
+            </button>
+          </div>
+
+          <p id="editor-ai-status" class="editor-ai-status" hidden aria-live="polite"></p>
+
+          <details class="gemini-key-details" id="editor-gemini-key-details">
+            <summary data-i18n="geminiKeySummary">🔑 Nastavení Gemini AI klíče (pokud není aktivní Firebase AI)</summary>
+            <div class="gemini-key-row">
+              <input
+                type="password"
+                id="editor-gemini-api-key"
+                placeholder="AIzaSy... (volitelný Gemini API klíč z Google AI Studia)"
+                autocomplete="off"
+                spellcheck="false"
+              >
+              <button type="button" class="secondary-btn sm-btn" id="save-gemini-key-btn" data-i18n="saveGeminiKeyBtn">Uložit klíč</button>
+            </div>
+          </details>
+        </div>
+
         <div class="form-grid-2">
           <div class="field">
             <label for="edit-topic-title" data-i18n="topicTitleLabel">Topic Title (Required)</label>
@@ -498,17 +558,26 @@
           </div>
 
           <div class="field">
-            <label for="edit-topic-subject" data-i18n="topicSubjectLabel">Subject (Required)</label>
-            <span id="edit-subject-hint" class="hint" data-i18n="topicSubjectHint">E.g., Math, Science, English, Dějepis, Přírodopis</span>
+            <label for="edit-topic-subject-select" data-i18n="topicSubjectLabel">Subject (Required)</label>
+            <span id="edit-subject-hint" class="hint" data-i18n="topicSubjectHint">Vyberte předmět ze seznamu nebo vytvořte nový</span>
+            <select
+              id="edit-topic-subject-select"
+              name="subjectSelect"
+              required
+              aria-describedby="edit-subject-hint"
+            ></select>
             <input
               type="text"
               id="edit-topic-subject"
               name="subject"
-              required
               minlength="2"
               maxlength="80"
+              placeholder="Napište název nového předmětu (např. Dějepis)..."
+              data-i18n-placeholder="newSubjectPlaceholder"
               aria-describedby="edit-subject-hint"
               aria-errormessage="edit-subject-error"
+              class="subject-custom-input"
+              hidden
             >
             <div id="edit-subject-error" class="error-msg" data-i18n="topicSubjectError">
               <span aria-hidden="true">❌</span> Please enter a school subject.

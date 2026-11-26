@@ -1,4 +1,4 @@
-const CACHE_NAME = 'honza-study-v22';
+const CACHE_NAME = 'honza-study-v23';
 const ASSETS = [
   '/',
   '/index.html',
@@ -33,7 +33,7 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== self.location.origin) return;
 
   event.respondWith(
-    fetch(event.request)
+    fetch(event.request, { cache: 'no-cache' })
       .then((response) => {
         const clone = response.clone();
         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
@@ -42,4 +42,3 @@ self.addEventListener('fetch', (event) => {
       .catch(() => caches.match(event.request))
   );
 });
-

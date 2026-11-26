@@ -8,7 +8,9 @@ const STORAGE_KEYS = {
   FIREBASE_CFG: 'honza_firebase_config_v1',
   AUTH_ROLE: 'honza_auth_role_v1',
   TOPICS_SORT: 'honza_topics_sort_v1',
-  TOPICS_VIEW: 'honza_topics_view_v1'
+  TOPICS_VIEW: 'honza_topics_view_v1',
+  TOPIC_IMAGES: 'honza_topic_images_v1',
+  GEMINI_KEY: 'honza_gemini_api_key_v1'
 };
 
 const AUTH_ACCOUNTS = {
@@ -56,6 +58,14 @@ const I18N = {
     backToTopics: 'Back to Topics',
     startQuizNow: 'Start Quiz Now',
     studyNotesHeading: '📖 Key Study Notes',
+    studyDetailImageHeading: '🖼️ Exam Details & Uploaded Photos',
+    photoUploadBoxTitle: '📸 Upload Photos of Textbook, Notes, or Exam Details',
+    photoUploadBoxSub: 'Select 1–4 photos. They will be attached to the topic and AI can automatically generate notes, flashcards, and quiz questions!',
+    selectPhotosBtn: 'Choose Photos...',
+    generateFromPhotosBtn: '✨ Generate Topic & Quiz from Photos (AI)',
+    clearPhotosBtn: '🗑️ Clear Photos',
+    newSubjectOption: '➕ Create new subject...',
+    newSubjectPlaceholder: 'Type new subject name (e.g. Dějepis)...',
     flashcardsHeading: '🃏 Flashcards Practice',
     prevCard: 'Previous',
     flipCard: 'Flip Card',
@@ -166,6 +176,7 @@ const I18N = {
     signInSubmitBtn: 'Sign In',
     invalidPasswordError: 'Incorrect password. Please try again.',
     footerText: "Honza's Study Space • Web, Android & iPhone",
+    reloadAppBtn: '🔄 Reload & Update',
     sortTopicsLabel: 'Sort:',
     sortPriority: 'Math first',
     sortNewest: 'Newest first',
@@ -220,6 +231,14 @@ const I18N = {
     backToTopics: 'Zpět na témata',
     startQuizNow: 'Spustit kvíz',
     studyNotesHeading: '📖 Klíčové výpisky k tématu',
+    studyDetailImageHeading: '🖼️ Zadání písemky / Fotky k tématu',
+    photoUploadBoxTitle: '📸 Nahrát fotky učebnice, zápisků nebo zadání písemky',
+    photoUploadBoxSub: 'Nahrajte fotku stránky z učebnice, sešitu nebo screenshot z Bakalářů. Fotka se přiloží k tématu a AI z ní může rovnou vytvořit výpisky, kartičky i kvíz!',
+    selectPhotosBtn: 'Vybrat fotky...',
+    generateFromPhotosBtn: '✨ Vygenerovat téma a kvíz z fotek (AI)',
+    clearPhotosBtn: '🗑️ Odebrat fotky',
+    newSubjectOption: '➕ Vytvořit nový předmět...',
+    newSubjectPlaceholder: 'Napište název nového předmětu (např. Dějepis)...',
     flashcardsHeading: '🃏 Tréninkové kartičky (Flashcards)',
     prevCard: 'Předchozí',
     flipCard: 'Otočit kartu',
@@ -330,6 +349,7 @@ const I18N = {
     signInSubmitBtn: 'Přihlásit se',
     invalidPasswordError: 'Nesprávné heslo. Zkuste to prosím znovu.',
     footerText: 'Honzův studijní prostor • Web, Android a iPhone',
+    reloadAppBtn: '🔄 Načíst novinky',
     sortTopicsLabel: 'Seřadit:',
     sortPriority: 'Matematika první',
     sortNewest: 'Nejnovější',
@@ -1642,6 +1662,30 @@ function openStudyMode(topicId) {
   document.getElementById('study-topic-title').textContent = stripSubjectPrefixFromTitle(topic.title, topic.subject);
   document.getElementById('study-topic-desc').textContent = topic.description || '';
 
+  const detailBox = document.getElementById('study-topic-detail-image-box');
+  const detailMount = document.getElementById('study-topic-detail-images-mount');
+  if (detailBox && detailMount) {
+    detailMount.innerHTML = '';
+    const imgs = [];
+    if (topic.detailImageUrl) imgs.push(topic.detailImageUrl);
+    for (const dataUrl of getSavedTopicImages(topic.id)) {
+      if (!imgs.includes(dataUrl)) imgs.push(dataUrl);
+    }
+    if (imgs.length > 0) {
+      detailBox.hidden = false;
+      imgs.forEach((src, i) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = `${topic.title} — zadání / příloha ${i + 1}`;
+        img.className = 'study-detail-img';
+        img.loading = 'lazy';
+        detailMount.appendChild(img);
+      });
+    } else {
+      detailBox.hidden = true;
+    }
+  }
+
   const notesList = document.getElementById('study-notes-list');
   notesList.innerHTML = '';
   const notes = Array.isArray(topic.studyNotes) && topic.studyNotes.length
@@ -2289,6 +2333,292 @@ function renderStudioTopicsList() {
   }
 }
 
+const DEFAULT_SUBJECTS = [
+  'Matematika',
+  'Fyzika',
+  'Český jazyk a literatura',
+  'Dějepis',
+  'Zeměpis',
+  'Přírodopis',
+  'Angličtina'
+];
+
+let editorPendingPhotos = [];
+
+function getSavedTopicImagesMap() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.TOPIC_IMAGES);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function getSavedTopicImages(topicId) {
+  if (!topicId) return [];
+  const map = getSavedTopicImagesMap();
+  return Array.isArray(map[topicId]) ? map[topicId] : [];
+}
+
+function saveTopicImages(topicId, dataUrls) {
+  if (!topicId) return;
+  try {
+    const map = getSavedTopicImagesMap();
+    if (Array.isArray(dataUrls) && dataUrls.length > 0) {
+      map[topicId] = dataUrls.slice(0, 4);
+    } else {
+      delete map[topicId];
+    }
+    localStorage.setItem(STORAGE_KEYS.TOPIC_IMAGES, JSON.stringify(map));
+  } catch (e) {
+    console.warn('Could not save topic images in localStorage:', e);
+  }
+}
+
+function populateSubjectSelect(selectedSubject = '') {
+  const select = document.getElementById('edit-topic-subject-select');
+  const customInput = document.getElementById('edit-topic-subject');
+  if (!select || !customInput) return;
+
+  const subjectSet = new Set(DEFAULT_SUBJECTS);
+  for (const tp of state.topics) {
+    if (tp.subject && tp.subject.trim()) {
+      subjectSet.add(tp.subject.trim());
+    }
+  }
+  const cleanSelected = (selectedSubject || '').trim();
+  if (cleanSelected) {
+    subjectSet.add(cleanSelected);
+  }
+
+  select.innerHTML = '';
+  for (const subj of subjectSet) {
+    const opt = document.createElement('option');
+    opt.value = subj;
+    opt.textContent = subj;
+    select.appendChild(opt);
+  }
+
+  const newOpt = document.createElement('option');
+  newOpt.value = '__new__';
+  newOpt.textContent = t('newSubjectOption');
+  select.appendChild(newOpt);
+
+  select.value = cleanSelected || DEFAULT_SUBJECTS[0];
+  customInput.hidden = true;
+  customInput.required = false;
+  customInput.value = '';
+}
+
+function renderEditorPhotoPreviews() {
+  const listEl = document.getElementById('editor-photo-preview-list');
+  const actionsEl = document.getElementById('editor-photo-ai-actions');
+  if (!listEl || !actionsEl) return;
+
+  listEl.innerHTML = '';
+  if (editorPendingPhotos.length === 0) {
+    listEl.hidden = true;
+    actionsEl.hidden = true;
+    return;
+  }
+
+  listEl.hidden = false;
+  actionsEl.hidden = false;
+  editorPendingPhotos.forEach((item, idx) => {
+    const box = document.createElement('div');
+    box.className = 'photo-preview-item';
+    const img = document.createElement('img');
+    img.src = item.dataUrl;
+    img.alt = `Fotka ${idx + 1}`;
+    box.appendChild(img);
+    listEl.appendChild(box);
+  });
+}
+
+function compressImageToDataUrl(file, maxDim = 1100, quality = 0.8) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('Nelze přečíst soubor'));
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = () => resolve({ dataUrl: reader.result, mimeType: file.type || 'image/jpeg' });
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > maxDim || height > maxDim) {
+          const ratio = Math.min(maxDim / width, maxDim / height);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        const outUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve({ dataUrl: outUrl, mimeType: 'image/jpeg' });
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function generateTopicFromUploadedPhotos() {
+  const statusEl = document.getElementById('editor-ai-status');
+  const btn = document.getElementById('editor-generate-ai-btn');
+  if (!editorPendingPhotos.length) return;
+
+  const setStatus = (msg, isError = false) => {
+    if (!statusEl) return;
+    statusEl.hidden = false;
+    statusEl.textContent = msg;
+    statusEl.style.color = isError ? 'var(--color-danger)' : 'var(--color-brand)';
+  };
+
+  if (btn) btn.disabled = true;
+  setStatus(
+    state.lang === 'cs'
+      ? '✨ AI čte nahrané fotky a připravuje výpisky, kartičky a kvíz pro Honzu...'
+      : '✨ AI is reading the photos and generating notes, flashcards, and quiz...'
+  );
+
+  const systemPrompt = `Create a thorough 6th-grade Czech (6. třída ZŠ) study topic for an 11-year-old boy named Honza from the attached image(s) (which may be a textbook page, handwritten notes, or a school exam announcement like Bakaláři).
+Return ONLY valid JSON with this exact structure:
+{
+  "title": "Topic title (include exam date/time if shown in image)",
+  "subject": "School subject in Czech (e.g. Fyzika, Matematika, Český jazyk a literatura, Dějepis, Zeměpis, Přírodopis, Angličtina)",
+  "description": "Short summary of what is tested",
+  "lang": "cs",
+  "studyNotes": ["6 to 10 clear, structured study notes explaining all concepts shown"],
+  "flashcards": [{"front": "Question", "back": "Clear answer"}],
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Question in Czech?",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "correctAnswer": "Option A",
+      "explanation": "Clear explanation"
+    },
+    {
+      "id": "q2",
+      "type": "true-false",
+      "prompt": "Pravda nebo lež: ...",
+      "options": ["Pravda", "Lež"],
+      "correctAnswer": "Pravda",
+      "explanation": "Clear explanation"
+    },
+    {
+      "id": "q3",
+      "type": "type-in",
+      "prompt": "Short answer question?",
+      "correctAnswer": "Answer",
+      "acceptedAnswers": ["answer"],
+      "explanation": "Clear explanation"
+    }
+  ]
+}
+Include 10 to 16 questions total.`;
+
+  const inlineParts = editorPendingPhotos.map((p) => ({
+    inlineData: {
+      data: p.dataUrl.split(',')[1],
+      mimeType: p.mimeType || 'image/jpeg'
+    }
+  }));
+
+  let generated = null;
+  let lastError = null;
+
+  try {
+    const config = getActiveFirebaseConfig();
+    if (config) {
+      const { getApps, initializeApp } = await import('firebase/app');
+      const { getAI, getGenerativeModel, GoogleAIBackend } = await import('firebase/ai');
+      const app = getApps().length ? getApps()[0] : initializeApp(config);
+      const ai = getAI(app, { backend: new GoogleAIBackend() });
+      const model = getGenerativeModel(ai, {
+        model: 'gemini-2.5-flash',
+        generationConfig: { responseMimeType: 'application/json' }
+      });
+      const result = await model.generateContent([systemPrompt, ...inlineParts]);
+      const rawText = result.response.text();
+      generated = JSON.parse(rawText.replace(/^```json\s*|\s*```$/g, '').trim());
+    }
+  } catch (err) {
+    lastError = err;
+  }
+
+  if (!generated) {
+    const keyInput = document.getElementById('editor-gemini-api-key');
+    const apiKey = (keyInput?.value || localStorage.getItem(STORAGE_KEYS.GEMINI_KEY) || '').trim();
+    if (apiKey) {
+      try {
+        localStorage.setItem(STORAGE_KEYS.GEMINI_KEY, apiKey);
+        const resp = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: systemPrompt }, ...inlineParts] }],
+              generationConfig: { responseMimeType: 'application/json' }
+            })
+          }
+        );
+        if (!resp.ok) {
+          const errJson = await resp.json().catch(() => ({}));
+          throw new Error(errJson?.error?.message || `HTTP ${resp.status}`);
+        }
+        const data = await resp.json();
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        generated = JSON.parse(text.replace(/^```json\s*|\s*```$/g, '').trim());
+      } catch (err) {
+        lastError = err;
+      }
+    }
+  }
+
+  if (btn) btn.disabled = false;
+
+  if (!generated || !generated.title) {
+    const keyDetails = document.getElementById('editor-gemini-key-details');
+    if (keyDetails) keyDetails.open = true;
+    setStatus(
+      state.lang === 'cs'
+        ? `ℹ️ Pro automatické AI generování vložte níže svůj Gemini API klíč (nebo povolte Firebase AI Logic v konzoli). Fotka zůstává přiložená k tématu! (${lastError?.message || 'AI není aktivní'})`
+        : `ℹ️ Please enter a Gemini API key below (or enable Firebase AI Logic in Console). Your photo stays attached to the topic!`,
+      true
+    );
+    return;
+  }
+
+  document.getElementById('edit-topic-title').value = generated.title || '';
+  populateSubjectSelect(generated.subject || DEFAULT_SUBJECTS[0]);
+  document.getElementById('edit-topic-desc').value = generated.description || '';
+  if (Array.isArray(generated.studyNotes)) {
+    document.getElementById('edit-study-notes').value = generated.studyNotes.join('\n');
+  }
+  if (Array.isArray(generated.flashcards)) {
+    document.getElementById('edit-flashcards').value = generated.flashcards
+      .map((fc) => `${fc.front} | ${fc.back}`)
+      .join('\n');
+  }
+  if (Array.isArray(generated.questions) && generated.questions.length) {
+    const qContainer = document.getElementById('editor-questions-container');
+    qContainer.innerHTML = '';
+    for (const q of generated.questions) {
+      appendQuestionBuilderCard(q);
+    }
+  }
+
+  setStatus(
+    state.lang === 'cs'
+      ? '✅ Hotovo! Téma, výpisky, kartičky i otázky byly vyplněny z fotek. Zkontrolujte je a klikněte na „Uložit téma a kvíz“.'
+      : '✅ Done! Topic, notes, flashcards, and questions are filled in. Review and click Save!'
+  );
+}
+
 function openTopicEditorModal(topicToEdit = null) {
   const dialog = document.getElementById('topic-editor-dialog');
   const form = document.getElementById('topic-editor-form');
@@ -2296,8 +2626,25 @@ function openTopicEditorModal(topicToEdit = null) {
 
   document.getElementById('edit-topic-id').value = topicToEdit ? topicToEdit.id : '';
   document.getElementById('edit-topic-title').value = topicToEdit ? topicToEdit.title : '';
-  document.getElementById('edit-topic-subject').value = topicToEdit ? topicToEdit.subject : '';
+  populateSubjectSelect(topicToEdit ? topicToEdit.subject : DEFAULT_SUBJECTS[0]);
   document.getElementById('edit-topic-desc').value = topicToEdit ? (topicToEdit.description || '') : '';
+
+  editorPendingPhotos = [];
+  if (topicToEdit) {
+    if (topicToEdit.detailImageUrl) {
+      editorPendingPhotos.push({ dataUrl: topicToEdit.detailImageUrl, mimeType: 'image/png' });
+    }
+    for (const url of getSavedTopicImages(topicToEdit.id)) {
+      if (!editorPendingPhotos.some((p) => p.dataUrl === url)) {
+        editorPendingPhotos.push({ dataUrl: url, mimeType: 'image/jpeg' });
+      }
+    }
+  }
+  renderEditorPhotoPreviews();
+  const statusEl = document.getElementById('editor-ai-status');
+  if (statusEl) statusEl.hidden = true;
+  const keyInput = document.getElementById('editor-gemini-api-key');
+  if (keyInput) keyInput.value = localStorage.getItem(STORAGE_KEYS.GEMINI_KEY) || '';
 
   const langVal = topicToEdit?.lang || 'cs';
   const langRadio = form.querySelector(`input[name="lang"][value="${langVal}"]`);
@@ -2455,7 +2802,13 @@ async function handleSaveTopicForm(e) {
 
   const existingId = document.getElementById('edit-topic-id').value.trim();
   const title = document.getElementById('edit-topic-title').value.trim();
-  const subject = document.getElementById('edit-topic-subject').value.trim();
+  const subjectSelectVal = document.getElementById('edit-topic-subject-select')?.value || '';
+  const customSubjectVal = document.getElementById('edit-topic-subject')?.value.trim() || '';
+  const subject = (subjectSelectVal === '__new__' ? customSubjectVal : subjectSelectVal).trim();
+  if (!subject) {
+    document.getElementById('edit-topic-subject')?.focus();
+    return;
+  }
   const description = document.getElementById('edit-topic-desc').value.trim();
   const lang = form.querySelector('input[name="lang"]:checked')?.value || 'cs';
 
@@ -2525,6 +2878,11 @@ async function handleSaveTopicForm(e) {
   const slug =
     existingId ||
     `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}-${Date.now().toString(36)}`;
+
+  const dataUrlsToSave = editorPendingPhotos
+    .map((p) => p.dataUrl)
+    .filter((u) => u && u.startsWith('data:'));
+  saveTopicImages(slug, dataUrlsToSave);
 
   await saveTopicEverywhere({
     id: slug,
@@ -2730,6 +3088,78 @@ function initEvents() {
     appendQuestionBuilderCard({ type: 'type-in' });
   });
   document.getElementById('topic-editor-form')?.addEventListener('submit', handleSaveTopicForm);
+
+  document.getElementById('edit-topic-subject-select')?.addEventListener('change', (e) => {
+    const isNew = e.target.value === '__new__';
+    const customInput = document.getElementById('edit-topic-subject');
+    if (!customInput) return;
+    customInput.hidden = !isNew;
+    customInput.required = isNew;
+    if (isNew) {
+      customInput.focus();
+    }
+  });
+
+  document.getElementById('editor-photo-input')?.addEventListener('change', async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    for (const file of files.slice(0, 4)) {
+      try {
+        const compressed = await compressImageToDataUrl(file);
+        editorPendingPhotos.push(compressed);
+      } catch (err) {
+        console.warn('Could not process image:', err);
+      }
+    }
+    e.target.value = '';
+    renderEditorPhotoPreviews();
+  });
+
+  document.getElementById('editor-clear-photos-btn')?.addEventListener('click', () => {
+    editorPendingPhotos = [];
+    renderEditorPhotoPreviews();
+    const statusEl = document.getElementById('editor-ai-status');
+    if (statusEl) statusEl.hidden = true;
+  });
+
+  document.getElementById('editor-generate-ai-btn')?.addEventListener('click', () => {
+    generateTopicFromUploadedPhotos();
+  });
+
+  document.getElementById('save-gemini-key-btn')?.addEventListener('click', (e) => {
+    const keyInput = document.getElementById('editor-gemini-api-key');
+    const val = (keyInput?.value || '').trim();
+    if (val) {
+      localStorage.setItem(STORAGE_KEYS.GEMINI_KEY, val);
+    } else {
+      localStorage.removeItem(STORAGE_KEYS.GEMINI_KEY);
+    }
+    const btn = e.currentTarget;
+    const prev = btn.textContent;
+    btn.textContent = '✅';
+    setTimeout(() => {
+      btn.textContent = prev;
+    }, 1200);
+  });
+
+  document.getElementById('footer-reload-btn')?.addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    btn.disabled = true;
+    btn.textContent = state.lang === 'cs' ? '🔄 Načítám...' : '🔄 Updating...';
+    try {
+      if ('caches' in window) {
+        const keys = await caches.keys();
+        await Promise.all(keys.map((k) => caches.delete(k)));
+      }
+      if ('serviceWorker' in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map((r) => r.update().catch(() => {})));
+      }
+    } catch {
+      // Ignore cache API errors and proceed with reload
+    }
+    window.location.reload();
+  });
 
   // Copy AI Prompt button
   document.getElementById('copy-prompt-btn')?.addEventListener('click', (e) => {

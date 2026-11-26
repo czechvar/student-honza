@@ -1643,6 +1643,147 @@
     font-size: 0.82rem;
   }
 
+  .footer-right-actions {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.65rem;
+  }
+
+  .footer-reload-btn {
+    min-block-size: 38px;
+    padding-inline: 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  /* Study Detail Uploaded Image Box */
+  .study-detail-image-box {
+    margin-block-end: 1.35rem;
+    padding: 0.9rem 1.15rem;
+    border-radius: 16px;
+    background-color: var(--bg-subtle);
+    border: 2px solid color-mix(in srgb, var(--color-brand) 30%, var(--ui-border));
+  }
+
+  .study-detail-image-summary {
+    font-weight: 800;
+    font-size: 0.98rem;
+    color: var(--color-brand);
+    cursor: pointer;
+  }
+
+  .study-detail-images-mount {
+    margin-block-start: 0.85rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+  }
+
+  .study-detail-img {
+    max-inline-size: 100%;
+    block-size: auto;
+    max-block-size: 460px;
+    border-radius: 12px;
+    border: 1px solid var(--ui-border);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
+  }
+
+  /* Topic Editor Photo Upload & AI Generator Box */
+  .editor-photo-upload-card {
+    margin-block-end: 1.25rem;
+    padding: 1.1rem 1.25rem;
+    border-radius: 16px;
+    border: 2px dashed color-mix(in srgb, var(--color-brand) 48%, var(--ui-border));
+    background-color: var(--bg-subtle);
+  }
+
+  .editor-photo-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.85rem;
+  }
+
+  .editor-photo-title {
+    font-size: 1.02rem;
+    margin-block-end: 0.2rem;
+    color: var(--text-main);
+  }
+
+  .photo-upload-trigger-btn {
+    cursor: pointer;
+    flex: 0 0 auto;
+  }
+
+  .editor-photo-preview-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-block-start: 0.9rem;
+  }
+
+  .photo-preview-item {
+    position: relative;
+    inline-size: 112px;
+    block-size: 86px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid var(--color-brand);
+    background-color: var(--bg-surface);
+  }
+
+  .photo-preview-item img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .editor-photo-ai-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem;
+    margin-block-start: 0.9rem;
+  }
+
+  .editor-ai-status {
+    margin-block-start: 0.75rem;
+    padding: 0.6rem 0.85rem;
+    border-radius: 12px;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--ui-border);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .gemini-key-details {
+    margin-block-start: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .gemini-key-details summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .gemini-key-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-block-start: 0.5rem;
+  }
+
+  .gemini-key-row input {
+    flex: 1;
+  }
+
+  .subject-custom-input {
+    margin-block-start: 0.5rem;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     ::view-transition-group(*),
     ::view-transition-old(*),
