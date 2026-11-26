@@ -2714,12 +2714,15 @@ function parseJsonFromGeminiParts(parts = []) {
 async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
   const candidateModels = [
     'gemini-3.8-flash',
-    'gemini-3.8-pro',
-    'gemini-flash-latest'
+    'gemini-3.8-pro'
   ];
 
-  const tryGenerate = async (modelId) => {
+  const tryGenerate = async (modelId, useJsonMime = true) => {
     const cleanModel = modelId.replace(/^models\//, '');
+    const genConfig = { temperature: 0.4 };
+    if (useJsonMime) {
+      genConfig.responseMimeType = 'application/json';
+    }
     const resp = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(cleanModel)}:generateContent?key=${encodeURIComponent(apiKey)}`,
       {
@@ -2727,16 +2730,16 @@ async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: promptText }, ...inlineParts] }],
-          generationConfig: {
-            responseMimeType: 'application/json',
-            temperature: 0.4
-          }
+          generationConfig: genConfig
         })
       }
     );
     if (!resp.ok) {
       const errJson = await resp.json().catch(() => ({}));
       const msg = errJson?.error?.message || `HTTP ${resp.status}`;
+      if (useJsonMime && /responseMimeType|response_mime_type|mime/i.test(msg)) {
+        return tryGenerate(modelId, false);
+      }
       const err = new Error(`[${cleanModel}] ${msg}`);
       err.status = resp.status;
       throw err;
@@ -2749,44 +2752,10 @@ async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
   let firstErr = null;
   for (const m of candidateModels) {
     try {
-      return await tryGenerate(m);
+      return await tryGenerate(m, true);
     } catch (err) {
       if (!firstErr) firstErr = err;
-      const suggested = String(err.message || '').match(/models\/(gemini-[a-z0-9.-]+)/i);
-      if (suggested && !candidateModels.includes(suggested[1])) {
-        try {
-          return await tryGenerate(suggested[1]);
-        } catch (err2) {
-          if (!firstErr) firstErr = err2;
-        }
-      }
     }
-  }
-
-  try {
-    const listResp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(apiKey)}`
-    );
-    if (listResp.ok) {
-      const listData = await listResp.json();
-      const models = Array.isArray(listData?.models) ? listData.models : [];
-      const flashModels = models.filter(
-        (m) =>
-          /gemini/i.test(m.name) &&
-          !/2\.0|2\.5|1\.5/i.test(m.name) &&
-          Array.isArray(m.supportedGenerationMethods) &&
-          m.supportedGenerationMethods.includes('generateContent')
-      );
-      for (const fm of flashModels) {
-        try {
-          return await tryGenerate(fm.name);
-        } catch {
-          // Continue trying next available model
-        }
-      }
-    }
-  } catch {
-    // Ignore list error
   }
 
   throw firstErr || new Error('Nelze zavolat Gemini API');
@@ -3981,13 +3950,13 @@ function initEvents() {
     btn.disabled = true;
     btn.textContent = state.lang === 'cs' ? '🔄 Načítám...' : '🔄 Updating...';
     try {
+      if ('serviceWorker' in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map((r) => r.unregister().catch(() => {})));
+      }
       if ('caches' in window) {
         const keys = await caches.keys();
         await Promise.all(keys.map((k) => caches.delete(k)));
-      }
-      if ('serviceWorker' in navigator) {
-        const regs = await navigator.serviceWorker.getRegistrations();
-        await Promise.all(regs.map((r) => r.update().catch(() => {})));
       }
     } catch {
       // Ignore cache API errors and proceed with reload

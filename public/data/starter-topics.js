@@ -3950,5 +3950,235 @@ export const STARTER_TOPICS = [
         "explanation": "Počítáme 4,5 : 0,75 = 450 : 75 = 6 kousků (zkouška: 6 × 0,75 = 4,5 m)."
       }
     ]
+  },
+  {
+    "id": "dejepis-test-pravek",
+    "lang": "cs",
+    "title": "Test - pravěk - čtvrtek 3. 12., od 10:55 do 11:40",
+    "subject": "Dějepis",
+    "description": "Příprava na souhrnný test z pravěku (čtvrtek 3. 12., od 10:55 do 11:40, 6.C): Periodizace pravěku podle materiálu (doba kamenná — paleolit, mezolit, neolit, eneolit; doba bronzová; doba železná — halštat a latén/Keltové), vývoj člověka, neolitická revoluce a pravěké umění.",
+    "authorName": "Táta & Gemini",
+    "createdAt": 1795700100000,
+    "updatedAt": 1795700100000,
+    "studyNotes": [
+      "Co je pravěk a jak ho poznáváme: Pravěk je nejstarší a nejdelší období lidských dějin, ze kterého NEMÁME PÍSEMNÉ PAMÁTKY. O životě lidí se dozvídáme díky ARCHEOLOGII (vykopávky: kosti, nástroje, keramika, hroby).",
+      "Rozdělení pravěku podle hlavního materiálu nástrojů: 1) Doba kamenná (paleolit, mezolit, neolit, eneolit), 2) Doba bronzová, 3) Doba železná (starší = halštatská, mladší = laténská / Keltové).",
+      "Vývoj člověka (hominizace): Australopithecus (předchůdce člověka v Africe) → Homo habilis (člověk zručný — první kamenné nástroje, sekáče) → Homo erectus (člověk vzpřímený — ovládl OHEŇ, pěstní klín, opustil Afriku) → Homo neanderthalensis (neandertálec — pohřbíval mrtvé) → Homo sapiens (člověk rozumný — umění, jeskynní malby, sošky).",
+      "Starší doba kamenná (PALEOLIT) a střední (MEZOLIT): Lidé měli PŘISVOJOVACÍ HOSPODÁŘSTVÍ — byli to lovci (mamutů, sobů) a sběrači, žili v tlupách, kočovali, používali štípané kamenné nástroje (pěstní klín), oštěpy a v mezolitu luk a šíp a ochočili PSA.",
+      "Pravěké umění v paleolitu: Věstonická venuše (keramická soška ženy z Dolních Věstonic na Moravě — lovci mamutů) a jeskynní malby zvířat (Altamira ve Španělsku, Lascaux ve Francii).",
+      "Mladší doba kamenná (NEOLIT) — NEOLITICKÁ REVOLUCE: Zásadní přechod od lovu a sběru k VÝROBNÍMU HOSPODÁŘSTVÍ! Lidé se usadili, začali pěstovat obilí (zemědělství), chovat dobytek (ovce, kozy, skot, prasata), stavět dlouhé domy, vyrábět KERAMIKU, tkaniny a HLADKÉ (broušené a vrtané) kamenné nástroje, srpy a zrnotěrky.",
+      "Pozdní doba kamenná (ENEOLIT / doba měděná) a DOBA BRONZOVÁ: V eneolitu lidé objevili první kov (měď), vynalezli KOLO, vůz a oradlo tažené dobytkem. V době bronzové začali odlévat BRONZ = slitinu MĚDI A CÍNU.",
+      "DOBA ŽELEZNÁ (halštatská a laténská): Železo bylo pevnější a dostupnější než bronz. Ve starší době železné (halštatské) vznikla u nás slavná jeskyně Býčí skála. V mladší době železné (laténské) žili na našem území KELTOVÉ — první obyvatelé známí jménem (kmen Bójů → Bohemia), stavěli opevněná města OPPIDA (Závist, Stradonice), razili mince (biateky, duhovky) a vynalezli HRNČÍŘSKÝ KRUH."
+    ],
+    "flashcards": [
+      {
+        "front": "Proč z období pravěku nemáme žádné kroniky ani knihy a která věda pravěk zkoumá?",
+        "back": "Lidé v pravěku ještě neznali písmo (nemáme písemné prameny). Pravěk zkoumá ARCHEOLOGIE pomocí hmotných pramenů (vykopávek)."
+      },
+      {
+        "front": "Jak jdou za sebou 3 hlavní doby pravěku podle materiálu?",
+        "back": "1. Doba kamenná\n2. Doba bronzová\n3. Doba železná"
+      },
+      {
+        "front": "Jak se dělí doba kamenná (4 podstupně)?",
+        "back": "1. Paleolit (starší)\n2. Mezolit (střední)\n3. Neolit (mladší)\n4. Eneolit (pozdní / doba měděná)"
+      },
+      {
+        "front": "Který předchůdce člověka jako první ovládl OHEŇ a vyráběl pěstní klín?",
+        "back": "Homo erectus (člověk vzpřímený)."
+      },
+      {
+        "front": "Co je to NEOLITICKÁ REVOLUCE?",
+        "back": "Přechod člověka v mladší době kamenné (neolitu) od přisvojovacího hospodářství (lov a sběr) k VÝROBNÍMU hospodářství (zemědělství, chov dobytka, trvalé osady)."
+      },
+      {
+        "front": "Z jakých dvou kovů se skládá BRONZ?",
+        "back": "Z MĚDI a CÍNU (slitina mědi a cínu)."
+      },
+      {
+        "front": "Co je to Věstonická venuše a z jaké doby pochází?",
+        "back": "Slavná soška ženy z pálené hlíny nalezená v Dolních Věstonicích na Moravě; pochází ze starší doby kamenné (paleolitu — lovci mamutů)."
+      },
+      {
+        "front": "Kdo byli KELTOVÉ, jak se jmenovala jejich opevněná sídliště a jaký kmen dal jméno Čechám (Bohemia)?",
+        "back": "První obyvatelé našeho území známí jménem (mladší doba železná / laténská). Jejich opevněná města se nazývala OPPIDA a kmen se jmenoval BÓJOVÉ."
+      }
+    ],
+    "questions": [
+      {
+        "id": "dej-p1",
+        "type": "multiple-choice",
+        "prompt": "Jaké je správné pořadí tří hlavních období pravěku podle materiálu, ze kterého lidé vyráběli nástroje?",
+        "options": [
+          "Doba kamenná → doba bronzová → doba železná",
+          "Doba kamenná → doba železná → doba bronzová",
+          "Doba bronzová → doba kamenná → doba železná",
+          "Doba měděná → doba železná → doba kamenná"
+        ],
+        "correctAnswer": "Doba kamenná → doba bronzová → doba železná",
+        "explanation": "Lidé nejprve opracovávali kámen, poté objevili slitinu mědi a cínu (bronz) a nakonec se naučili tavit železo."
+      },
+      {
+        "id": "dej-p2",
+        "type": "multiple-choice",
+        "prompt": "Který vývojový předchůdce člověka jako první začal cíleně používat a udržovat OHEŇ a vyráběl pěstní klín?",
+        "options": [
+          "Člověk vzpřímený (Homo erectus)",
+          "Australopithecus",
+          "Člověk zručný (Homo habilis)",
+          "Keltové"
+        ],
+        "correctAnswer": "Člověk vzpřímený (Homo erectus)",
+        "explanation": "Homo erectus (člověk vzpřímený) ovládl oheň, používal pěstní klín a jako první se rozšířil z Afriky do Evropy a Asie."
+      },
+      {
+        "id": "dej-p3",
+        "type": "multiple-choice",
+        "prompt": "Jak se odborně nazývá starší doba kamenná (období lovců mamutů a sběračů)?",
+        "options": [
+          "Paleolit",
+          "Neolit",
+          "Mezolit",
+          "Eneolit"
+        ],
+        "correctAnswer": "Paleolit",
+        "explanation": "Paleolit = starší doba kamenná. Mezolit = střední, neolit = mladší, eneolit = pozdní doba kamenná."
+      },
+      {
+        "id": "dej-p4",
+        "type": "multiple-choice",
+        "prompt": "Co znamená pojem „neolitická revoluce“ v mladší době kamenné (neolitu)?",
+        "options": [
+          "Přechod od lovu a sběru k zemědělství, chovu dobytka a usedlému způsobu života",
+          "Válka mezi neandertálci a Kelty o železné zbraně",
+          "Vynález střelného prachu a knihtisku",
+          "Ochočení mamutů a vynález parního stroje"
+        ],
+        "correctAnswer": "Přechod od lovu a sběru k zemědělství, chovu dobytka a usedlému způsobu života",
+        "explanation": "V neolitu lidé přešli z přisvojovacího hospodářství (lov, sběr) na výrobní hospodářství (pěstování obilí, chov zvířat, stavba stálých domů, výroba keramiky)."
+      },
+      {
+        "id": "dej-p5",
+        "type": "multiple-choice",
+        "prompt": "Z jakých dvou kovů se skládá slitina zvaná BRONZ?",
+        "options": [
+          "Z mědi a cínu",
+          "Ze železa a mědi",
+          "Ze zlata a stříbra",
+          "Z cínu a olova"
+        ],
+        "correctAnswer": "Z mědi a cínu",
+        "explanation": "Bronz je slitina mědi (cca 90 %) a cínu (cca 10 %)."
+      },
+      {
+        "id": "dej-p6",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Z období pravěku se nám nedochovaly žádné písemné památky, a proto život pravěkých lidí zkoumá archeologie pomocí vykopávek.",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Pravda",
+        "explanation": "Pravěk končí právě vynálezem písma a vznikem prvních států. O pravěku víme jen z hmotných pramenů (archeologických nálezů)."
+      },
+      {
+        "id": "dej-p7",
+        "type": "multiple-choice",
+        "prompt": "Ve kterých slavných jeskyních v Evropě se našly pravěké nástěnné malby zvířat ze starší doby kamenné?",
+        "options": [
+          "Altamira (Španělsko) a Lascaux (Francie)",
+          "Koněpruské jeskyně a Macocha",
+          "Závist a Stradonice",
+          "Pompeje a Knóssos"
+        ],
+        "correctAnswer": "Altamira (Španělsko) a Lascaux (Francie)",
+        "explanation": "Jeskyně Altamira ve Španělsku a Lascaux ve Francii jsou proslulé paleolitickými malbami bizonů, koní a jelenů."
+      },
+      {
+        "id": "dej-p8",
+        "type": "type-in",
+        "prompt": "Jak se jmenuje nejslavnější keramická soška ženy ze starší doby kamenné nalezená na jižní Moravě? (Napiš dvěma slovy)",
+        "correctAnswer": "Věstonická venuše",
+        "acceptedAnswers": [
+          "Věstonická venuše",
+          "vestonicka venuse"
+        ],
+        "explanation": "Věstonická venuše byla nalezena na sídlišti lovců mamutů v Dolních Věstonicích pod Pálavou."
+      },
+      {
+        "id": "dej-p9",
+        "type": "multiple-choice",
+        "prompt": "Jaké první zvíře si člověk ochočil (domestikoval) už na přelomu starší a střední doby kamenné jako pomocníka při lovu?",
+        "options": [
+          "Psa (z vlka)",
+          "Krávu",
+          "Koně",
+          "Kočku"
+        ],
+        "correctAnswer": "Psa (z vlka)",
+        "explanation": "Pes byl prvním domestikovaným zvířetem — pomáhal lovcům při stopování a lovu zvěře."
+      },
+      {
+        "id": "dej-p10",
+        "type": "multiple-choice",
+        "prompt": "Které novinky se objevily v mladší době kamenné (neolitu) společně se zemědělstvím?",
+        "options": [
+          "Výroba keramických nádob, broušené a vrtané kamenné nástroje, tkaní látek",
+          "Tavení železa, ražba zlatých mincí a vynález hrnčířského kruhu",
+          "Pouze pěstní klín a lov mamutů do jam",
+          "Stavba kamenných hradů a používání střelného prachu"
+        ],
+        "correctAnswer": "Výroba keramických nádob, broušené a vrtané kamenné nástroje, tkaní látek",
+        "explanation": "V neolitu lidé potřebovali nádoby na uchování obilí a vaření (keramika), broušené sekery na kácení lesa, zrnotěrky na mouku a tkalcovský stav na oděvy."
+      },
+      {
+        "id": "dej-p11",
+        "type": "multiple-choice",
+        "prompt": "Kdo byli první obyvatelé našeho území v mladší době železné (laténské), které známe podle jména?",
+        "options": [
+          "Keltové (kmen Bójů)",
+          "Slované",
+          "Vikingové",
+          "Neandertálci"
+        ],
+        "correctAnswer": "Keltové (kmen Bójů)",
+        "explanation": "V mladší době železné (laténské) žili na našem území Keltové. Podle keltského kmene Bójů získaly Čechy latinský název Bohemia."
+      },
+      {
+        "id": "dej-p12",
+        "type": "type-in",
+        "prompt": "Jak se nazývala keltská opevněná města (hradiště) z mladší doby železné, jako např. Závist u Zbraslavi nebo Stradonice?",
+        "correctAnswer": "oppida",
+        "acceptedAnswers": [
+          "oppida",
+          "oppidum"
+        ],
+        "explanation": "Keltská opevněná sídliště městského typu se nazývají oppida (jednotné číslo: oppidum)."
+      },
+      {
+        "id": "dej-p13",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Keltové přinesli na naše území hrnčířský kruh a jako první zde razili zlaté a stříbrné mince (duhovky).",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Pravda",
+        "explanation": "Keltové byli vynikající řemeslníci — vyráběli keramiku na hrnčířském kruhu, železné nástroje (nůžky, kosy) a razili vlastní mince."
+      },
+      {
+        "id": "dej-p14",
+        "type": "multiple-choice",
+        "prompt": "Ve kterém období pravěku lidé poprvé využili měď, vynalezli kolo s vozem a začali orat pole dřevěným oradlem taženým dobytkem?",
+        "options": [
+          "V pozdní době kamenné (eneolitu)",
+          "Ve starší době kamenné (paleolitu)",
+          "Ve střední době kamenné (mezolitu)",
+          "Až ve středověku"
+        ],
+        "correctAnswer": "V pozdní době kamenné (eneolitu)",
+        "explanation": "V eneolitu (pozdní době kamenné / době měděné) lidé začali zpracovávat měď, používat oradlo tažené dobytkem a vynalezli kolo a vůz."
+      }
+    ]
   }
 ];
