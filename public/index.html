@@ -241,9 +241,14 @@
         <button type="button" class="secondary-btn" id="back-from-study-btn">
           ← <span data-i18n="backToTopics">Back to Topics</span>
         </button>
-        <button type="button" class="primary-btn" id="start-quiz-from-study-btn">
-          <span data-i18n="startQuizNow">Start Quiz Now</span> →
-        </button>
+        <div class="button-row">
+          <button type="button" class="secondary-btn" id="study-edit-topic-btn" hidden>
+            ✏️ <span data-i18n="addResourcesBtn">Upravit / Přidat materiály</span>
+          </button>
+          <button type="button" class="primary-btn" id="start-quiz-from-study-btn">
+            <span data-i18n="startQuizNow">Start Quiz Now</span> →
+          </button>
+        </div>
       </div>
 
       <article class="study-card-container">
@@ -538,6 +543,9 @@
           <div id="editor-photo-preview-list" class="editor-photo-preview-list" hidden></div>
 
           <div id="editor-photo-ai-actions" class="editor-photo-ai-actions" hidden>
+            <button type="button" class="primary-btn" id="editor-append-ai-btn" hidden data-i18n="appendFromPhotosBtn">
+              ➕ Přidat k tématu z fotek (AI)
+            </button>
             <button type="button" class="primary-btn" id="editor-generate-ai-btn" data-i18n="generateFromPhotosBtn">
               ✨ Vygenerovat téma a kvíz z fotek (AI)
             </button>
@@ -1016,7 +1024,7 @@
     </div>
   </dialog>
 
-  <script type="module" src="/app.js?v=30"></script>
+  <script type="module" src="/app.js?v=31"></script>
 </body>
 </html>
 

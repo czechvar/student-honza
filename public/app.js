@@ -86,6 +86,8 @@ const I18N = {
     photoUploadBoxSub: 'Select 1–4 photos. They will be attached to the topic and AI can automatically generate notes, flashcards, and quiz questions!',
     selectPhotosBtn: 'Choose Photos...',
     generateFromPhotosBtn: '✨ Generate Topic & Quiz from Photos (AI)',
+    appendFromPhotosBtn: '➕ Add to Topic from Photos (AI)',
+    addResourcesBtn: 'Edit / Add Resources',
     clearPhotosBtn: '🗑️ Clear Photos',
     newSubjectOption: '➕ Create new subject...',
     newSubjectPlaceholder: 'Type new subject name (e.g. Dějepis)...',
@@ -281,6 +283,8 @@ const I18N = {
     photoUploadBoxSub: 'Nahrajte fotku stránky z učebnice, sešitu nebo screenshot z Bakalářů. Fotka se přiloží k tématu a AI z ní může rovnou vytvořit výpisky, kartičky i kvíz!',
     selectPhotosBtn: 'Vybrat fotky...',
     generateFromPhotosBtn: '✨ Vygenerovat téma a kvíz z fotek (AI)',
+    appendFromPhotosBtn: '➕ Přidat k tématu z fotek (AI)',
+    addResourcesBtn: 'Upravit / Přidat materiály',
     clearPhotosBtn: '🗑️ Odebrat fotky',
     newSubjectOption: '➕ Vytvořit nový předmět...',
     newSubjectPlaceholder: 'Napište název nového předmětu (např. Dějepis)...',
@@ -1778,6 +1782,15 @@ function renderTopicsGrid() {
     quizBtn.addEventListener('click', () => startQuiz(tp.id, 'full'));
 
     actionsDiv.append(studyBtn, quizBtn);
+    if (state.userRole === 'admin') {
+      const quickEditBtn = document.createElement('button');
+      quickEditBtn.type = 'button';
+      quickEditBtn.className = 'secondary-btn sm-btn';
+      quickEditBtn.textContent = `✏️ ${t('editBtn')}`;
+      quickEditBtn.setAttribute('aria-label', `${t('editBtn')} — ${tp.title}`);
+      quickEditBtn.addEventListener('click', () => openTopicEditorModal(tp));
+      actionsDiv.appendChild(quickEditBtn);
+    }
     li.append(topDiv, actionsDiv);
     grid.appendChild(li);
   }
@@ -1832,6 +1845,11 @@ function openStudyMode(topicId) {
   document.getElementById('study-topic-subject').textContent = topic.subject;
   document.getElementById('study-topic-title').textContent = stripSubjectPrefixFromTitle(topic.title, topic.subject);
   document.getElementById('study-topic-desc').textContent = topic.description || '';
+
+  const studyEditBtn = document.getElementById('study-edit-topic-btn');
+  if (studyEditBtn) {
+    studyEditBtn.hidden = state.userRole !== 'admin';
+  }
 
   const detailBox = document.getElementById('study-topic-detail-image-box');
   const detailMount = document.getElementById('study-topic-detail-images-mount');
@@ -2639,6 +2657,8 @@ function populateSubjectSelect(selectedSubject = '') {
 function renderEditorPhotoPreviews() {
   const listEl = document.getElementById('editor-photo-preview-list');
   const actionsEl = document.getElementById('editor-photo-ai-actions');
+  const appendBtn = document.getElementById('editor-append-ai-btn');
+  const genBtn = document.getElementById('editor-generate-ai-btn');
   if (!listEl || !actionsEl) return;
 
   listEl.innerHTML = '';
@@ -2646,6 +2666,17 @@ function renderEditorPhotoPreviews() {
     listEl.hidden = true;
     actionsEl.hidden = true;
     return;
+  }
+
+  const isExistingTopic = Boolean(document.getElementById('edit-topic-id')?.value.trim());
+  if (appendBtn) appendBtn.hidden = !isExistingTopic;
+  if (genBtn) {
+    genBtn.className = isExistingTopic ? 'secondary-btn sm-btn' : 'primary-btn';
+    genBtn.textContent = isExistingTopic
+      ? state.lang === 'cs'
+        ? '♻️ Přepsat vše z fotek'
+        : '♻️ Replace All from Photos'
+      : t('generateFromPhotosBtn');
   }
 
   listEl.hidden = false;
@@ -2763,12 +2794,15 @@ async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
 
 let activeAiGenerationPromise = null;
 
-async function generateTopicFromUploadedPhotos() {
+async function generateTopicFromUploadedPhotos(mode = 'replace') {
   if (activeAiGenerationPromise) return activeAiGenerationPromise;
   const statusEl = document.getElementById('editor-ai-status');
   const btn = document.getElementById('editor-generate-ai-btn');
+  const appendBtn = document.getElementById('editor-append-ai-btn');
   const saveBtn = document.getElementById('save-topic-btn');
   if (!editorPendingPhotos.length) return null;
+
+  const isAppend = mode === 'append';
 
   const setStatus = (msg, isError = false) => {
     if (!statusEl) return;
@@ -2778,6 +2812,7 @@ async function generateTopicFromUploadedPhotos() {
   };
 
   if (btn) btn.disabled = true;
+  if (appendBtn) appendBtn.disabled = true;
   const origSaveText = saveBtn ? saveBtn.textContent : '';
   if (saveBtn) saveBtn.textContent = state.lang === 'cs' ? '⏳ Generuji z fotky...' : '⏳ Generating...';
 
@@ -2886,6 +2921,7 @@ Include 10 to 12 questions and 8 flashcards.`;
 
     clearInterval(timerId);
     if (btn) btn.disabled = false;
+    if (appendBtn) appendBtn.disabled = false;
     if (saveBtn) saveBtn.textContent = origSaveText || t('saveTopicBtn');
 
     if (!generated || !generated.title) {
@@ -2898,6 +2934,34 @@ Include 10 to 12 questions and 8 flashcards.`;
         true
       );
       return null;
+    }
+
+    if (isAppend) {
+      const notesEl = document.getElementById('edit-study-notes');
+      const cardsEl = document.getElementById('edit-flashcards');
+      const existingNotes = notesEl.value.trim();
+      const newNotes = Array.isArray(generated.studyNotes) ? generated.studyNotes.join('\n') : '';
+      if (newNotes) {
+        notesEl.value = existingNotes ? `${existingNotes}\n${newNotes}` : newNotes;
+      }
+      const existingCards = cardsEl.value.trim();
+      const newCards = Array.isArray(generated.flashcards)
+        ? generated.flashcards.map((fc) => `${fc.front} | ${fc.back}`).join('\n')
+        : '';
+      if (newCards) {
+        cardsEl.value = existingCards ? `${existingCards}\n${newCards}` : newCards;
+      }
+      if (Array.isArray(generated.questions) && generated.questions.length) {
+        for (const q of generated.questions) {
+          appendQuestionBuilderCard(q);
+        }
+      }
+      setStatus(
+        state.lang === 'cs'
+          ? `✅ Přidáno za ${elapsedSec} s (+${generated.studyNotes?.length || 0} výpisků, +${generated.flashcards?.length || 0} kartiček, +${generated.questions?.length || 0} otázek)! Klikněte na „Uložit téma a kvíz“.`
+          : `✅ Appended in ${elapsedSec} s! Click Save to keep the new resources.`
+      );
+      return generated;
     }
 
     const titleInput = document.getElementById('edit-topic-title');
@@ -3811,6 +3875,11 @@ function initEvents() {
   document.getElementById('back-from-study-btn')?.addEventListener('click', () => {
     switchView('topics');
   });
+  document.getElementById('study-edit-topic-btn')?.addEventListener('click', () => {
+    if (state.activeStudyTopic) {
+      openTopicEditorModal(state.activeStudyTopic);
+    }
+  });
   document.getElementById('start-quiz-from-study-btn')?.addEventListener('click', () => {
     if (state.activeStudyTopic) {
       startQuiz(state.activeStudyTopic.id, 'full');
@@ -3925,8 +3994,12 @@ function initEvents() {
     if (statusEl) statusEl.hidden = true;
   });
 
+  document.getElementById('editor-append-ai-btn')?.addEventListener('click', () => {
+    generateTopicFromUploadedPhotos('append');
+  });
+
   document.getElementById('editor-generate-ai-btn')?.addEventListener('click', () => {
-    generateTopicFromUploadedPhotos();
+    generateTopicFromUploadedPhotos('replace');
   });
 
   document.getElementById('save-gemini-key-btn')?.addEventListener('click', (e) => {
