@@ -1,4 +1,4 @@
-const CACHE_NAME = 'honza-study-v23';
+const CACHE_NAME = 'honza-study-v24';
 const ASSETS = [
   '/',
   '/index.html',
@@ -7,6 +7,7 @@ const ASSETS = [
   '/firebase-config.js',
   '/data/starter-topics.js',
   '/quizzes/catalog.json',
+  '/quizzes/hodnoceni-fyzika-delka-prevody.png',
   '/manifest.webmanifest',
   '/icons/icon.svg'
 ];

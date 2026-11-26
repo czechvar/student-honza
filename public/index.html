@@ -104,6 +104,10 @@
         <p id="hero-subtext" data-i18n="heroSub">Pick a topic to study notes and flashcards, then take the quiz and beat your high score.</p>
       </div>
       <div class="stats-strip" id="quick-stats-strip">
+        <div class="stat-chip stat-chip-grade">
+          <span class="stat-value" id="stat-school-grades">—</span>
+          <span class="stat-label" data-i18n="statSchoolGrades">Známky ze školy</span>
+        </div>
         <div class="stat-chip">
           <span class="stat-value" id="stat-quizzes-taken">0</span>
           <span class="stat-label" data-i18n="statTestsCompleted">Tests Done</span>
@@ -324,6 +328,19 @@
 
     <!-- VIEW 4: SCORES HISTORY & REVIEW DASHBOARD -->
     <section id="view-scores" class="view-section" hidden>
+      <div class="school-grades-summary-section" id="school-grades-summary-section">
+        <div class="toolbar-row">
+          <div>
+            <h2 data-i18n="schoolGradesHeading">🏅 Známky z písemek ve škole (Bakaláři)</h2>
+            <p class="muted-text" data-i18n="schoolGradesSub">Skutečné výsledky písemek ze školy a porovnání s tréninkem v aplikaci. Jako rodič můžete kdykoli stisknout Ctrl+V / Cmd+V a vložit screenshot hodnocení.</p>
+          </div>
+          <button type="button" class="primary-btn" id="open-grade-modal-from-scores-btn" hidden data-i18n="addSchoolGradeBtn">
+            🏅 Zapsat známku / Vložit screenshot (Ctrl+V)
+          </button>
+        </div>
+        <ul role="list" id="school-grades-cards-grid" class="school-grades-cards-grid"></ul>
+      </div>
+
       <div class="toolbar-row">
         <div>
           <h2 data-i18n="scoresHistoryHeading">Honza's Test Scores &amp; Review History</h2>
@@ -369,6 +386,9 @@
         <div class="button-row">
           <button type="button" class="primary-btn" id="create-new-topic-btn">
             + <span data-i18n="newTopicBtn">Create New Quiz / Topic</span>
+          </button>
+          <button type="button" class="secondary-btn" id="open-grade-modal-from-studio-btn">
+            🏅 <span data-i18n="addSchoolGradeBtn">Zapsat známku / Vložit screenshot (Ctrl+V)</span>
           </button>
           <button type="button" class="secondary-btn" id="open-import-modal-btn">
             📥 <span data-i18n="importJsonBtn">Import Quiz JSON</span>
@@ -866,6 +886,121 @@
         <footer class="dialog-footer">
           <button type="button" class="secondary-btn" id="auth-signout-btn" hidden data-i18n="signOutBtn">Odhlásit se</button>
           <button type="submit" class="primary-btn lg-btn" id="auth-submit-btn" data-i18n="signInSubmitBtn">Přihlásit se</button>
+        </footer>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- MODAL 7: SCHOOL EXAM RESULT / GRADE DIALOG (PASTE SCREENSHOT OR VIEW DETAIL) -->
+  <dialog id="exam-grade-dialog" closedby="any" aria-labelledby="exam-grade-dialog-title">
+    <div class="dialog-inner dialog-wide">
+      <header class="dialog-header">
+        <div>
+          <span class="subject-tag" id="exam-grade-dialog-badge" data-i18n="examGradeBadge">Hodnocení ze školy (Bakaláři)</span>
+          <h2 id="exam-grade-dialog-title" data-i18n="examGradeModalTitle">Výsledek písemky</h2>
+        </div>
+        <form method="dialog">
+          <button type="submit" value="close" class="icon-close-btn" aria-label="Zavřít hodnocení">✕</button>
+        </form>
+      </header>
+
+      <!-- VIEW MODE: Displayed when clicking a grade badge -->
+      <div id="exam-grade-view-panel" class="grade-detail-view-card" hidden>
+        <div class="grade-detail-top">
+          <div class="grade-big-circle" id="grade-view-circle">1</div>
+          <div class="grade-detail-meta">
+            <h3 id="grade-view-topic-title">Délka - převody jednotek</h3>
+            <p class="muted-text" id="grade-view-meta-line">Fyzika • Písemná práce • Váha: 1</p>
+            <p class="muted-text" id="grade-view-teacher-line">Vytvořil: Andrea Petrová • Datum: 25. 11. 2026</p>
+            <p id="grade-view-note-line" class="grade-view-note"></p>
+          </div>
+        </div>
+        <div id="grade-view-screenshot-box" class="grade-view-screenshot-box" hidden>
+          <img id="grade-view-screenshot-img" class="study-detail-img" src="" alt="Screenshot hodnocení z Bakalářů">
+        </div>
+        <footer class="dialog-footer">
+          <button type="button" class="secondary-btn" id="grade-view-edit-btn" hidden data-i18n="editGradeBtn">
+            ✏️ Upravit hodnocení
+          </button>
+          <form method="dialog">
+            <button type="submit" value="close" class="primary-btn" data-i18n="closeBtn">Zavřít</button>
+          </form>
+        </footer>
+      </div>
+
+      <!-- EDIT / PASTE SCREENSHOT MODE (Parent Admin) -->
+      <form id="exam-grade-form" action="#view-topics" method="POST" novalidate hidden>
+        <div class="paste-grade-dropzone" id="paste-grade-dropzone" tabindex="0">
+          <div class="paste-grade-dropzone-inner">
+            <div>
+              <strong data-i18n="pasteGradeHeadline">📋 Vložte screenshot hodnocení z Bakalářů (Ctrl+V / Cmd+V)</strong>
+              <p class="hint" data-i18n="pasteGradeHint">Stačí udělat screenshot „Detail hodnocení“ a stisknout Ctrl+V (nebo Cmd+V na Macu) kdekoli na stránce. AI automaticky přečte známku, předmět, učitele i téma!</p>
+            </div>
+            <label for="grade-photo-input" class="secondary-btn sm-btn photo-upload-trigger-btn">
+              📷 <span data-i18n="chooseGradeImageBtn">Vybrat obrázek...</span>
+            </label>
+            <input type="file" id="grade-photo-input" accept="image/*" class="visually-hidden">
+          </div>
+          <div id="grade-paste-preview-box" class="grade-paste-preview-box" hidden>
+            <img id="grade-paste-preview-img" src="" alt="Náhled screenshotu hodnocení">
+            <div class="grade-paste-preview-actions">
+              <button type="button" class="primary-btn sm-btn" id="grade-reanalyze-ai-btn">✨ Přečíst známku ze screenshotu (AI)</button>
+              <button type="button" class="secondary-btn sm-btn" id="grade-clear-image-btn">🗑️ Odebrat obrázek</button>
+            </div>
+          </div>
+          <p id="grade-ai-status" class="editor-ai-status" hidden aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <label for="grade-topic-select" data-i18n="gradeTopicLabel">Písemka / Studijní téma (Povinné)</label>
+          <select id="grade-topic-select" name="topicId" required></select>
+        </div>
+
+        <fieldset class="grade-picker-fieldset">
+          <legend data-i18n="gradeValueLegend">Známka (Hodnocení):</legend>
+          <div class="grade-picker-grid" id="grade-picker-grid">
+            <label class="grade-choice-btn" data-grade-tone="1"><input type="radio" name="gradeVal" value="1" checked><span>1</span></label>
+            <label class="grade-choice-btn" data-grade-tone="1"><input type="radio" name="gradeVal" value="1-"><span>1-</span></label>
+            <label class="grade-choice-btn" data-grade-tone="2"><input type="radio" name="gradeVal" value="2"><span>2</span></label>
+            <label class="grade-choice-btn" data-grade-tone="2"><input type="radio" name="gradeVal" value="2-"><span>2-</span></label>
+            <label class="grade-choice-btn" data-grade-tone="3"><input type="radio" name="gradeVal" value="3"><span>3</span></label>
+            <label class="grade-choice-btn" data-grade-tone="3"><input type="radio" name="gradeVal" value="3-"><span>3-</span></label>
+            <label class="grade-choice-btn" data-grade-tone="4"><input type="radio" name="gradeVal" value="4"><span>4</span></label>
+            <label class="grade-choice-btn" data-grade-tone="5"><input type="radio" name="gradeVal" value="5"><span>5</span></label>
+          </div>
+        </fieldset>
+
+        <div class="form-grid-2">
+          <div class="field">
+            <label for="grade-category-input" data-i18n="gradeCategoryLabel">Kategorie zadání</label>
+            <input type="text" id="grade-category-input" name="category" placeholder="Např. Písemná práce, Diktát, Test..." value="Písemná práce">
+          </div>
+          <div class="field">
+            <label for="grade-weight-input" data-i18n="gradeWeightLabel">Váha známky</label>
+            <input type="number" id="grade-weight-input" name="weight" min="1" max="10" value="1">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="field">
+            <label for="grade-teacher-input" data-i18n="gradeTeacherLabel">Učitel (Vytvořil)</label>
+            <input type="text" id="grade-teacher-input" name="teacher" placeholder="Např. Andrea Petrová">
+          </div>
+          <div class="field">
+            <label for="grade-date-input" data-i18n="gradeDateLabel">Datum hodnocení</label>
+            <input type="text" id="grade-date-input" name="date" placeholder="Např. 25. 11. 2026">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="grade-note-input" data-i18n="gradeNoteLabel">Poznámka / Popis úkolu</label>
+          <input type="text" id="grade-note-input" name="note" placeholder="Např. 12 příkladů na převody jednotek délky">
+        </div>
+
+        <footer class="dialog-footer">
+          <button type="button" class="danger-btn" id="grade-delete-btn" hidden data-i18n="deleteGradeBtn">🗑️ Smazat známku</button>
+          <button type="button" class="secondary-btn" id="grade-cancel-btn" data-i18n="cancelBtn">Zrušit</button>
+          <button type="submit" class="primary-btn" id="grade-save-btn" data-i18n="saveGradeBtn">💾 Uložit známku</button>
         </footer>
       </form>
     </div>

@@ -10,6 +10,7 @@ const STORAGE_KEYS = {
   TOPICS_SORT: 'honza_topics_sort_v1',
   TOPICS_VIEW: 'honza_topics_view_v1',
   TOPIC_IMAGES: 'honza_topic_images_v1',
+  GRADE_IMAGES: 'honza_grade_images_v1',
   GEMINI_KEY: 'honza_gemini_api_key_v1'
 };
 
@@ -46,6 +47,10 @@ const I18N = {
     statTestsCompleted: 'Tests Done',
     statAvgScore: 'Avg Score',
     statStarsEarned: 'Stars Earned',
+    statSchoolGrades: 'School Grades',
+    schoolGradesHeading: '🏅 School Exam Grades (Bakaláři)',
+    schoolGradesSub: 'Official school exam results compared with app practice. As a parent, press Ctrl+V / Cmd+V anywhere to paste an evaluation screenshot.',
+    addSchoolGradeBtn: '🏅 Add Grade / Paste Screenshot (Ctrl+V)',
     availableTopicsHeading: 'Study Topics & Quizzes',
     searchTopicsLabel: 'Filter topics by title or subject',
     searchTopicsPlaceholder: 'Filter topics (e.g. Math, Space, Dějepis)...',
@@ -219,6 +224,10 @@ const I18N = {
     statTestsCompleted: 'Splněné testy',
     statAvgScore: 'Průměr',
     statStarsEarned: 'Získané hvězdy',
+    statSchoolGrades: 'Známky ze školy',
+    schoolGradesHeading: '🏅 Známky z písemek ve škole (Bakaláři)',
+    schoolGradesSub: 'Skutečné výsledky písemek ze školy a porovnání s tréninkem v aplikaci. Jako rodič můžete kdykoli stisknout Ctrl+V / Cmd+V a vložit screenshot hodnocení.',
+    addSchoolGradeBtn: '🏅 Zapsat známku / Vložit screenshot (Ctrl+V)',
     availableTopicsHeading: 'Studijní témata a kvízy',
     searchTopicsLabel: 'Hledat téma podle názvu nebo předmětu',
     searchTopicsPlaceholder: 'Hledat téma (např. Matematika, Dějepis, Space)...',
@@ -658,7 +667,7 @@ function sanitizeTopicForFirestore(topic) {
   const now = Date.now();
   const subject = String(topic.subject || 'General').slice(0, 100);
   const title = stripSubjectPrefixFromTitle(topic.title || 'Untitled Topic', subject).slice(0, 200);
-  return {
+  const out = {
     id: String(topic.id).slice(0, 150),
     title,
     subject,
@@ -671,6 +680,21 @@ function sanitizeTopicForFirestore(topic) {
     updatedAt: now,
     authorName: String(topic.authorName || 'Parent').slice(0, 100)
   };
+  if (topic.examResult && typeof topic.examResult === 'object' && topic.examResult.grade) {
+    const er = topic.examResult;
+    const rawImg = String(er.imageUrl || '');
+    out.examResult = {
+      grade: String(er.grade).slice(0, 20),
+      weight: Math.max(1, Math.min(20, Math.round(Number(er.weight) || 1))),
+      category: String(er.category || 'Písemná práce').slice(0, 100),
+      teacher: String(er.teacher || '').slice(0, 100),
+      date: String(er.date || '').slice(0, 60),
+      note: String(er.note || '').slice(0, 300),
+      imageUrl: rawImg.startsWith('data:') ? '' : rawImg.slice(0, 300),
+      updatedAt: typeof er.updatedAt === 'number' ? er.updatedAt : now
+    };
+  }
+  return out;
 }
 
 function sanitizeAttemptForFirestore(attempt) {
@@ -805,6 +829,8 @@ function applyRolePermissions() {
   if (heroBanner) heroBanner.hidden = !isAuthenticated;
   if (studioNavLi) studioNavLi.hidden = !isAdmin;
   if (firebaseBtn) firebaseBtn.hidden = !isAdmin;
+  const scoresGradeBtn = document.getElementById('open-grade-modal-from-scores-btn');
+  if (scoresGradeBtn) scoresGradeBtn.hidden = !isAdmin;
   if (headerLogoutBtn) headerLogoutBtn.hidden = !isAuthenticated;
   if (signOutBtn) signOutBtn.hidden = !isAuthenticated;
   if (authCloseForm) authCloseForm.hidden = !isAuthenticated;
@@ -1248,11 +1274,64 @@ function renderSubjectFilterBar() {
   }
 }
 
+function getNumericGradeValue(gradeStr) {
+  const clean = String(gradeStr || '').trim();
+  const map = {
+    '1': 1.0,
+    '1-': 1.5,
+    '2': 2.0,
+    '2-': 2.5,
+    '3': 3.0,
+    '3-': 3.5,
+    '4': 4.0,
+    '4-': 4.5,
+    '5': 5.0
+  };
+  return map[clean] ?? (Number.isFinite(Number(clean)) ? Number(clean) : null);
+}
+
+function getGradeTone(gradeStr) {
+  const g = String(gradeStr || '').trim();
+  if (g.startsWith('1')) return '1';
+  if (g.startsWith('2')) return '2';
+  if (g.startsWith('3')) return '3';
+  if (g.startsWith('4')) return '4';
+  return '5';
+}
+
 function renderStatsStrip() {
   const countEl = document.getElementById('stat-quizzes-taken');
   const avgEl = document.getElementById('stat-avg-score');
   const starsEl = document.getElementById('stat-stars');
+  const gradesEl = document.getElementById('stat-school-grades');
   const navBadge = document.getElementById('attempts-count-badge');
+
+  // School exam grades summary
+  if (gradesEl) {
+    const gradedTopics = state.topics.filter((tp) => tp.examResult && tp.examResult.grade);
+    if (gradedTopics.length === 0) {
+      gradesEl.textContent = '—';
+    } else {
+      let weightedSum = 0;
+      let totalWeight = 0;
+      for (const tp of gradedTopics) {
+        const val = getNumericGradeValue(tp.examResult.grade);
+        const w = Math.max(1, Number(tp.examResult.weight) || 1);
+        if (val !== null) {
+          weightedSum += val * w;
+          totalWeight += w;
+        }
+      }
+      if (gradedTopics.length === 1) {
+        gradesEl.textContent = `🏅 ${gradedTopics[0].examResult.grade}`;
+      } else if (totalWeight > 0) {
+        const avgGrade = (weightedSum / totalWeight).toFixed(2).replace('.', ',');
+        gradesEl.textContent = `🏅 Ø ${avgGrade} (${gradedTopics.length}×)`;
+      } else {
+        gradesEl.textContent = `🏅 ${gradedTopics.length}×`;
+      }
+    }
+  }
 
   const totalAttempts = state.attempts.length;
   if (countEl) countEl.textContent = String(totalAttempts);
@@ -1493,19 +1572,43 @@ function renderTopicsTable(filtered) {
     metaSub.textContent = `❓ ${qCount} • 📝 ${nCount} • 🃏 ${cCount}`;
     tdMaterials.appendChild(metaSub);
 
-    // 4. Best score
+    // 4. Best score & school grade
     const tdScore = document.createElement('td');
+    const scoreWrap = document.createElement('div');
+    scoreWrap.style.display = 'inline-flex';
+    scoreWrap.style.flexWrap = 'wrap';
+    scoreWrap.style.alignItems = 'center';
+    scoreWrap.style.gap = '0.35rem';
+
+    if (tp.examResult && tp.examResult.grade) {
+      const gradePill = document.createElement('button');
+      gradePill.type = 'button';
+      gradePill.className = 'school-grade-pill';
+      gradePill.dataset.gradeTone = getGradeTone(tp.examResult.grade);
+      gradePill.textContent = `🏅 ${state.lang === 'cs' ? 'Známka' : 'Grade'}: ${tp.examResult.grade}`;
+      gradePill.addEventListener('click', () => openExamGradeViewModal(tp.id));
+      scoreWrap.appendChild(gradePill);
+    } else if (state.userRole === 'admin') {
+      const addGradeBtn = document.createElement('button');
+      addGradeBtn.type = 'button';
+      addGradeBtn.className = 'add-grade-card-btn';
+      addGradeBtn.textContent = '+ 🏅 Známka';
+      addGradeBtn.addEventListener('click', () => openExamGradeEditModal(tp.id));
+      scoreWrap.appendChild(addGradeBtn);
+    }
+
     if (bestPct !== null) {
       const bestPill = document.createElement('span');
       bestPill.className = 'best-score-pill';
       bestPill.textContent = `🏆 ${bestPct}%`;
-      tdScore.appendChild(bestPill);
-    } else {
+      scoreWrap.appendChild(bestPill);
+    } else if (!tp.examResult?.grade && state.userRole !== 'admin') {
       const dash = document.createElement('span');
       dash.className = 'muted-text';
       dash.textContent = '—';
-      tdScore.appendChild(dash);
+      scoreWrap.appendChild(dash);
     }
+    tdScore.appendChild(scoreWrap);
 
     // 5. Actions
     const tdActions = document.createElement('td');
@@ -1562,6 +1665,23 @@ function renderTopicsGrid() {
     subjTag.className = 'subject-tag';
     subjTag.textContent = tp.subject;
     metaRow.appendChild(subjTag);
+
+    if (tp.examResult && tp.examResult.grade) {
+      const gradePill = document.createElement('button');
+      gradePill.type = 'button';
+      gradePill.className = 'school-grade-pill';
+      gradePill.dataset.gradeTone = getGradeTone(tp.examResult.grade);
+      gradePill.textContent = `🏅 ${state.lang === 'cs' ? 'Známka ze školy' : 'School Grade'}: ${tp.examResult.grade}`;
+      gradePill.addEventListener('click', () => openExamGradeViewModal(tp.id));
+      metaRow.appendChild(gradePill);
+    } else if (state.userRole === 'admin') {
+      const addGradeBtn = document.createElement('button');
+      addGradeBtn.type = 'button';
+      addGradeBtn.className = 'add-grade-card-btn';
+      addGradeBtn.textContent = state.lang === 'cs' ? '+ 🏅 Zapsat známku' : '+ 🏅 Add Grade';
+      addGradeBtn.addEventListener('click', () => openExamGradeEditModal(tp.id));
+      metaRow.appendChild(addGradeBtn);
+    }
 
     if (bestPct !== null) {
       const bestPill = document.createElement('span');
@@ -2132,7 +2252,62 @@ async function handleQuizNextQuestion() {
 // ============================================================================
 // Scoreboard & Detailed Attempt Review Modal
 // ============================================================================
+function renderSchoolGradesSummary() {
+  const section = document.getElementById('school-grades-summary-section');
+  const grid = document.getElementById('school-grades-cards-grid');
+  const addBtn = document.getElementById('open-grade-modal-from-scores-btn');
+  if (!section || !grid) return;
+
+  if (addBtn) addBtn.hidden = state.userRole !== 'admin';
+
+  const gradedTopics = state.topics.filter((tp) => tp.examResult && tp.examResult.grade);
+  grid.innerHTML = '';
+
+  if (gradedTopics.length === 0) {
+    section.hidden = state.userRole !== 'admin';
+    return;
+  }
+  section.hidden = false;
+
+  for (const tp of gradedTopics) {
+    const er = tp.examResult;
+    const bestPct = getBestScoreForTopic(tp.id);
+    const li = document.createElement('li');
+    li.className = 'school-grade-card';
+    li.tabIndex = 0;
+    li.setAttribute('role', 'button');
+    li.addEventListener('click', () => openExamGradeViewModal(tp.id));
+    li.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openExamGradeViewModal(tp.id);
+      }
+    });
+
+    const circle = document.createElement('div');
+    circle.className = 'grade-big-circle';
+    circle.dataset.gradeTone = getGradeTone(er.grade);
+    circle.textContent = er.grade;
+
+    const info = document.createElement('div');
+    const titleEl = document.createElement('strong');
+    titleEl.textContent = `${getSubjectIcon(tp.subject)} ${stripSubjectPrefixFromTitle(tp.title, tp.subject)}`;
+    const subEl = document.createElement('p');
+    subEl.className = 'muted-text';
+    subEl.style.fontSize = '0.84rem';
+    const parts = [tp.subject, er.category || 'Písemná práce'];
+    if (er.date) parts.push(er.date);
+    if (bestPct !== null) parts.push(`Trénink: ${bestPct}%`);
+    subEl.textContent = parts.join(' • ');
+
+    info.append(titleEl, subEl);
+    li.append(circle, info);
+    grid.appendChild(li);
+  }
+}
+
 function renderScoresTable() {
+  renderSchoolGradesSummary();
   const filterSelect = document.getElementById('scores-topic-filter');
   const tbody = document.getElementById('scores-table-body');
   const emptyCard = document.getElementById('scores-empty-state');
@@ -2884,6 +3059,7 @@ async function handleSaveTopicForm(e) {
     .filter((u) => u && u.startsWith('data:'));
   saveTopicImages(slug, dataUrlsToSave);
 
+  const existingTopic = state.topics.find((tp) => tp.id === slug);
   await saveTopicEverywhere({
     id: slug,
     title,
@@ -2892,10 +3068,319 @@ async function handleSaveTopicForm(e) {
     lang,
     studyNotes,
     flashcards,
-    questions
+    questions,
+    ...(existingTopic?.examResult ? { examResult: existingTopic.examResult } : {})
   });
 
   document.getElementById('topic-editor-dialog').close();
+}
+
+let pendingGradeScreenshotDataUrl = '';
+
+function getSavedGradeImagesMap() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.GRADE_IMAGES);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function getSavedGradeImage(topicId, fallbackUrl = '') {
+  const map = getSavedGradeImagesMap();
+  return map[topicId] || fallbackUrl || '';
+}
+
+function saveGradeImage(topicId, dataUrl) {
+  if (!topicId) return;
+  try {
+    const map = getSavedGradeImagesMap();
+    if (dataUrl && dataUrl.startsWith('data:')) {
+      map[topicId] = dataUrl;
+    } else if (!dataUrl) {
+      delete map[topicId];
+    }
+    localStorage.setItem(STORAGE_KEYS.GRADE_IMAGES, JSON.stringify(map));
+  } catch (e) {
+    console.warn('Could not save grade screenshot to localStorage:', e);
+  }
+}
+
+function openExamGradeViewModal(topicId) {
+  const topic = state.topics.find((tp) => tp.id === topicId);
+  if (!topic || !topic.examResult) return;
+
+  const dialog = document.getElementById('exam-grade-dialog');
+  const viewPanel = document.getElementById('exam-grade-view-panel');
+  const formPanel = document.getElementById('exam-grade-form');
+  if (!dialog || !viewPanel || !formPanel) return;
+
+  viewPanel.hidden = false;
+  formPanel.hidden = true;
+
+  const er = topic.examResult;
+  const circle = document.getElementById('grade-view-circle');
+  if (circle) {
+    circle.textContent = er.grade;
+    circle.dataset.gradeTone = getGradeTone(er.grade);
+  }
+
+  document.getElementById('grade-view-topic-title').textContent = stripSubjectPrefixFromTitle(topic.title, topic.subject);
+  document.getElementById('grade-view-meta-line').textContent = `${topic.subject} • ${er.category || 'Písemná práce'} • Váha: ${er.weight || 1}`;
+  const teacherParts = [];
+  if (er.teacher) teacherParts.push(`Vytvořil: ${er.teacher}`);
+  if (er.date) teacherParts.push(`Datum: ${er.date}`);
+  const bestPct = getBestScoreForTopic(topic.id);
+  if (bestPct !== null) teacherParts.push(`Trénink v aplikaci: ${bestPct}%`);
+  document.getElementById('grade-view-teacher-line').textContent = teacherParts.join(' • ');
+  document.getElementById('grade-view-note-line').textContent = er.note || '';
+
+  const imgUrl = getSavedGradeImage(topic.id, er.imageUrl);
+  const imgBox = document.getElementById('grade-view-screenshot-box');
+  const imgEl = document.getElementById('grade-view-screenshot-img');
+  if (imgBox && imgEl) {
+    if (imgUrl) {
+      imgBox.hidden = false;
+      imgEl.src = imgUrl;
+    } else {
+      imgBox.hidden = true;
+      imgEl.src = '';
+    }
+  }
+
+  const editBtn = document.getElementById('grade-view-edit-btn');
+  if (editBtn) {
+    editBtn.hidden = state.userRole !== 'admin';
+    editBtn.onclick = () => openExamGradeEditModal(topic.id);
+  }
+
+  if (!dialog.open) dialog.showModal();
+}
+
+function populateGradeTopicSelect(selectedTopicId = '') {
+  const select = document.getElementById('grade-topic-select');
+  if (!select) return;
+  select.innerHTML = '';
+  for (const tp of state.topics) {
+    const opt = document.createElement('option');
+    opt.value = tp.id;
+    opt.textContent = `${tp.subject} — ${stripSubjectPrefixFromTitle(tp.title, tp.subject)}`;
+    select.appendChild(opt);
+  }
+  if (selectedTopicId && state.topics.some((tp) => tp.id === selectedTopicId)) {
+    select.value = selectedTopicId;
+  } else if (state.topics.length > 0) {
+    select.value = state.topics[0].id;
+  }
+}
+
+function syncGradeFormFieldsFromTopic(topicId) {
+  const topic = state.topics.find((tp) => tp.id === topicId);
+  const er = topic?.examResult;
+  const delBtn = document.getElementById('grade-delete-btn');
+  if (delBtn) delBtn.hidden = !er;
+
+  const gradeVal = er?.grade || '1';
+  const radio = document.querySelector(`#exam-grade-form input[name="gradeVal"][value="${gradeVal}"]`);
+  if (radio) radio.checked = true;
+
+  document.getElementById('grade-category-input').value = er?.category || 'Písemná práce';
+  document.getElementById('grade-weight-input').value = er?.weight || 1;
+  document.getElementById('grade-teacher-input').value = er?.teacher || '';
+  document.getElementById('grade-date-input').value = er?.date || new Date().toLocaleDateString('cs-CZ');
+  document.getElementById('grade-note-input').value = er?.note || '';
+
+  if (!pendingGradeScreenshotDataUrl) {
+    const existingImg = topic ? getSavedGradeImage(topic.id, er?.imageUrl) : '';
+    const previewBox = document.getElementById('grade-paste-preview-box');
+    const previewImg = document.getElementById('grade-paste-preview-img');
+    if (previewBox && previewImg) {
+      if (existingImg) {
+        previewBox.hidden = false;
+        previewImg.src = existingImg;
+      } else {
+        previewBox.hidden = true;
+        previewImg.src = '';
+      }
+    }
+  }
+}
+
+function openExamGradeEditModal(topicId = '', pastedDataUrl = '') {
+  const dialog = document.getElementById('exam-grade-dialog');
+  const viewPanel = document.getElementById('exam-grade-view-panel');
+  const formPanel = document.getElementById('exam-grade-form');
+  if (!dialog || !viewPanel || !formPanel) return;
+
+  viewPanel.hidden = true;
+  formPanel.hidden = false;
+  pendingGradeScreenshotDataUrl = pastedDataUrl || '';
+
+  const statusEl = document.getElementById('grade-ai-status');
+  if (statusEl) statusEl.hidden = true;
+
+  populateGradeTopicSelect(topicId);
+  const activeTopicId = document.getElementById('grade-topic-select')?.value || '';
+  syncGradeFormFieldsFromTopic(activeTopicId);
+
+  if (pastedDataUrl) {
+    const previewBox = document.getElementById('grade-paste-preview-box');
+    const previewImg = document.getElementById('grade-paste-preview-img');
+    if (previewBox && previewImg) {
+      previewBox.hidden = false;
+      previewImg.src = pastedDataUrl;
+    }
+    analyzeGradeScreenshotWithAI(pastedDataUrl);
+  }
+
+  if (!dialog.open) dialog.showModal();
+}
+
+function matchTopicByTitleAndSubject(extractedTitle = '', extractedSubject = '') {
+  const norm = (s) =>
+    String(s || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim();
+
+  const tQuery = norm(extractedTitle);
+  const sQuery = norm(extractedSubject);
+
+  let bestTopic = null;
+  let bestScore = -1;
+
+  for (const tp of state.topics) {
+    const tpTitle = norm(stripSubjectPrefixFromTitle(tp.title, tp.subject));
+    const tpSubj = norm(tp.subject);
+    let score = 0;
+    if (tQuery && tpTitle.includes(tQuery)) score += 10;
+    const words = tQuery.split(/[^a-z0-9]+/).filter((w) => w.length >= 3);
+    for (const w of words) {
+      if (tpTitle.includes(w)) score += 3;
+      if (norm(tp.description).includes(w)) score += 1;
+    }
+    if (sQuery && (tpSubj.includes(sQuery) || sQuery.includes(tpSubj))) {
+      score += 4;
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestTopic = tp;
+    }
+  }
+  return bestScore >= 3 ? bestTopic : null;
+}
+
+async function analyzeGradeScreenshotWithAI(dataUrl) {
+  const statusEl = document.getElementById('grade-ai-status');
+  const setStatus = (msg, isErr = false) => {
+    if (!statusEl) return;
+    statusEl.hidden = false;
+    statusEl.textContent = msg;
+    statusEl.style.color = isErr ? 'var(--color-danger)' : 'var(--color-brand)';
+  };
+
+  setStatus('✨ Čtu známku, předmět a téma ze screenshotu...');
+
+  const prompt = `Extract the school exam evaluation details from this Czech Bakaláři / Škola OnLine screenshot ("Detail hodnocení" / "Detail úkolu").
+Return ONLY valid JSON with this structure:
+{
+  "grade": "1",
+  "weight": 1,
+  "category": "Písemná práce",
+  "teacher": "Teacher name (from Vytvořil)",
+  "date": "Date (if 'Včera' or 'Dnes', convert or keep text)",
+  "taskTitle": "Task title (from Název, e.g. Délka - převody jednotek)",
+  "subject": "Subject name (from Předmět, e.g. Fyzika)",
+  "note": "Task description (from Popis úkolu)"
+}`;
+
+  const inlinePart = {
+    inlineData: {
+      data: dataUrl.split(',')[1],
+      mimeType: 'image/jpeg'
+    }
+  };
+
+  let extracted = null;
+
+  try {
+    const config = getActiveFirebaseConfig();
+    if (config) {
+      const { getApps, initializeApp } = await import('firebase/app');
+      const { getAI, getGenerativeModel, GoogleAIBackend } = await import('firebase/ai');
+      const app = getApps().length ? getApps()[0] : initializeApp(config);
+      const ai = getAI(app, { backend: new GoogleAIBackend() });
+      const model = getGenerativeModel(ai, {
+        model: 'gemini-2.5-flash',
+        generationConfig: { responseMimeType: 'application/json' }
+      });
+      const res = await model.generateContent([prompt, inlinePart]);
+      extracted = JSON.parse(res.response.text().replace(/^```json\s*|\s*```$/g, '').trim());
+    }
+  } catch {
+    // Fallback to Gemini API key if available
+  }
+
+  if (!extracted) {
+    const apiKey = (localStorage.getItem(STORAGE_KEYS.GEMINI_KEY) || '').trim();
+    if (apiKey) {
+      try {
+        const resp = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }, inlinePart] }],
+              generationConfig: { responseMimeType: 'application/json' }
+            })
+          }
+        );
+        if (resp.ok) {
+          const data = await resp.json();
+          const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+          extracted = JSON.parse(text.replace(/^```json\s*|\s*```$/g, '').trim());
+        }
+      } catch {
+        // Ignore and let parent confirm fields manually
+      }
+    }
+  }
+
+  if (!extracted) {
+    setStatus('📸 Screenshot přiložen! Vyberte známku a téma níže a klikněte na „Uložit známku“.');
+    return;
+  }
+
+  const matchedTopic = matchTopicByTitleAndSubject(extracted.taskTitle, extracted.subject);
+  if (matchedTopic) {
+    const select = document.getElementById('grade-topic-select');
+    if (select) select.value = matchedTopic.id;
+  }
+
+  if (extracted.grade) {
+    const gClean = String(extracted.grade).trim();
+    const radio = document.querySelector(`#exam-grade-form input[name="gradeVal"][value="${gClean}"]`);
+    if (radio) radio.checked = true;
+  }
+  if (extracted.category) document.getElementById('grade-category-input').value = extracted.category;
+  if (extracted.weight) document.getElementById('grade-weight-input').value = Number(extracted.weight) || 1;
+  if (extracted.teacher) document.getElementById('grade-teacher-input').value = extracted.teacher;
+  if (extracted.date) {
+    const dStr = String(extracted.date).trim();
+    if (/včera|vcera/i.test(dStr)) {
+      const y = new Date(Date.now() - 86400000);
+      document.getElementById('grade-date-input').value = y.toLocaleDateString('cs-CZ');
+    } else {
+      document.getElementById('grade-date-input').value = dStr;
+    }
+  }
+  if (extracted.note) document.getElementById('grade-note-input').value = extracted.note;
+
+  setStatus(
+    `✅ Přečteno ze screenshotu: známka ${extracted.grade || '1'}${matchedTopic ? ` (${stripSubjectPrefixFromTitle(matchedTopic.title, matchedTopic.subject)})` : ''}. Klikněte na „Uložit známku“!`
+  );
 }
 
 // ============================================================================
@@ -3159,6 +3644,117 @@ function initEvents() {
       // Ignore cache API errors and proceed with reload
     }
     window.location.reload();
+  });
+
+  // School Exam Grade Modal & Global Clipboard Paste (Ctrl+V / Cmd+V for Parent Admin)
+  document.getElementById('open-grade-modal-from-scores-btn')?.addEventListener('click', () => {
+    openExamGradeEditModal();
+  });
+  document.getElementById('open-grade-modal-from-studio-btn')?.addEventListener('click', () => {
+    openExamGradeEditModal();
+  });
+  document.getElementById('grade-cancel-btn')?.addEventListener('click', () => {
+    document.getElementById('exam-grade-dialog')?.close();
+  });
+  document.getElementById('grade-topic-select')?.addEventListener('change', (e) => {
+    syncGradeFormFieldsFromTopic(e.target.value);
+  });
+
+  document.getElementById('grade-photo-input')?.addEventListener('change', async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const compressed = await compressImageToDataUrl(file);
+    pendingGradeScreenshotDataUrl = compressed.dataUrl;
+    const previewBox = document.getElementById('grade-paste-preview-box');
+    const previewImg = document.getElementById('grade-paste-preview-img');
+    if (previewBox && previewImg) {
+      previewBox.hidden = false;
+      previewImg.src = compressed.dataUrl;
+    }
+    e.target.value = '';
+    analyzeGradeScreenshotWithAI(compressed.dataUrl);
+  });
+
+  document.getElementById('grade-reanalyze-ai-btn')?.addEventListener('click', () => {
+    const previewImg = document.getElementById('grade-paste-preview-img');
+    if (previewImg?.src) {
+      analyzeGradeScreenshotWithAI(previewImg.src);
+    }
+  });
+
+  document.getElementById('grade-clear-image-btn')?.addEventListener('click', () => {
+    pendingGradeScreenshotDataUrl = '';
+    const previewBox = document.getElementById('grade-paste-preview-box');
+    const previewImg = document.getElementById('grade-paste-preview-img');
+    if (previewBox && previewImg) {
+      previewBox.hidden = true;
+      previewImg.src = '';
+    }
+  });
+
+  document.getElementById('grade-delete-btn')?.addEventListener('click', async () => {
+    const topicId = document.getElementById('grade-topic-select')?.value;
+    const topic = state.topics.find((tp) => tp.id === topicId);
+    if (!topic) return;
+    delete topic.examResult;
+    saveGradeImage(topic.id, '');
+    await saveTopicEverywhere(topic);
+    document.getElementById('exam-grade-dialog')?.close();
+  });
+
+  document.getElementById('exam-grade-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const topicId = document.getElementById('grade-topic-select')?.value;
+    const topic = state.topics.find((tp) => tp.id === topicId);
+    if (!topic) return;
+
+    const grade = document.querySelector('#exam-grade-form input[name="gradeVal"]:checked')?.value || '1';
+    const category = document.getElementById('grade-category-input')?.value.trim() || 'Písemná práce';
+    const weight = Math.max(1, Math.min(10, Number(document.getElementById('grade-weight-input')?.value) || 1));
+    const teacher = document.getElementById('grade-teacher-input')?.value.trim() || '';
+    const date = document.getElementById('grade-date-input')?.value.trim() || '';
+    const note = document.getElementById('grade-note-input')?.value.trim() || '';
+
+    if (pendingGradeScreenshotDataUrl) {
+      saveGradeImage(topic.id, pendingGradeScreenshotDataUrl);
+    }
+
+    topic.examResult = {
+      grade,
+      weight,
+      category,
+      teacher,
+      date,
+      note,
+      imageUrl: topic.examResult?.imageUrl && !pendingGradeScreenshotDataUrl ? topic.examResult.imageUrl : '',
+      updatedAt: Date.now()
+    };
+
+    await saveTopicEverywhere(topic);
+    document.getElementById('exam-grade-dialog')?.close();
+  });
+
+  window.addEventListener('paste', async (e) => {
+    if (state.userRole !== 'admin') return;
+    const items = Array.from(e.clipboardData?.items || []);
+    const imgItem = items.find((item) => item.type.startsWith('image/'));
+    if (!imgItem) return;
+    const file = imgItem.getAsFile();
+    if (!file) return;
+
+    // If topic editor dialog is open, add photo there; otherwise open School Exam Grade modal!
+    const editorDialog = document.getElementById('topic-editor-dialog');
+    const compressed = await compressImageToDataUrl(file);
+    if (editorDialog?.open) {
+      editorPendingPhotos.push(compressed);
+      renderEditorPhotoPreviews();
+      return;
+    }
+    const gradeDialog = document.getElementById('exam-grade-dialog');
+    const currentTopicId = gradeDialog?.open
+      ? document.getElementById('grade-topic-select')?.value || ''
+      : state.activeStudyTopic?.id || '';
+    openExamGradeEditModal(currentTopicId, compressed.dataUrl);
   });
 
   // Copy AI Prompt button

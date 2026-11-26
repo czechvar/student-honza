@@ -2916,7 +2916,17 @@ export const STARTER_TOPICS = [
     "description": "Příprava na písemku (středa 25. 11., od 10:55 do 11:40, 6.C — 12 příkladů na převody jednotek délky): Fyzikální veličina délka (l, s, d), základní jednotka metr (m), předpony kilo-, deci-, centi-, mili- a převody km, m, dm, cm, mm včetně desetinných čísel.",
     "authorName": "Táta & Gemini",
     "createdAt": 1795517941849,
-    "updatedAt": 1795517941849,
+    "updatedAt": 1795696500000,
+    "examResult": {
+      "grade": "1",
+      "weight": 1,
+      "category": "Písemná práce",
+      "teacher": "Andrea Petrová",
+      "date": "25. 11. 2026",
+      "note": "12 příkladů na převody jednotek délky",
+      "imageUrl": "/quizzes/hodnoceni-fyzika-delka-prevody.png",
+      "updatedAt": 1795696500000
+    },
     "studyNotes": [
       "Fyzikální veličina délka: Značka veličiny bývá nejčastěji l (délka), s (dráha), d (průměr/tloušťka), h nebo v (výška). Základní jednotkou délky v soustavě SI je METR (značka m).",
       "Přehledná řada jednotek délky: km (kilometr) — [× 1 000] — m (metr) — [× 10] — dm (decimetr) — [× 10] — cm (centimetr) — [× 10] — mm (milimetr).",
