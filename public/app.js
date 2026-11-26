@@ -2714,20 +2714,12 @@ function parseJsonFromGeminiParts(parts = []) {
 async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
   const candidateModels = [
     'gemini-3.8-flash',
-    'gemini-flash-latest',
-    'gemini-3.0-flash',
-    'gemini-2.5-flash'
+    'gemini-3.8-pro',
+    'gemini-flash-latest'
   ];
 
-  const tryGenerate = async (modelId, useZeroThinking = true) => {
+  const tryGenerate = async (modelId) => {
     const cleanModel = modelId.replace(/^models\//, '');
-    const genConfig = {
-      responseMimeType: 'application/json',
-      temperature: 0.4
-    };
-    if (useZeroThinking) {
-      genConfig.thinkingConfig = { thinkingBudget: 0 };
-    }
     const resp = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(cleanModel)}:generateContent?key=${encodeURIComponent(apiKey)}`,
       {
@@ -2735,18 +2727,17 @@ async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: promptText }, ...inlineParts] }],
-          generationConfig: genConfig
+          generationConfig: {
+            responseMimeType: 'application/json',
+            temperature: 0.4
+          }
         })
       }
     );
     if (!resp.ok) {
       const errJson = await resp.json().catch(() => ({}));
       const msg = errJson?.error?.message || `HTTP ${resp.status}`;
-      // If model doesn't support thinkingConfig field, retry immediately without it
-      if (useZeroThinking && /thinkingConfig|thinking_config|thinkingBudget/i.test(msg)) {
-        return tryGenerate(modelId, false);
-      }
-      const err = new Error(msg);
+      const err = new Error(`[${cleanModel}] ${msg}`);
       err.status = resp.status;
       throw err;
     }
@@ -2755,18 +2746,18 @@ async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
     return parseJsonFromGeminiParts(parts);
   };
 
-  let lastErr = null;
+  let firstErr = null;
   for (const m of candidateModels) {
     try {
-      return await tryGenerate(m, true);
+      return await tryGenerate(m);
     } catch (err) {
-      lastErr = err;
+      if (!firstErr) firstErr = err;
       const suggested = String(err.message || '').match(/models\/(gemini-[a-z0-9.-]+)/i);
       if (suggested && !candidateModels.includes(suggested[1])) {
         try {
-          return await tryGenerate(suggested[1], true);
+          return await tryGenerate(suggested[1]);
         } catch (err2) {
-          lastErr = err2;
+          if (!firstErr) firstErr = err2;
         }
       }
     }
@@ -2779,21 +2770,26 @@ async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
     if (listResp.ok) {
       const listData = await listResp.json();
       const models = Array.isArray(listData?.models) ? listData.models : [];
-      const flashModel = models.find(
+      const flashModels = models.filter(
         (m) =>
-          /gemini.*flash/i.test(m.name) &&
+          /gemini/i.test(m.name) &&
+          !/2\.0|2\.5|1\.5/i.test(m.name) &&
           Array.isArray(m.supportedGenerationMethods) &&
           m.supportedGenerationMethods.includes('generateContent')
       );
-      if (flashModel) {
-        return await tryGenerate(flashModel.name, true);
+      for (const fm of flashModels) {
+        try {
+          return await tryGenerate(fm.name);
+        } catch {
+          // Continue trying next available model
+        }
       }
     }
   } catch {
-    // Ignore list error and throw lastErr
+    // Ignore list error
   }
 
-  throw lastErr || new Error('Nelze zavolat Gemini API');
+  throw firstErr || new Error('Nelze zavolat Gemini API');
 }
 
 let activeAiGenerationPromise = null;

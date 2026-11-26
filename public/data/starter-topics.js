@@ -3754,5 +3754,201 @@ export const STARTER_TOPICS = [
         "explanation": "13 × 3 = 39, dohromady 1 + 1 = 2 desetinná místa → 0,39."
       }
     ]
+  },
+  {
+    "id": "matematika-deleni-desetinnych-cisel",
+    "lang": "cs",
+    "title": "Dělení desetinných čísel - pondělí 30. 11., od 8:55 do 9:40",
+    "subject": "Matematika",
+    "description": "Příprava na písemku (pondělí 30. 11., od 8:55 do 9:40, 6.C): Dělení 10, 100, 1 000, dělení desetinného čísla přirozeným číslem, dělení desetinného čísla desetinným číslem (posouvání desetinné čárky v dělenci i děliteli), zkouška násobením a slovní úlohy.",
+    "authorName": "Táta & Gemini",
+    "createdAt": 1795699500000,
+    "updatedAt": 1795699500000,
+    "studyNotes": [
+      "Dělení 10, 100, 1 000: Desetinnou čárku posouváme DOLEVA o tolik míst, kolik má dělitel nul (: 10 o 1 místo, : 100 o 2 místa, : 1 000 o 3 místa). Např. 45,6 : 10 = 4,56; 3,2 : 100 = 0,032.",
+      "Dělení desetinného čísla přirozeným číslem (např. 14,8 : 4): Dělíme jako přirozená čísla. Jakmile v dělenci přejdeme přes desetinnou čárku, napíšeme desetinnou čárku i do výsledku (14 : 4 = 3, zbytek 2 → čárka → 28 : 4 = 7 → výsledek 3,7).",
+      "Když je celá část menší než dělitel (např. 1,5 : 5): Protože 1 : 5 = 0, napíšeme do výsledku „0,“ a pak dělíme 15 : 5 = 3 → výsledek 0,3. Podobně 0,24 : 6 = 0,04!",
+      "Dělení desetinného čísla desetinným číslem (HLAVNÍ PRAVIDLO): Dělit desetinným číslem přímo neumíme — musíme z DĚLITELE (druhého čísla!) udělat přirozené číslo! Posuneme desetinnou čárku DOPRAVA o stejný počet míst v OBĚMA číslech (v dělenci i děliteli).",
+      "Příklad posunu čárky u obou čísel: 4,8 : 0,6 → v děliteli (0,6) je 1 desetinné místo → posuneme čárku o 1 místo doprava v obou číslech → 48 : 6 = 8. Další příklad: 0,72 : 0,09 → o 2 místa → 72 : 9 = 8.",
+      "Doplňování nul při posunu čárky: Když má dělenec méně desetinných míst než dělitel, doplníme na konec dělence nuly! Např. 6 : 0,2 → o 1 místo → 60 : 2 = 30. Nebo 3,5 : 0,07 → o 2 místa → 350 : 7 = 50.",
+      "Pozor na dělení číslem menším než 1: Když dělíš kladné číslo číslem menším než 1 (např. : 0,5 nebo : 0,1), výsledek je VĚTŠÍ než původní číslo! Např. 12 : 0,5 = 120 : 5 = 24.",
+      "Zkouška násobením: Každé dělení si v písemce zkontroluj násobením: výsledek × dělitel = dělenec! Např. 4,5 : 0,9 = 5 → zkouška: 5 × 0,9 = 4,5 (sedí!)."
+    ],
+    "flashcards": [
+      {
+        "front": "Kam a o kolik míst posouváme desetinnou čárku při dělení 10, 100, 1 000?",
+        "back": "DOLEVA o tolik míst, kolik má číslo nul (: 10 o 1 místo, : 100 o 2 místa, : 1 000 o 3 místa)."
+      },
+      {
+        "front": "Kolik je 24,5 : 10 a 24,5 : 100?",
+        "back": "24,5 : 10 = 2,45\n24,5 : 100 = 0,245"
+      },
+      {
+        "front": "Jaké je hlavní pravidlo pro dělení desetinným číslem (např. 3,6 : 0,4)?",
+        "back": "Posuneme desetinnou čárku DOPRAVA o stejný počet míst v dělenci i děliteli tak, aby dělitel (druhé číslo) byl přirozené číslo: 3,6 : 0,4 = 36 : 4 = 9."
+      },
+      {
+        "front": "Kolik je 1,5 : 3 a 0,15 : 3?",
+        "back": "1,5 : 3 = 0,5\n0,15 : 3 = 0,05"
+      },
+      {
+        "front": "Jak upravíme příklad 12 : 0,4 a jaký je výsledek?",
+        "back": "Posuneme o 1 místo (k 12 připíšeme nulu): 120 : 4 = 30."
+      },
+      {
+        "front": "Jak upravíme příklad 2,8 : 0,07 a jaký je výsledek?",
+        "back": "Dělitel 0,07 má 2 desetinná místa → posuneme o 2 místa: 280 : 7 = 40."
+      },
+      {
+        "front": "Kolik je 0,48 : 0,8?",
+        "back": "Posuneme o 1 místo (podle dělitele 0,8): 4,8 : 8 = 0,6!"
+      },
+      {
+        "front": "Je výsledek příkladu 10 : 0,5 větší nebo menší než 10?",
+        "back": "VĚTŠÍ! 10 : 0,5 = 100 : 5 = 20 (když dělíme číslem menším než 1, výsledek se zvětší)."
+      }
+    ],
+    "questions": [
+      {
+        "id": "md-q1",
+        "type": "multiple-choice",
+        "prompt": "Kam posouváme desetinnou čárku při dělení číslem 100?",
+        "options": [
+          "O 2 místa doleva",
+          "O 2 místa doprava",
+          "O 1 místo doleva",
+          "O 3 místa doleva"
+        ],
+        "correctAnswer": "O 2 místa doleva",
+        "explanation": "Při dělení 100 se číslo zmenšuje 100krát, proto posouváme desetinnou čárku o 2 místa doleva."
+      },
+      {
+        "id": "md-q2",
+        "type": "type-in",
+        "prompt": "Vypočítej z hlavy: 34,8 : 10 =",
+        "correctAnswer": "3,48",
+        "acceptedAnswers": ["3,48", "3.48"],
+        "explanation": "Posuneme desetinnou čárku o 1 místo doleva: 34,8 : 10 = 3,48."
+      },
+      {
+        "id": "md-q3",
+        "type": "type-in",
+        "prompt": "Vypočítej z hlavy: 5,2 : 100 =",
+        "correctAnswer": "0,052",
+        "acceptedAnswers": ["0,052", "0.052"],
+        "explanation": "Posuneme desetinnou čárku o 2 místa doleva a doplníme nuly: 5,2 : 100 = 0,052."
+      },
+      {
+        "id": "md-q4",
+        "type": "multiple-choice",
+        "prompt": "Jak správně upravíme příklad 4,5 : 0,9 před dělením?",
+        "options": [
+          "45 : 9",
+          "4,5 : 9",
+          "450 : 9",
+          "0,45 : 9"
+        ],
+        "correctAnswer": "45 : 9",
+        "explanation": "V děliteli (0,9) je 1 desetinné místo, proto posuneme čárku o 1 místo doprava v obou číslech: 45 : 9 = 5."
+      },
+      {
+        "id": "md-q5",
+        "type": "type-in",
+        "prompt": "Vypočítej: 2,4 : 6 =",
+        "correctAnswer": "0,4",
+        "acceptedAnswers": ["0,4", "0.4"],
+        "explanation": "2 : 6 = 0 (napíšeme 0,) a 24 : 6 = 4 → výsledek je 0,4. Zkouška: 0,4 × 6 = 2,4."
+      },
+      {
+        "id": "md-q6",
+        "type": "type-in",
+        "prompt": "Vypočítej: 0,35 : 7 =",
+        "correctAnswer": "0,05",
+        "acceptedAnswers": ["0,05", "0.05"],
+        "explanation": "0 : 7 = 0; 3 : 7 = 0; 35 : 7 = 5 → výsledek je 0,05. Zkouška: 0,05 × 7 = 0,35."
+      },
+      {
+        "id": "md-q7",
+        "type": "type-in",
+        "prompt": "Vypočítej: 5,6 : 0,8 =",
+        "correctAnswer": "7",
+        "acceptedAnswers": ["7"],
+        "explanation": "Posuneme čárku o 1 místo doprava v obou číslech: 56 : 8 = 7."
+      },
+      {
+        "id": "md-q8",
+        "type": "multiple-choice",
+        "prompt": "Jaký je výsledek příkladu 0,64 : 0,8?",
+        "options": [
+          "0,8",
+          "8",
+          "0,08",
+          "80"
+        ],
+        "correctAnswer": "0,8",
+        "explanation": "Podle dělitele (0,8) posuneme čárku o 1 místo doprava v obou číslech: 6,4 : 8 = 0,8!"
+      },
+      {
+        "id": "md-q9",
+        "type": "type-in",
+        "prompt": "Vypočítej: 0,72 : 0,09 =",
+        "correctAnswer": "8",
+        "acceptedAnswers": ["8"],
+        "explanation": "Dělitel 0,09 má 2 desetinná místa → posuneme čárku o 2 místa doprava: 72 : 9 = 8."
+      },
+      {
+        "id": "md-q10",
+        "type": "multiple-choice",
+        "prompt": "Kolik je 15 : 0,5?",
+        "options": [
+          "30",
+          "3",
+          "7,5",
+          "0,3"
+        ],
+        "correctAnswer": "30",
+        "explanation": "Posuneme o 1 místo doprava (k 15 připíšeme nulu): 150 : 5 = 30."
+      },
+      {
+        "id": "md-q11",
+        "type": "type-in",
+        "prompt": "Vypočítej: 3,6 : 0,06 =",
+        "correctAnswer": "60",
+        "acceptedAnswers": ["60"],
+        "explanation": "Posuneme o 2 místa doprava (podle 0,06): 360 : 6 = 60."
+      },
+      {
+        "id": "md-q12",
+        "type": "true-false",
+        "prompt": "Pravda nebo lež: Při dělení 1,25 : 0,5 musíme posunout čárku tak, aby byl dělitel (druhé číslo) celé číslo, tedy na 12,5 : 5.",
+        "options": [
+          "Pravda",
+          "Lež"
+        ],
+        "correctAnswer": "Pravda",
+        "explanation": "Ano! Řídíme se vždy DĚLITELEM (0,5 má 1 desetinné místo), takže posuneme o 1 místo na 12,5 : 5 = 2,5."
+      },
+      {
+        "id": "md-q13",
+        "type": "type-in",
+        "prompt": "Vypočítej: 12,5 : 5 =",
+        "correctAnswer": "2,5",
+        "acceptedAnswers": ["2,5", "2.5"],
+        "explanation": "12 : 5 = 2 (zbytek 2), napíšeme desetinnou čárku, 25 : 5 = 5 → výsledek 2,5."
+      },
+      {
+        "id": "md-q14",
+        "type": "multiple-choice",
+        "prompt": "Slovní úloha: Provaz dlouhý 4,5 metru rozstříháme na kousky po 0,75 metru. Kolik kousků získáme?",
+        "options": [
+          "6 kousků",
+          "5 kousků",
+          "60 kousků",
+          "0,6 kousku"
+        ],
+        "correctAnswer": "6 kousků",
+        "explanation": "Počítáme 4,5 : 0,75 = 450 : 75 = 6 kousků (zkouška: 6 × 0,75 = 4,5 m)."
+      }
+    ]
   }
 ];
