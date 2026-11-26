@@ -2691,6 +2691,83 @@ function compressImageToDataUrl(file, maxDim = 1100, quality = 0.8) {
   });
 }
 
+async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
+  const candidateModels = [
+    'gemini-3.8-flash',
+    'gemini-flash-latest',
+    'gemini-3.0-flash',
+    'gemini-2.5-flash'
+  ];
+
+  // Also dynamically discover available flash models if needed
+  const tryGenerate = async (modelId) => {
+    const cleanModel = modelId.replace(/^models\//, '');
+    const resp = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(cleanModel)}:generateContent?key=${encodeURIComponent(apiKey)}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: promptText }, ...inlineParts] }],
+          generationConfig: { responseMimeType: 'application/json' }
+        })
+      }
+    );
+    if (!resp.ok) {
+      const errJson = await resp.json().catch(() => ({}));
+      const msg = errJson?.error?.message || `HTTP ${resp.status}`;
+      const err = new Error(msg);
+      err.status = resp.status;
+      throw err;
+    }
+    const data = await resp.json();
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    return JSON.parse(text.replace(/^```json\s*|\s*```$/g, '').trim());
+  };
+
+  let lastErr = null;
+  for (const m of candidateModels) {
+    try {
+      return await tryGenerate(m);
+    } catch (err) {
+      lastErr = err;
+      // If the error message explicitly recommends a model (e.g. "use models/gemini-3.8-flash"), try it immediately
+      const suggested = String(err.message || '').match(/models\/(gemini-[a-z0-9.-]+)/i);
+      if (suggested && !candidateModels.includes(suggested[1])) {
+        try {
+          return await tryGenerate(suggested[1]);
+        } catch (err2) {
+          lastErr = err2;
+        }
+      }
+    }
+  }
+
+  // Dynamic fallback: query /v1beta/models for any flash model supporting generateContent
+  try {
+    const listResp = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(apiKey)}`
+    );
+    if (listResp.ok) {
+      const listData = await listResp.json();
+      const models = Array.isArray(listData?.models) ? listData.models : [];
+      const flashModel = models.find(
+        (m) =>
+          /gemini.*flash/i.test(m.name) &&
+          Array.isArray(m.supportedGenerationMethods) &&
+          m.supportedGenerationMethods.includes('generateContent')
+      );
+      if (flashModel) {
+        return await tryGenerate(flashModel.name);
+      }
+    }
+  } catch {
+    // Ignore list error and throw lastErr
+  }
+
+  throw lastErr || new Error('Nelze zavolat Gemini API');
+}
+
 async function generateTopicFromUploadedPhotos() {
   const statusEl = document.getElementById('editor-ai-status');
   const btn = document.getElementById('editor-generate-ai-btn');
@@ -2766,7 +2843,7 @@ Include 10 to 16 questions total.`;
       const app = getApps().length ? getApps()[0] : initializeApp(config);
       const ai = getAI(app, { backend: new GoogleAIBackend() });
       const model = getGenerativeModel(ai, {
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3.8-flash',
         generationConfig: { responseMimeType: 'application/json' }
       });
       const result = await model.generateContent([systemPrompt, ...inlineParts]);
@@ -2783,24 +2860,7 @@ Include 10 to 16 questions total.`;
     if (apiKey) {
       try {
         localStorage.setItem(STORAGE_KEYS.GEMINI_KEY, apiKey);
-        const resp = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: systemPrompt }, ...inlineParts] }],
-              generationConfig: { responseMimeType: 'application/json' }
-            })
-          }
-        );
-        if (!resp.ok) {
-          const errJson = await resp.json().catch(() => ({}));
-          throw new Error(errJson?.error?.message || `HTTP ${resp.status}`);
-        }
-        const data = await resp.json();
-        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        generated = JSON.parse(text.replace(/^```json\s*|\s*```$/g, '').trim());
+        generated = await callGeminiWithAutoModel(apiKey, systemPrompt, inlineParts);
       } catch (err) {
         lastError = err;
       }
@@ -3503,7 +3563,7 @@ Return ONLY valid JSON with this structure:
       const app = getApps().length ? getApps()[0] : initializeApp(config);
       const ai = getAI(app, { backend: new GoogleAIBackend() });
       const model = getGenerativeModel(ai, {
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3.8-flash',
         generationConfig: { responseMimeType: 'application/json' }
       });
       const res = await model.generateContent([prompt, inlinePart]);
@@ -3518,22 +3578,7 @@ Return ONLY valid JSON with this structure:
     const apiKey = (localStorage.getItem(STORAGE_KEYS.GEMINI_KEY) || '').trim();
     if (apiKey) {
       try {
-        const resp = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: prompt }, inlinePart] }],
-              generationConfig: { responseMimeType: 'application/json' }
-            })
-          }
-        );
-        if (resp.ok) {
-          const data = await resp.json();
-          const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-          extracted = JSON.parse(text.replace(/^```json\s*|\s*```$/g, '').trim());
-        }
+        extracted = await callGeminiWithAutoModel(apiKey, prompt, [inlinePart]);
       } catch {
         // Proceed to built-in Browser OCR
       }
