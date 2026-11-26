@@ -2691,6 +2691,26 @@ function compressImageToDataUrl(file, maxDim = 1100, quality = 0.8) {
   });
 }
 
+function parseJsonFromGeminiParts(parts = []) {
+  // Filter out internal thinking parts (part.thought === true) returned by Gemini 2.5/3.x models
+  const nonThoughtParts = parts.filter((p) => !p?.thought && typeof p?.text === 'string');
+  const raw = (nonThoughtParts.length ? nonThoughtParts : parts)
+    .map((p) => p?.text || '')
+    .join('\n')
+    .trim();
+  const stripped = raw.replace(/^```(?:json)?\s*|\s*```$/gi, '').trim();
+  try {
+    return JSON.parse(stripped);
+  } catch {
+    const firstBrace = stripped.indexOf('{');
+    const lastBrace = stripped.lastIndexOf('}');
+    if (firstBrace >= 0 && lastBrace > firstBrace) {
+      return JSON.parse(stripped.slice(firstBrace, lastBrace + 1));
+    }
+    throw new Error('AI nevrátila platný JSON');
+  }
+}
+
 async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
   const candidateModels = [
     'gemini-3.8-flash',
@@ -2699,9 +2719,15 @@ async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
     'gemini-2.5-flash'
   ];
 
-  // Also dynamically discover available flash models if needed
-  const tryGenerate = async (modelId) => {
+  const tryGenerate = async (modelId, useZeroThinking = true) => {
     const cleanModel = modelId.replace(/^models\//, '');
+    const genConfig = {
+      responseMimeType: 'application/json',
+      temperature: 0.4
+    };
+    if (useZeroThinking) {
+      genConfig.thinkingConfig = { thinkingBudget: 0 };
+    }
     const resp = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(cleanModel)}:generateContent?key=${encodeURIComponent(apiKey)}`,
       {
@@ -2709,33 +2735,36 @@ async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: promptText }, ...inlineParts] }],
-          generationConfig: { responseMimeType: 'application/json' }
+          generationConfig: genConfig
         })
       }
     );
     if (!resp.ok) {
       const errJson = await resp.json().catch(() => ({}));
       const msg = errJson?.error?.message || `HTTP ${resp.status}`;
+      // If model doesn't support thinkingConfig field, retry immediately without it
+      if (useZeroThinking && /thinkingConfig|thinking_config|thinkingBudget/i.test(msg)) {
+        return tryGenerate(modelId, false);
+      }
       const err = new Error(msg);
       err.status = resp.status;
       throw err;
     }
     const data = await resp.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    return JSON.parse(text.replace(/^```json\s*|\s*```$/g, '').trim());
+    const parts = data?.candidates?.[0]?.content?.parts || [];
+    return parseJsonFromGeminiParts(parts);
   };
 
   let lastErr = null;
   for (const m of candidateModels) {
     try {
-      return await tryGenerate(m);
+      return await tryGenerate(m, true);
     } catch (err) {
       lastErr = err;
-      // If the error message explicitly recommends a model (e.g. "use models/gemini-3.8-flash"), try it immediately
       const suggested = String(err.message || '').match(/models\/(gemini-[a-z0-9.-]+)/i);
       if (suggested && !candidateModels.includes(suggested[1])) {
         try {
-          return await tryGenerate(suggested[1]);
+          return await tryGenerate(suggested[1], true);
         } catch (err2) {
           lastErr = err2;
         }
@@ -2743,7 +2772,6 @@ async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
     }
   }
 
-  // Dynamic fallback: query /v1beta/models for any flash model supporting generateContent
   try {
     const listResp = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(apiKey)}`
@@ -2758,7 +2786,7 @@ async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
           m.supportedGenerationMethods.includes('generateContent')
       );
       if (flashModel) {
-        return await tryGenerate(flashModel.name);
+        return await tryGenerate(flashModel.name, true);
       }
     }
   } catch {
@@ -2768,10 +2796,14 @@ async function callGeminiWithAutoModel(apiKey, promptText, inlineParts) {
   throw lastErr || new Error('Nelze zavolat Gemini API');
 }
 
+let activeAiGenerationPromise = null;
+
 async function generateTopicFromUploadedPhotos() {
+  if (activeAiGenerationPromise) return activeAiGenerationPromise;
   const statusEl = document.getElementById('editor-ai-status');
   const btn = document.getElementById('editor-generate-ai-btn');
-  if (!editorPendingPhotos.length) return;
+  const saveBtn = document.getElementById('save-topic-btn');
+  if (!editorPendingPhotos.length) return null;
 
   const setStatus = (msg, isError = false) => {
     if (!statusEl) return;
@@ -2781,21 +2813,38 @@ async function generateTopicFromUploadedPhotos() {
   };
 
   if (btn) btn.disabled = true;
-  setStatus(
-    state.lang === 'cs'
-      ? '✨ AI čte nahrané fotky a připravuje výpisky, kartičky a kvíz pro Honzu...'
-      : '✨ AI is reading the photos and generating notes, flashcards, and quiz...'
-  );
+  const origSaveText = saveBtn ? saveBtn.textContent : '';
+  if (saveBtn) saveBtn.textContent = state.lang === 'cs' ? '⏳ Generuji z fotky...' : '⏳ Generating...';
 
-  const systemPrompt = `Create a thorough 6th-grade Czech (6. třída ZŠ) study topic for an 11-year-old boy named Honza from the attached image(s) (which may be a textbook page, handwritten notes, or a school exam announcement like Bakaláři).
-Return ONLY valid JSON with this exact structure:
+  let elapsedSec = 0;
+  const updateTimerMsg = () => {
+    const stage =
+      elapsedSec < 3
+        ? 'Čtu zadání z fotky...'
+        : elapsedSec < 7
+        ? 'Připravuji výpisky a kartičky...'
+        : 'Sestavuji kvízové otázky...';
+    setStatus(
+      state.lang === 'cs'
+        ? `⏳ (${elapsedSec} s) ${stage}`
+        : `⏳ (${elapsedSec} s) AI is generating notes, flashcards, and quiz...`
+    );
+  };
+  updateTimerMsg();
+  const timerId = setInterval(() => {
+    elapsedSec += 1;
+    updateTimerMsg();
+  }, 1000);
+
+  const systemPrompt = `Create a 6th-grade Czech (6. třída ZŠ) study topic for Honza from the attached image(s) (textbook page, notes, or Bakaláři exam announcement).
+Return ONLY valid JSON:
 {
-  "title": "Topic title (include exam date/time if shown in image)",
-  "subject": "School subject in Czech (e.g. Fyzika, Matematika, Český jazyk a literatura, Dějepis, Zeměpis, Přírodopis, Angličtina)",
+  "title": "Topic title (include exam date/time if shown, e.g. Dělení desetinných čísel - 30. 11., od 8:55 do 9:40)",
+  "subject": "School subject in Czech (Matematika, Fyzika, Český jazyk a literatura, Dějepis, Zeměpis, Přírodopis, Angličtina, Občanská výchova)",
   "description": "Short summary of what is tested",
   "lang": "cs",
-  "studyNotes": ["6 to 10 clear, structured study notes explaining all concepts shown"],
-  "flashcards": [{"front": "Question", "back": "Clear answer"}],
+  "studyNotes": ["6 to 8 clear, structured study notes explaining the rules and examples"],
+  "flashcards": [{"front": "Question or problem", "back": "Clear answer"}],
   "questions": [
     {
       "id": "q1",
@@ -2816,14 +2865,14 @@ Return ONLY valid JSON with this exact structure:
     {
       "id": "q3",
       "type": "type-in",
-      "prompt": "Short answer question?",
+      "prompt": "Short calculation or answer question?",
       "correctAnswer": "Answer",
       "acceptedAnswers": ["answer"],
       "explanation": "Clear explanation"
     }
   ]
 }
-Include 10 to 16 questions total.`;
+Include 10 to 12 questions and 8 flashcards.`;
 
   const inlineParts = editorPendingPhotos.map((p) => ({
     inlineData: {
@@ -2832,29 +2881,11 @@ Include 10 to 16 questions total.`;
     }
   }));
 
-  let generated = null;
-  let lastError = null;
+  activeAiGenerationPromise = (async () => {
+    let generated = null;
+    let lastError = null;
 
-  try {
-    const config = getActiveFirebaseConfig();
-    if (config) {
-      const { getApps, initializeApp } = await import('firebase/app');
-      const { getAI, getGenerativeModel, GoogleAIBackend } = await import('firebase/ai');
-      const app = getApps().length ? getApps()[0] : initializeApp(config);
-      const ai = getAI(app, { backend: new GoogleAIBackend() });
-      const model = getGenerativeModel(ai, {
-        model: 'gemini-3.8-flash',
-        generationConfig: { responseMimeType: 'application/json' }
-      });
-      const result = await model.generateContent([systemPrompt, ...inlineParts]);
-      const rawText = result.response.text();
-      generated = JSON.parse(rawText.replace(/^```json\s*|\s*```$/g, '').trim());
-    }
-  } catch (err) {
-    lastError = err;
-  }
-
-  if (!generated) {
+    // 1) Try saved/entered Gemini API key FIRST (fastest, zero wait!)
     const keyInput = document.getElementById('editor-gemini-api-key');
     const apiKey = (keyInput?.value || localStorage.getItem(STORAGE_KEYS.GEMINI_KEY) || '').trim();
     if (apiKey) {
@@ -2865,46 +2896,82 @@ Include 10 to 16 questions total.`;
         lastError = err;
       }
     }
-  }
 
-  if (btn) btn.disabled = false;
+    // 2) Fallback: Firebase AI Logic if no API key or if API key wasn't provided
+    if (!generated && !apiKey) {
+      try {
+        const config = getActiveFirebaseConfig();
+        if (config) {
+          const { getApps, initializeApp } = await import('firebase/app');
+          const { getAI, getGenerativeModel, GoogleAIBackend } = await import('firebase/ai');
+          const app = getApps().length ? getApps()[0] : initializeApp(config);
+          const ai = getAI(app, { backend: new GoogleAIBackend() });
+          const model = getGenerativeModel(ai, {
+            model: 'gemini-3.8-flash',
+            generationConfig: { responseMimeType: 'application/json' }
+          });
+          const result = await model.generateContent([systemPrompt, ...inlineParts]);
+          const rawText = result.response.text();
+          generated = parseJsonFromGeminiParts([{ text: rawText }]);
+        }
+      } catch (err) {
+        lastError = err;
+      }
+    }
 
-  if (!generated || !generated.title) {
-    const keyDetails = document.getElementById('editor-gemini-key-details');
-    if (keyDetails) keyDetails.open = true;
+    clearInterval(timerId);
+    if (btn) btn.disabled = false;
+    if (saveBtn) saveBtn.textContent = origSaveText || t('saveTopicBtn');
+
+    if (!generated || !generated.title) {
+      const keyDetails = document.getElementById('editor-gemini-key-details');
+      if (keyDetails) keyDetails.open = true;
+      setStatus(
+        state.lang === 'cs'
+          ? `ℹ️ Pro automatické AI generování vložte níže svůj Gemini API klíč. Fotka zůstává přiložená k tématu! (${lastError?.message || 'AI není aktivní'})`
+          : `ℹ️ Please enter a Gemini API key below. Your photo stays attached to the topic!`,
+        true
+      );
+      return null;
+    }
+
+    const titleInput = document.getElementById('edit-topic-title');
+    if (titleInput) {
+      titleInput.value = generated.title || '';
+      titleInput.classList.remove('user-invalid-fallback');
+      titleInput.removeAttribute('aria-invalid');
+    }
+    populateSubjectSelect(generated.subject || DEFAULT_SUBJECTS[0]);
+    document.getElementById('edit-topic-desc').value = generated.description || '';
+    if (Array.isArray(generated.studyNotes)) {
+      document.getElementById('edit-study-notes').value = generated.studyNotes.join('\n');
+    }
+    if (Array.isArray(generated.flashcards)) {
+      document.getElementById('edit-flashcards').value = generated.flashcards
+        .map((fc) => `${fc.front} | ${fc.back}`)
+        .join('\n');
+    }
+    if (Array.isArray(generated.questions) && generated.questions.length) {
+      const qContainer = document.getElementById('editor-questions-container');
+      qContainer.innerHTML = '';
+      for (const q of generated.questions) {
+        appendQuestionBuilderCard(q);
+      }
+    }
+
     setStatus(
       state.lang === 'cs'
-        ? `ℹ️ Pro automatické AI generování vložte níže svůj Gemini API klíč (nebo povolte Firebase AI Logic v konzoli). Fotka zůstává přiložená k tématu! (${lastError?.message || 'AI není aktivní'})`
-        : `ℹ️ Please enter a Gemini API key below (or enable Firebase AI Logic in Console). Your photo stays attached to the topic!`,
-      true
+        ? `✅ Hotovo za ${elapsedSec} s! Téma „${generated.title}“, výpisky, kartičky i otázky byly vyplněny. Klikněte na „Uložit téma a kvíz“.`
+        : `✅ Done in ${elapsedSec} s! Topic, notes, flashcards, and questions are filled in. Click Save!`
     );
-    return;
-  }
+    return generated;
+  })();
 
-  document.getElementById('edit-topic-title').value = generated.title || '';
-  populateSubjectSelect(generated.subject || DEFAULT_SUBJECTS[0]);
-  document.getElementById('edit-topic-desc').value = generated.description || '';
-  if (Array.isArray(generated.studyNotes)) {
-    document.getElementById('edit-study-notes').value = generated.studyNotes.join('\n');
+  try {
+    return await activeAiGenerationPromise;
+  } finally {
+    activeAiGenerationPromise = null;
   }
-  if (Array.isArray(generated.flashcards)) {
-    document.getElementById('edit-flashcards').value = generated.flashcards
-      .map((fc) => `${fc.front} | ${fc.back}`)
-      .join('\n');
-  }
-  if (Array.isArray(generated.questions) && generated.questions.length) {
-    const qContainer = document.getElementById('editor-questions-container');
-    qContainer.innerHTML = '';
-    for (const q of generated.questions) {
-      appendQuestionBuilderCard(q);
-    }
-  }
-
-  setStatus(
-    state.lang === 'cs'
-      ? '✅ Hotovo! Téma, výpisky, kartičky i otázky byly vyplněny z fotek. Zkontrolujte je a klikněte na „Uložit téma a kvíz“.'
-      : '✅ Done! Topic, notes, flashcards, and questions are filled in. Review and click Save!'
-  );
 }
 
 function openTopicEditorModal(topicToEdit = null) {
@@ -3082,6 +3149,15 @@ function appendQuestionBuilderCard(qData = {}) {
 async function handleSaveTopicForm(e) {
   e.preventDefault();
   const form = e.target;
+
+  // If photos are uploaded and AI generation is running (or title hasn't been filled yet), wait for AI generation first!
+  const titleEl = document.getElementById('edit-topic-title');
+  if (activeAiGenerationPromise) {
+    await activeAiGenerationPromise;
+  } else if (editorPendingPhotos.length > 0 && (!titleEl || !titleEl.value.trim())) {
+    await generateTopicFromUploadedPhotos();
+  }
+
   if (!form.checkValidity()) {
     const firstInvalid = form.querySelector(':invalid');
     if (firstInvalid) firstInvalid.focus();
