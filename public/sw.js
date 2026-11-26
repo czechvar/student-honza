@@ -1,4 +1,4 @@
-const CACHE_NAME = 'honza-study-v25';
+const CACHE_NAME = 'honza-study-v26';
 const ASSETS = [
   '/',
   '/index.html',
@@ -8,6 +8,7 @@ const ASSETS = [
   '/data/starter-topics.js',
   '/quizzes/catalog.json',
   '/quizzes/hodnoceni-fyzika-delka-prevody.png',
+  '/quizzes/hodnoceni-matematika-nasobeni-desetinnych.png',
   '/manifest.webmanifest',
   '/icons/icon.svg'
 ];

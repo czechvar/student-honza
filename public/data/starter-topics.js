@@ -3338,7 +3338,17 @@ export const STARTER_TOPICS = [
     "description": "Příprava na písemku (čtvrtek 26. 11., od 10:00 do 10:45, 6.C): Násobení 10, 100, 1 000 i 0,1; 0,01; 0,001, násobení desetinného čísla přirozeným číslem, násobení dvou desetinných čísel, určování počtu desetinných míst, odhad výsledku a slovní úlohy.",
     "authorName": "Táta & Gemini",
     "createdAt": 1795517940849,
-    "updatedAt": 1795517940849,
+    "updatedAt": 1795697800000,
+    "examResult": {
+      "grade": "1",
+      "weight": 1,
+      "category": "Písemná práce",
+      "teacher": "Klára Svitáčková",
+      "date": "Čt 19. 11. 2026",
+      "note": "Násobení desetinných čísel (do 19. 11., 10:45)",
+      "imageUrl": "/quizzes/hodnoceni-matematika-nasobeni-desetinnych.png",
+      "updatedAt": 1795697800000
+    },
     "studyNotes": [
       "Násobení 10, 100, 1 000: Desetinnou čárku posouváme DOPRAVA o tolik míst, kolik má číslo nul (× 10 o 1 místo, × 100 o 2 místa, × 1 000 o 3 místa). Chybějící místa doplníme nulami: 2,4 × 100 = 240.",
       "Násobení 0,1; 0,01; 0,001: Desetinnou čárku posouváme DOLEVA o tolik míst, kolik má činitel desetinných míst (× 0,1 je stejné jako : 10). Např. 34,5 × 0,1 = 3,45; 7 × 0,01 = 0,07.",

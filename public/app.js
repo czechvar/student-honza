@@ -2679,6 +2679,8 @@ function compressImageToDataUrl(file, maxDim = 1100, quality = 0.8) {
         canvas.width = width;
         canvas.height = height;
         const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, width, height);
         ctx.drawImage(img, 0, 0, width, height);
         const outUrl = canvas.toDataURL('image/jpeg', quality);
         resolve({ dataUrl: outUrl, mimeType: 'image/jpeg' });
@@ -3322,8 +3324,144 @@ function matchTopicByTitleAndSubject(extractedTitle = '', extractedSubject = '')
   return bestScore >= 3 ? bestTopic : null;
 }
 
+function parseBakalariOcrText(rawText = '') {
+  const lines = String(rawText || '')
+    .split(/\r?\n/)
+    .map((l) => l.replace(/\s+/g, ' ').trim())
+    .filter(Boolean);
+
+  const out = {
+    grade: '',
+    weight: 1,
+    category: '',
+    teacher: '',
+    date: '',
+    taskTitle: '',
+    subject: '',
+    note: '',
+    dueText: ''
+  };
+
+  for (const line of lines) {
+    // 1. Předmět
+    const subjMatch = line.match(/P[řr]edm[ěe]t\s*:?\s*(.+)/i);
+    if (subjMatch && !out.subject) {
+      let s = subjMatch[1].trim();
+      // Strip Bakaláři class/student suffix like "M - 6.C" or "Fy - 6.C, Jan Antl"
+      s = s.replace(/\s+[A-ZČŘŠŽa-z]{1,4}\s*[-–]\s*\d.*$/i, '').split(',')[0].trim();
+      if (s) out.subject = s;
+      continue;
+    }
+
+    // 2. Kategorie zadání
+    const catMatch = line.match(/Kategorie(?:\s+zad[áa]n[íi])?\s*:?\s*(.+)/i);
+    if (catMatch && !out.category) {
+      out.category = catMatch[1].trim();
+      continue;
+    }
+
+    // 3. Datum hodnocení
+    const dateMatch = line.match(/Datum\s+hodnocen[íi]\s*:?\s*(.+)/i);
+    if (dateMatch && !out.date) {
+      out.date = dateMatch[1].trim();
+      continue;
+    }
+
+    // 4. Hodnocení (exclude "Hodnocení pro:" and "Datum hodnocení:")
+    if (!/pro\s*:|datum/i.test(line)) {
+      const gradeMatch = line.match(/Hodnocen[íi]\s*:?\s*(.*)$/i);
+      if (gradeMatch && !out.grade) {
+        const rawG = gradeMatch[1].trim();
+        const digitMatch = rawG.match(/([1-5])\s*(-)?/);
+        if (digitMatch) {
+          out.grade = digitMatch[1] + (digitMatch[2] ? '-' : '');
+        } else if (/^[lI|!\[\]1]+(-)?$/.test(rawG)) {
+          out.grade = rawG.includes('-') ? '1-' : '1';
+        }
+        continue;
+      }
+    }
+
+    // 5. Váha
+    const weightMatch = line.match(/V[áa]ha\s*:?\s*(.*)$/i);
+    if (weightMatch) {
+      const rawW = weightMatch[1].trim();
+      const numW = parseInt(rawW, 10);
+      if (Number.isFinite(numW) && numW >= 1 && numW <= 10) {
+        out.weight = numW;
+      } else if (/^[lI|!1]$/.test(rawW)) {
+        out.weight = 1;
+      }
+      continue;
+    }
+
+    // 6. Vytvořil (Teacher)
+    const teacherMatch = line.match(/Vytvo[řr]il\s*:?\s*(.+)/i);
+    if (teacherMatch && !out.teacher) {
+      // Ignore if it looks like a timestamp from "Vytvořeno: Po 16. 11. 2026"
+      const val = teacherMatch[1].trim();
+      if (!/\d{4}/.test(val)) {
+        out.teacher = val;
+      }
+      continue;
+    }
+
+    // 7. Název (Task title)
+    const titleMatch = line.match(/N[áa]zev\s*:?\s*(.+)/i);
+    if (titleMatch && !out.taskTitle) {
+      out.taskTitle = titleMatch[1].trim();
+      continue;
+    }
+
+    // 8. Popis úkolu
+    const noteMatch = line.match(/Popis\s+[úu]kolu\s*:?\s*(.+)/i);
+    if (noteMatch && !out.note) {
+      const n = noteMatch[1].trim();
+      if (n && !/^[-–—_]+$/.test(n)) {
+        out.note = n;
+      }
+      continue;
+    }
+
+    // 9. Termín
+    const dueMatch = line.match(/Term[íi]n\s*:?\s*(.+)/i);
+    if (dueMatch && !out.dueText) {
+      out.dueText = dueMatch[1].trim();
+    }
+  }
+
+  if (!out.grade) {
+    out.grade = '1';
+  }
+  if (!out.category) {
+    out.category = 'Písemná práce';
+  }
+  if (!out.note && out.taskTitle) {
+    out.note = out.dueText ? `${out.taskTitle} (${out.dueText})` : out.taskTitle;
+  }
+
+  return out;
+}
+
+async function extractGradeWithBrowserOcr(dataUrl, onProgress) {
+  const Tesseract = await import('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.esm.min.js');
+  const recognizeFn = Tesseract.recognize || Tesseract.default?.recognize;
+  if (typeof recognizeFn !== 'function') {
+    throw new Error('OCR knihovna se nenačetla');
+  }
+  const result = await recognizeFn(dataUrl, 'ces', {
+    logger: (m) => {
+      if (m?.status === 'recognizing text' && typeof onProgress === 'function') {
+        onProgress(Math.round((m.progress || 0) * 100));
+      }
+    }
+  });
+  return parseBakalariOcrText(result?.data?.text || '');
+}
+
 async function analyzeGradeScreenshotWithAI(dataUrl) {
   const statusEl = document.getElementById('grade-ai-status');
+  const reanalyzeBtn = document.getElementById('grade-reanalyze-ai-btn');
   const setStatus = (msg, isErr = false) => {
     if (!statusEl) return;
     statusEl.hidden = false;
@@ -3331,7 +3469,8 @@ async function analyzeGradeScreenshotWithAI(dataUrl) {
     statusEl.style.color = isErr ? 'var(--color-danger)' : 'var(--color-brand)';
   };
 
-  setStatus('✨ Čtu známku, předmět a téma ze screenshotu...');
+  if (reanalyzeBtn) reanalyzeBtn.disabled = true;
+  setStatus('✨ Čtu známku, předmět, učitele a téma ze screenshotu...');
 
   const prompt = `Extract the school exam evaluation details from this Czech Bakaláři / Škola OnLine screenshot ("Detail hodnocení" / "Detail úkolu").
 Return ONLY valid JSON with this structure:
@@ -3340,10 +3479,10 @@ Return ONLY valid JSON with this structure:
   "weight": 1,
   "category": "Písemná práce",
   "teacher": "Teacher name (from Vytvořil)",
-  "date": "Date (if 'Včera' or 'Dnes', convert or keep text)",
-  "taskTitle": "Task title (from Název, e.g. Délka - převody jednotek)",
-  "subject": "Subject name (from Předmět, e.g. Fyzika)",
-  "note": "Task description (from Popis úkolu)"
+  "date": "Date (from Datum hodnocení)",
+  "taskTitle": "Task title (from Název, e.g. násobení desetinných čísel)",
+  "subject": "Subject name (from Předmět, e.g. Matematika)",
+  "note": "Task description (from Popis úkolu, or taskTitle + Termín if Popis úkolu is empty/dash)"
 }`;
 
   const inlinePart = {
@@ -3355,6 +3494,7 @@ Return ONLY valid JSON with this structure:
 
   let extracted = null;
 
+  // 1) Try Gemini via Firebase AI Logic if enabled
   try {
     const config = getActiveFirebaseConfig();
     if (config) {
@@ -3370,9 +3510,10 @@ Return ONLY valid JSON with this structure:
       extracted = JSON.parse(res.response.text().replace(/^```json\s*|\s*```$/g, '').trim());
     }
   } catch {
-    // Fallback to Gemini API key if available
+    // Proceed to Gemini API key or built-in Browser OCR
   }
 
+  // 2) Try Gemini REST API if parent saved an API key
   if (!extracted) {
     const apiKey = (localStorage.getItem(STORAGE_KEYS.GEMINI_KEY) || '').trim();
     if (apiKey) {
@@ -3394,43 +3535,83 @@ Return ONLY valid JSON with this structure:
           extracted = JSON.parse(text.replace(/^```json\s*|\s*```$/g, '').trim());
         }
       } catch {
-        // Ignore and let parent confirm fields manually
+        // Proceed to built-in Browser OCR
       }
     }
   }
+
+  // 3) Built-in Browser OCR (Tesseract.js Czech) — works automatically with zero API keys!
+  if (!extracted) {
+    try {
+      extracted = await extractGradeWithBrowserOcr(dataUrl, (pct) => {
+        setStatus(`✨ Čtu text ze screenshotu (OCR ${pct} %)...`);
+      });
+    } catch (ocrErr) {
+      console.warn('Browser OCR failed:', ocrErr);
+    }
+  }
+
+  if (reanalyzeBtn) reanalyzeBtn.disabled = false;
 
   if (!extracted) {
     setStatus('📸 Screenshot přiložen! Vyberte známku a téma níže a klikněte na „Uložit známku“.');
     return;
   }
 
+  // 1. Match and select Topic in dropdown
   const matchedTopic = matchTopicByTitleAndSubject(extracted.taskTitle, extracted.subject);
   if (matchedTopic) {
     const select = document.getElementById('grade-topic-select');
     if (select) select.value = matchedTopic.id;
   }
 
-  if (extracted.grade) {
-    const gClean = String(extracted.grade).trim();
-    const radio = document.querySelector(`#exam-grade-form input[name="gradeVal"][value="${gClean}"]`);
-    if (radio) radio.checked = true;
+  // 2. Populate Grade radio button (1 .. 5)
+  const gClean = String(extracted.grade || '1').trim();
+  const radio =
+    document.querySelector(`#exam-grade-form input[name="gradeVal"][value="${gClean}"]`) ||
+    document.querySelector('#exam-grade-form input[name="gradeVal"][value="1"]');
+  if (radio) radio.checked = true;
+
+  // 3. Populate Category
+  document.getElementById('grade-category-input').value =
+    (extracted.category && extracted.category.trim()) || 'Písemná práce';
+
+  // 4. Populate Weight
+  document.getElementById('grade-weight-input').value = Number(extracted.weight) || 1;
+
+  // 5. Populate Teacher
+  if (extracted.teacher) {
+    document.getElementById('grade-teacher-input').value = extracted.teacher.trim();
   }
-  if (extracted.category) document.getElementById('grade-category-input').value = extracted.category;
-  if (extracted.weight) document.getElementById('grade-weight-input').value = Number(extracted.weight) || 1;
-  if (extracted.teacher) document.getElementById('grade-teacher-input').value = extracted.teacher;
+
+  // 6. Populate Date
   if (extracted.date) {
     const dStr = String(extracted.date).trim();
     if (/včera|vcera/i.test(dStr)) {
       const y = new Date(Date.now() - 86400000);
       document.getElementById('grade-date-input').value = y.toLocaleDateString('cs-CZ');
+    } else if (/dnes/i.test(dStr)) {
+      document.getElementById('grade-date-input').value = new Date().toLocaleDateString('cs-CZ');
     } else {
       document.getElementById('grade-date-input').value = dStr;
     }
   }
-  if (extracted.note) document.getElementById('grade-note-input').value = extracted.note;
+
+  // 7. Populate Note / Task Description (fallback to taskTitle if Popis úkolu was "—")
+  const noteText =
+    extracted.note && !/^[-–—_]+$/.test(String(extracted.note).trim())
+      ? String(extracted.note).trim()
+      : extracted.taskTitle || '';
+  if (noteText) {
+    document.getElementById('grade-note-input').value = noteText;
+  }
 
   setStatus(
-    `✅ Přečteno ze screenshotu: známka ${extracted.grade || '1'}${matchedTopic ? ` (${stripSubjectPrefixFromTitle(matchedTopic.title, matchedTopic.subject)})` : ''}. Klikněte na „Uložit známku“!`
+    `✅ Všechna pole vyplněna ze screenshotu: známka ${gClean}${
+      extracted.teacher ? `, učitel ${extracted.teacher}` : ''
+    }${
+      matchedTopic ? `, téma „${stripSubjectPrefixFromTitle(matchedTopic.title, matchedTopic.subject)}“` : ''
+    }. Klikněte na „Uložit známku“!`
   );
 }
 
