@@ -49,8 +49,26 @@ const I18N = {
     statStarsEarned: 'Stars Earned',
     statSchoolGrades: 'School Grades',
     schoolGradesHeading: '🏅 School Exam Grades (Bakaláři)',
-    schoolGradesSub: 'Official school exam results compared with app practice. As a parent, press Ctrl+V / Cmd+V anywhere to paste an evaluation screenshot.',
-    addSchoolGradeBtn: '🏅 Add Grade / Paste Screenshot (Ctrl+V)',
+    schoolGradesSub: 'Official school exam results compared with app practice. As a parent, paste a screenshot from clipboard or press Ctrl+V / Cmd+V.',
+    addSchoolGradeBtn: '🏅 Add Grade / Paste Screenshot',
+    examGradeBadge: 'School Evaluation (Bakaláři)',
+    examGradeModalTitle: 'School Exam Grade & Evaluation',
+    pasteGradeHeadline: '📋 Paste Bakaláři Evaluation Screenshot (from Clipboard or File)',
+    pasteGradeHint: 'Take a screenshot of "Detail hodnocení" to your clipboard and click "Paste from Clipboard" (or press Cmd+V / Ctrl+V).',
+    pasteFromClipboardBtn: 'Paste from Clipboard',
+    chooseGradeImageBtn: 'Choose Image...',
+    gradeTopicLabel: 'Exam / Study Topic (Required)',
+    gradeValueLegend: 'Grade (Evaluation):',
+    gradeCategoryLabel: 'Category',
+    gradeWeightLabel: 'Grade Weight',
+    gradeTeacherLabel: 'Teacher (Created by)',
+    gradeDateLabel: 'Evaluation Date',
+    gradeNoteLabel: 'Note / Task Description',
+    editGradeBtn: '✏️ Edit Evaluation',
+    deleteGradeBtn: '🗑️ Delete Grade',
+    saveGradeBtn: '💾 Save Grade',
+    geminiKeySummary: '🔑 Gemini AI Key Settings (if Firebase AI is not enabled)',
+    saveGeminiKeyBtn: 'Save Key',
     availableTopicsHeading: 'Study Topics & Quizzes',
     searchTopicsLabel: 'Filter topics by title or subject',
     searchTopicsPlaceholder: 'Filter topics (e.g. Math, Space, Dějepis)...',
@@ -226,8 +244,26 @@ const I18N = {
     statStarsEarned: 'Získané hvězdy',
     statSchoolGrades: 'Známky ze školy',
     schoolGradesHeading: '🏅 Známky z písemek ve škole (Bakaláři)',
-    schoolGradesSub: 'Skutečné výsledky písemek ze školy a porovnání s tréninkem v aplikaci. Jako rodič můžete kdykoli stisknout Ctrl+V / Cmd+V a vložit screenshot hodnocení.',
-    addSchoolGradeBtn: '🏅 Zapsat známku / Vložit screenshot (Ctrl+V)',
+    schoolGradesSub: 'Skutečné výsledky písemek ze školy a porovnání s tréninkem v aplikaci. Jako rodič můžete vložit screenshot ze schránky nebo stisknout Ctrl+V / Cmd+V.',
+    addSchoolGradeBtn: '🏅 Zapsat známku / Vložit screenshot',
+    examGradeBadge: 'Hodnocení ze školy (Bakaláři)',
+    examGradeModalTitle: 'Zapsat / Upravit známku z písemky',
+    pasteGradeHeadline: '📋 Vložte screenshot hodnocení z Bakalářů (ze schránky nebo souboru)',
+    pasteGradeHint: 'Udělejte screenshot „Detail hodnocení“ do schránky a klikněte na „Vložit ze schránky“ (nebo stiskněte Cmd+V / Ctrl+V). AI automaticky přečte známku, předmět, učitele i téma!',
+    pasteFromClipboardBtn: 'Vložit ze schránky',
+    chooseGradeImageBtn: 'Vybrat obrázek...',
+    gradeTopicLabel: 'Písemka / Studijní téma (Povinné)',
+    gradeValueLegend: 'Známka (Hodnocení):',
+    gradeCategoryLabel: 'Kategorie zadání',
+    gradeWeightLabel: 'Váha známky',
+    gradeTeacherLabel: 'Učitel (Vytvořil)',
+    gradeDateLabel: 'Datum hodnocení',
+    gradeNoteLabel: 'Poznámka / Popis úkolu',
+    editGradeBtn: '✏️ Upravit hodnocení',
+    deleteGradeBtn: '🗑️ Smazat známku',
+    saveGradeBtn: '💾 Uložit známku',
+    geminiKeySummary: '🔑 Nastavení Gemini AI klíče (pokud není aktivní Firebase AI)',
+    saveGeminiKeyBtn: 'Uložit klíč',
     availableTopicsHeading: 'Studijní témata a kvízy',
     searchTopicsLabel: 'Hledat téma podle názvu nebo předmětu',
     searchTopicsPlaceholder: 'Hledat téma (např. Matematika, Dějepis, Space)...',
@@ -605,9 +641,15 @@ function loadLocalData() {
     if (!item || !item.id || deprecatedSet.has(item.id)) continue;
     const starterItem = starterMap.get(item.id);
     if (starterItem && (Number(starterItem.updatedAt) || 0) >= (Number(item.updatedAt) || 0)) {
-      map.set(item.id, starterItem);
+      map.set(item.id, {
+        ...starterItem,
+        examResult: item.examResult || starterItem.examResult
+      });
     } else {
-      map.set(item.id, item);
+      map.set(item.id, {
+        ...item,
+        ...(starterItem?.examResult && !item.examResult ? { examResult: starterItem.examResult } : {})
+      });
     }
   }
   state.topics = Array.from(map.values());
@@ -631,7 +673,11 @@ async function loadCatalogQuizzes() {
       const map = new Map(state.topics.map((tp) => [tp.id, tp]));
       for (const tp of data.topics) {
         if (tp && tp.id && tp.title && Array.isArray(tp.questions)) {
-          map.set(tp.id, tp);
+          const existing = map.get(tp.id);
+          map.set(tp.id, {
+            ...tp,
+            ...(existing?.examResult && !tp.examResult ? { examResult: existing.examResult } : {})
+          });
           changed = true;
         }
       }
@@ -763,8 +809,13 @@ async function startFirestoreListeners() {
         const data = docSnap.data();
         if (data && data.title && Array.isArray(data.questions)) {
           const existing = map.get(docSnap.id);
+          const mergedExamResult = data.examResult || existing?.examResult;
           if (!existing || (Number(data.updatedAt) || 0) >= (Number(existing.updatedAt) || 0)) {
-            map.set(docSnap.id, { ...data, id: docSnap.id });
+            map.set(docSnap.id, {
+              ...data,
+              id: docSnap.id,
+              ...(mergedExamResult ? { examResult: mergedExamResult } : {})
+            });
           } else if (state.userRole === 'admin') {
             saveTopicEverywhere(existing).catch(() => {});
           }
@@ -3673,6 +3724,75 @@ function initEvents() {
     }
     e.target.value = '';
     analyzeGradeScreenshotWithAI(compressed.dataUrl);
+  });
+
+  async function pickClipboardImageFile() {
+    if (!navigator.clipboard || typeof navigator.clipboard.read !== 'function') {
+      throw new Error(
+        state.lang === 'cs'
+          ? 'Prohlížeč nedovolil přímé čtení schránky tlačítkem — stiskněte prosím Cmd+V (Mac) nebo Ctrl+V.'
+          : 'Please press Cmd+V or Ctrl+V to paste from clipboard.'
+      );
+    }
+    const items = await navigator.clipboard.read();
+    for (const item of items) {
+      const imgType = item.types.find((tName) => tName.startsWith('image/'));
+      if (imgType) {
+        const blob = await item.getType(imgType);
+        return new File([blob], `clipboard-${Date.now()}.png`, { type: imgType });
+      }
+    }
+    throw new Error(
+      state.lang === 'cs'
+        ? 'Ve schránce nebyl nalezen žádný obrázek. Udělejte nejprve screenshot do schránky!'
+        : 'No image found in clipboard. Take a screenshot to clipboard first!'
+    );
+  }
+
+  document.getElementById('grade-paste-clipboard-btn')?.addEventListener('click', async () => {
+    const statusEl = document.getElementById('grade-ai-status');
+    try {
+      const file = await pickClipboardImageFile();
+      const compressed = await compressImageToDataUrl(file);
+      pendingGradeScreenshotDataUrl = compressed.dataUrl;
+      const previewBox = document.getElementById('grade-paste-preview-box');
+      const previewImg = document.getElementById('grade-paste-preview-img');
+      if (previewBox && previewImg) {
+        previewBox.hidden = false;
+        previewImg.src = compressed.dataUrl;
+      }
+      analyzeGradeScreenshotWithAI(compressed.dataUrl);
+    } catch (err) {
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.style.color = 'var(--color-danger)';
+        statusEl.textContent = `ℹ️ ${err.message}`;
+      }
+    }
+  });
+
+  document.getElementById('editor-paste-clipboard-btn')?.addEventListener('click', async () => {
+    const statusEl = document.getElementById('editor-ai-status');
+    try {
+      const file = await pickClipboardImageFile();
+      const compressed = await compressImageToDataUrl(file);
+      editorPendingPhotos.push(compressed);
+      renderEditorPhotoPreviews();
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.style.color = 'var(--color-brand)';
+        statusEl.textContent =
+          state.lang === 'cs'
+            ? '📋 Screenshot vložen ze schránky! Klikněte na „Vygenerovat téma a kvíz z fotek (AI)“.'
+            : '📋 Screenshot pasted from clipboard!';
+      }
+    } catch (err) {
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.style.color = 'var(--color-danger)';
+        statusEl.textContent = `ℹ️ ${err.message}`;
+      }
+    }
   });
 
   document.getElementById('grade-reanalyze-ai-btn')?.addEventListener('click', () => {

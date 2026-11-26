@@ -478,6 +478,7 @@
   }
 
   input[type="text"],
+  input[type="number"],
   input[type="password"],
   input[type="search"],
   textarea,
@@ -495,6 +496,7 @@
 
   @media (pointer: coarse) {
     input[type="text"],
+    input[type="number"],
     input[type="password"],
     input[type="search"],
     select,

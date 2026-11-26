@@ -518,9 +518,14 @@
               <h3 class="editor-photo-title" data-i18n="photoUploadBoxTitle">📸 Nahrát fotky učebnice, zápisků nebo zadání písemky</h3>
               <p class="hint" data-i18n="photoUploadBoxSub">Nahrajte fotku stránky z učebnice, sešitu nebo screenshot z Bakalářů. Fotka se přiloží k tématu a AI z ní může rovnou vytvořit výpisky, kartičky i kvíz!</p>
             </div>
-            <label for="editor-photo-input" class="secondary-btn photo-upload-trigger-btn">
-              📷 <span data-i18n="selectPhotosBtn">Vybrat fotky...</span>
-            </label>
+            <div class="button-row">
+              <button type="button" class="primary-btn sm-btn" id="editor-paste-clipboard-btn">
+                📋 <span data-i18n="pasteFromClipboardBtn">Vložit ze schránky</span>
+              </button>
+              <label for="editor-photo-input" class="secondary-btn sm-btn photo-upload-trigger-btn">
+                📷 <span data-i18n="selectPhotosBtn">Vybrat fotky...</span>
+              </label>
+            </div>
             <input
               type="file"
               id="editor-photo-input"
@@ -933,12 +938,17 @@
         <div class="paste-grade-dropzone" id="paste-grade-dropzone" tabindex="0">
           <div class="paste-grade-dropzone-inner">
             <div>
-              <strong data-i18n="pasteGradeHeadline">📋 Vložte screenshot hodnocení z Bakalářů (Ctrl+V / Cmd+V)</strong>
-              <p class="hint" data-i18n="pasteGradeHint">Stačí udělat screenshot „Detail hodnocení“ a stisknout Ctrl+V (nebo Cmd+V na Macu) kdekoli na stránce. AI automaticky přečte známku, předmět, učitele i téma!</p>
+              <strong data-i18n="pasteGradeHeadline">📋 Vložte screenshot hodnocení z Bakalářů (ze schránky nebo souboru)</strong>
+              <p class="hint" data-i18n="pasteGradeHint">Udělejte screenshot „Detail hodnocení“ do schránky a klikněte na „Vložit ze schránky“ (nebo stiskněte Cmd+V / Ctrl+V). AI automaticky přečte známku, předmět, učitele i téma!</p>
             </div>
-            <label for="grade-photo-input" class="secondary-btn sm-btn photo-upload-trigger-btn">
-              📷 <span data-i18n="chooseGradeImageBtn">Vybrat obrázek...</span>
-            </label>
+            <div class="button-row">
+              <button type="button" class="primary-btn sm-btn" id="grade-paste-clipboard-btn">
+                📋 <span data-i18n="pasteFromClipboardBtn">Vložit ze schránky</span>
+              </button>
+              <label for="grade-photo-input" class="secondary-btn sm-btn photo-upload-trigger-btn">
+                📷 <span data-i18n="chooseGradeImageBtn">Vybrat obrázek...</span>
+              </label>
+            </div>
             <input type="file" id="grade-photo-input" accept="image/*" class="visually-hidden">
           </div>
           <div id="grade-paste-preview-box" class="grade-paste-preview-box" hidden>
