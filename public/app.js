@@ -730,6 +730,23 @@ function sanitizeTopicForFirestore(topic) {
     updatedAt: now,
     authorName: String(topic.authorName || 'Parent').slice(0, 100)
   };
+  if (topic.detailImageUrl) {
+    out.detailImageUrl = String(topic.detailImageUrl).slice(0, 500);
+  }
+  if (Array.isArray(topic.attachments) && topic.attachments.length > 0) {
+    const safeAttachments = [];
+    let totalLen = 0;
+    for (const item of topic.attachments.slice(0, 4)) {
+      const s = String(item || '');
+      if (!s || s.length > 260000) continue;
+      if (totalLen + s.length > 700000) break;
+      safeAttachments.push(s);
+      totalLen += s.length;
+    }
+    if (safeAttachments.length > 0) {
+      out.attachments = safeAttachments;
+    }
+  }
   if (topic.examResult && typeof topic.examResult === 'object' && topic.examResult.grade) {
     const er = topic.examResult;
     const rawImg = String(er.imageUrl || '');
@@ -740,7 +757,7 @@ function sanitizeTopicForFirestore(topic) {
       teacher: String(er.teacher || '').slice(0, 100),
       date: String(er.date || '').slice(0, 60),
       note: String(er.note || '').slice(0, 300),
-      imageUrl: rawImg.startsWith('data:') ? '' : rawImg.slice(0, 300),
+      imageUrl: rawImg.length <= 260000 ? rawImg : '',
       updatedAt: typeof er.updatedAt === 'number' ? er.updatedAt : now
     };
   }
@@ -1857,6 +1874,11 @@ function openStudyMode(topicId) {
     detailMount.innerHTML = '';
     const imgs = [];
     if (topic.detailImageUrl) imgs.push(topic.detailImageUrl);
+    if (Array.isArray(topic.attachments)) {
+      for (const attUrl of topic.attachments) {
+        if (attUrl && !imgs.includes(attUrl)) imgs.push(attUrl);
+      }
+    }
     for (const dataUrl of getSavedTopicImages(topic.id)) {
       if (!imgs.includes(dataUrl)) imgs.push(dataUrl);
     }
@@ -2692,7 +2714,7 @@ function renderEditorPhotoPreviews() {
   });
 }
 
-function compressImageToDataUrl(file, maxDim = 1100, quality = 0.8) {
+function compressImageToDataUrl(file, maxDim = 920, quality = 0.65) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onerror = () => reject(new Error('Nelze přečíst soubor'));
@@ -3018,6 +3040,13 @@ function openTopicEditorModal(topicToEdit = null) {
     if (topicToEdit.detailImageUrl) {
       editorPendingPhotos.push({ dataUrl: topicToEdit.detailImageUrl, mimeType: 'image/png' });
     }
+    if (Array.isArray(topicToEdit.attachments)) {
+      for (const attUrl of topicToEdit.attachments) {
+        if (attUrl && !editorPendingPhotos.some((p) => p.dataUrl === attUrl)) {
+          editorPendingPhotos.push({ dataUrl: attUrl, mimeType: 'image/jpeg' });
+        }
+      }
+    }
     for (const url of getSavedTopicImages(topicToEdit.id)) {
       if (!editorPendingPhotos.some((p) => p.dataUrl === url)) {
         editorPendingPhotos.push({ dataUrl: url, mimeType: 'image/jpeg' });
@@ -3287,6 +3316,8 @@ async function handleSaveTopicForm(e) {
     studyNotes,
     flashcards,
     questions,
+    attachments: dataUrlsToSave,
+    ...(existingTopic?.detailImageUrl ? { detailImageUrl: existingTopic.detailImageUrl } : {}),
     ...(existingTopic?.examResult ? { examResult: existingTopic.examResult } : {})
   });
 
@@ -4186,7 +4217,7 @@ function initEvents() {
       teacher,
       date,
       note,
-      imageUrl: topic.examResult?.imageUrl && !pendingGradeScreenshotDataUrl ? topic.examResult.imageUrl : '',
+      imageUrl: pendingGradeScreenshotDataUrl || topic.examResult?.imageUrl || '',
       updatedAt: Date.now()
     };
 

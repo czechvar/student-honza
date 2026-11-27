@@ -23,6 +23,8 @@ service cloud.firestore {
     //   - createdAt: number or timestamp (optional, immutable) - Creation timestamp
     //   - updatedAt: number or timestamp (optional) - Last modification timestamp
     //   - authorName: string (optional, 0..100 chars) - Name of parent/teacher author
+    //   - detailImageUrl: string (optional, 0..500 chars) - Topic detail cover image URL or path
+    //   - attachments: list (optional, 0..4 items) - Web-compressed study photo data URLs or paths
     //   - examResult: map or null (optional) - Exam grade and reflection details
     //       - grade: string (required, 1..20 chars)
     //       - weight, category, teacher, date, note, imageUrl, updatedAt (optional)
@@ -125,6 +127,8 @@ service cloud.firestore {
         'createdAt',
         'updatedAt',
         'authorName',
+        'detailImageUrl',
+        'attachments',
         'examResult'
       ];
       let requiredFields = ['title', 'subject', 'questions'];
@@ -142,6 +146,8 @@ service cloud.firestore {
         (!('createdAt' in data) || isValidTimeOrNumber(data.createdAt)) &&
         (!('updatedAt' in data) || isValidTimeOrNumber(data.updatedAt)) &&
         isValidOptionalString('authorName', 0, 100) &&
+        isValidOptionalString('detailImageUrl', 0, 500) &&
+        isValidOptionalList('attachments', 4) &&
         (!('examResult' in data) || data.examResult == null || (
           data.examResult is map &&
           data.examResult.keys().hasOnly(['grade', 'weight', 'category', 'teacher', 'date', 'note', 'imageUrl', 'updatedAt']) &&

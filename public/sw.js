@@ -1,9 +1,9 @@
-const CACHE_NAME = 'honza-study-v31';
+const CACHE_NAME = 'honza-study-v32';
 const ASSETS = [
   '/',
   '/index.html',
   '/styles.css?v=30',
-  '/app.js?v=31',
+  '/app.js?v=32',
   '/firebase-config.js',
   '/data/starter-topics.js',
   '/quizzes/catalog.json',
